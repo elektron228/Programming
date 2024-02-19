@@ -15,30 +15,30 @@ namespace Programming
             seasonComboBox.DataSource = seasonValues;
         }
 
-        //Заполняем листбокс перечислениями
+        //Р—Р°РїРѕР»РЅСЏРµРј Р»РёСЃС‚Р±РѕРєСЃ РїРµСЂРµС‡РёСЃР»РµРЅРёСЏРјРё
         public void FillEnumListBox()
         {
-            //Получаем все типы в проекте
+            //РџРѕР»СѓС‡Р°РµРј РІСЃРµ С‚РёРїС‹ РІ РїСЂРѕРµРєС‚Рµ
             Type[] types = typeof(Program).Assembly.GetTypes();
-            //Ищем перечисления
+            //РС‰РµРј РїРµСЂРµС‡РёСЃР»РµРЅРёСЏ
             var enumTypes = Array.FindAll(types, type => type.IsEnum);
-            //Добавляем их в листбокс
+            //Р”РѕР±Р°РІР»СЏРµРј РёС… РІ Р»РёСЃС‚Р±РѕРєСЃ
             foreach (var type in enumTypes)
             {
                 EnumerationListBox.Items.Add(type.Name);
             }
         }
 
-        //Заполняем листбокс при смене выбранного перечисления
+        //Р—Р°РїРѕР»РЅСЏРµРј Р»РёСЃС‚Р±РѕРєСЃ РїСЂРё СЃРјРµРЅРµ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РїРµСЂРµС‡РёСЃР»РµРЅРёСЏ
         private void EnumerationListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            //Получаем значение выбранного пункта (тип string)
+            //РџРѕР»СѓС‡Р°РµРј Р·РЅР°С‡РµРЅРёРµ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РїСѓРЅРєС‚Р° (С‚РёРї string)
             var selectedEnum = EnumerationListBox.SelectedItem;
-            //Объявляем переменную для работы свитча
+            //РћР±СЉСЏРІР»СЏРµРј РїРµСЂРµРјРµРЅРЅСѓСЋ РґР»СЏ СЂР°Р±РѕС‚С‹ СЃРІРёС‚С‡Р°
             var enumValues = Enum.GetValues(typeof(Genre));
-            //Очищаем ValuesListBox
+            //РћС‡РёС‰Р°РµРј ValuesListBox
             ValuesListBox.Items.Clear();
-            //Заполняем ValuesListBox в зависимости от выбранного пункта
+            //Р—Р°РїРѕР»РЅСЏРµРј ValuesListBox РІ Р·Р°РІРёСЃРёРјРѕСЃС‚Рё РѕС‚ РІС‹Р±СЂР°РЅРЅРѕРіРѕ РїСѓРЅРєС‚Р°
             switch (selectedEnum)
             {
                 case "Colour":
@@ -86,27 +86,27 @@ namespace Programming
 
             }
         }
-        //Отображаем индекс в текстбокс
+        //РћС‚РѕР±СЂР°Р¶Р°РµРј РёРЅРґРµРєСЃ РІ С‚РµРєСЃС‚Р±РѕРєСЃ
         private void ValuesListBox_SelectedIndexChanged(object sender, EventArgs e)
         {
             ValueTextBox.Text = ValuesListBox.SelectedIndex.ToString();
         }
-        //Парсим дни недели
+        //РџР°СЂСЃРёРј РґРЅРё РЅРµРґРµР»Рё
         private void buttonParse_Click(object sender, EventArgs e)
         {
-            //Получеам значение из текстбокса
+            //РџРѕР»СѓС‡РµР°Рј Р·РЅР°С‡РµРЅРёРµ РёР· С‚РµРєСЃС‚Р±РѕРєСЃР°
             string parseTextBoxValue = ParseTextBox.Text;
-            //Защита от дураков
+            //Р—Р°С‰РёС‚Р° РѕС‚ РґСѓСЂР°РєРѕРІ
             parseTextBoxValue = parseTextBoxValue.Trim().ToLower();
             parseTextBoxValue = FirstLetterToUpper(parseTextBoxValue);
-            //Создаем переменную типа Weekday
+            //РЎРѕР·РґР°РµРј РїРµСЂРµРјРµРЅРЅСѓСЋ С‚РёРїР° Weekday
             Weekday weekday;
-            //Пробуем парсить и если да, то выводим значение в weekday
+            //РџСЂРѕР±СѓРµРј РїР°СЂСЃРёС‚СЊ Рё РµСЃР»Рё РґР°, С‚Рѕ РІС‹РІРѕРґРёРј Р·РЅР°С‡РµРЅРёРµ РІ weekday
             if (Enum.TryParse(parseTextBoxValue, out weekday))
             {
-                //Получаем индекс элемента перечисления
+                //РџРѕР»СѓС‡Р°РµРј РёРЅРґРµРєСЃ СЌР»РµРјРµРЅС‚Р° РїРµСЂРµС‡РёСЃР»РµРЅРёСЏ
                 var weekdayIndex = (int)weekday;
-                //Выводим результат
+                //Р’С‹РІРѕРґРёРј СЂРµР·СѓР»СЊС‚Р°С‚
                 ParseFinishLabel.Text = $"{parseTextBoxValue} is weekday! ({parseTextBoxValue} = {weekdayIndex + 1})";
             }
             else
@@ -114,18 +114,18 @@ namespace Programming
                 ParseFinishLabel.Text = $"{parseTextBoxValue} not weekday.";
             }
         }
-        //Переводим первую букву строки в верхний регистр
+        //РџРµСЂРµРІРѕРґРёРј РїРµСЂРІСѓСЋ Р±СѓРєРІСѓ СЃС‚СЂРѕРєРё РІ РІРµСЂС…РЅРёР№ СЂРµРіРёСЃС‚СЂ
         public static string FirstLetterToUpper(string str)
         {
             if (str.Length > 0) { return Char.ToUpper(str[0]) + str.Substring(1); }
             return "";
         }
-        //Делаем что-то при выборе сезона
+        //Р”РµР»Р°РµРј С‡С‚Рѕ-С‚Рѕ РїСЂРё РІС‹Р±РѕСЂРµ СЃРµР·РѕРЅР°
         private void goButton_Click(object sender, EventArgs e)
         {
-            //Получаем выбранное значение
+            //РџРѕР»СѓС‡Р°РµРј РІС‹Р±СЂР°РЅРЅРѕРµ Р·РЅР°С‡РµРЅРёРµ
             string seasonComboBoxValue = seasonComboBox.Text;
-            //Реализуем логику
+            //Р РµР°Р»РёР·СѓРµРј Р»РѕРіРёРєСѓ
             switch (seasonComboBoxValue)
             {
                 case "Winter":
