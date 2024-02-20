@@ -97,12 +97,13 @@ namespace Programming
             //Получеам значение из текстбокса
             string parseTextBoxValue = ParseTextBox.Text;
             //Защита от дураков
+            double number;
             parseTextBoxValue = parseTextBoxValue.Trim().ToLower();
             parseTextBoxValue = FirstLetterToUpper(parseTextBoxValue);
             //Создаем переменную типа Weekday
             Weekday weekday;
             //Пробуем парсить и если да, то выводим значение в weekday
-            if (Enum.TryParse(parseTextBoxValue, out weekday))
+            if (Enum.TryParse(parseTextBoxValue, out weekday)&& double.TryParse(parseTextBoxValue, out number)==false)
             {
                 //Получаем индекс элемента перечисления
                 var weekdayIndex = (int)weekday;
