@@ -1,3 +1,6 @@
+/// <summary>
+/// Перечисление, содержащее цвета.
+/// </summary>
 public enum Colour
 {
     White,

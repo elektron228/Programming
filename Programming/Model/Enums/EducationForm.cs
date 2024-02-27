@@ -1,3 +1,6 @@
+/// <summary>
+/// Перечисление, содержащее форму обучения.
+/// </summary>
 public enum EducationForm 
 {
     Correspondence,
