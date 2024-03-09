@@ -27,20 +27,11 @@ namespace Programming
         /// </summary>
         public int Hours
         {
-            get
-            {
-                return _hours;
-            }
+            get { return _hours; }
             set
             {
-                if (value < 0)
-                {
-                    throw new ArgumentException();
-                }
-                else
-                {
-                    _hours = value;
-                }
+                Validator.AssertOnPositiveValue(value);
+                _hours = value;
             }
         }
 
@@ -57,10 +48,7 @@ namespace Programming
             get { return _mark; }
             set
             {
-                if (value < 2 && value > 5)
-                {
-                    throw new ArgumentException();
-                }
+                Validator.AssertValueInRange(value, 2, 5);
                 _mark = value;
             }
         }

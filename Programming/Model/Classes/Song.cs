@@ -33,10 +33,7 @@ namespace Programming
             get { return _duration; }
             set
             {
-                if (value < 0)
-                {
-                    throw new ArgumentException();
-                }
+                Validator.AssertOnPositiveValue(value);
                 _duration = value;
             }
         }

@@ -62,6 +62,12 @@
             movieNameTextBox = new TextBox();
             MovieListBox = new ListBox();
             rectanglesGroupBox = new GroupBox();
+            IdLabel = new Label();
+            idTextBox = new TextBox();
+            labelCenterY = new Label();
+            textBoxCenterY = new TextBox();
+            labelCenterX = new Label();
+            textBoxCenterX = new TextBox();
             findRectangleButton = new Button();
             colourLabel = new Label();
             colourTextBox = new TextBox();
@@ -297,7 +303,7 @@
             movieGroupBox.Controls.Add(MovieListBox);
             movieGroupBox.Location = new Point(289, 8);
             movieGroupBox.Name = "movieGroupBox";
-            movieGroupBox.Size = new Size(524, 286);
+            movieGroupBox.Size = new Size(524, 292);
             movieGroupBox.TabIndex = 8;
             movieGroupBox.TabStop = false;
             movieGroupBox.Text = "Movies";
@@ -408,6 +414,12 @@
             // 
             // rectanglesGroupBox
             // 
+            rectanglesGroupBox.Controls.Add(IdLabel);
+            rectanglesGroupBox.Controls.Add(idTextBox);
+            rectanglesGroupBox.Controls.Add(labelCenterY);
+            rectanglesGroupBox.Controls.Add(textBoxCenterY);
+            rectanglesGroupBox.Controls.Add(labelCenterX);
+            rectanglesGroupBox.Controls.Add(textBoxCenterX);
             rectanglesGroupBox.Controls.Add(findRectangleButton);
             rectanglesGroupBox.Controls.Add(colourLabel);
             rectanglesGroupBox.Controls.Add(colourTextBox);
@@ -418,10 +430,61 @@
             rectanglesGroupBox.Controls.Add(rectanglesListBox);
             rectanglesGroupBox.Location = new Point(8, 8);
             rectanglesGroupBox.Name = "rectanglesGroupBox";
-            rectanglesGroupBox.Size = new Size(275, 286);
+            rectanglesGroupBox.Size = new Size(275, 292);
             rectanglesGroupBox.TabIndex = 0;
             rectanglesGroupBox.TabStop = false;
             rectanglesGroupBox.Text = "Rectangles";
+            // 
+            // IdLabel
+            // 
+            IdLabel.AutoSize = true;
+            IdLabel.Location = new Point(192, 236);
+            IdLabel.Name = "IdLabel";
+            IdLabel.Size = new Size(27, 20);
+            IdLabel.TabIndex = 13;
+            IdLabel.Text = "ID:";
+            // 
+            // idTextBox
+            // 
+            idTextBox.Location = new Point(192, 259);
+            idTextBox.Name = "idTextBox";
+            idTextBox.ReadOnly = true;
+            idTextBox.Size = new Size(77, 27);
+            idTextBox.TabIndex = 12;
+            // 
+            // labelCenterY
+            // 
+            labelCenterY.AutoSize = true;
+            labelCenterY.Location = new Point(99, 236);
+            labelCenterY.Name = "labelCenterY";
+            labelCenterY.Size = new Size(67, 20);
+            labelCenterY.TabIndex = 11;
+            labelCenterY.Text = "Center Y:";
+            // 
+            // textBoxCenterY
+            // 
+            textBoxCenterY.Location = new Point(99, 259);
+            textBoxCenterY.Name = "textBoxCenterY";
+            textBoxCenterY.ReadOnly = true;
+            textBoxCenterY.Size = new Size(87, 27);
+            textBoxCenterY.TabIndex = 10;
+            // 
+            // labelCenterX
+            // 
+            labelCenterX.AutoSize = true;
+            labelCenterX.Location = new Point(6, 236);
+            labelCenterX.Name = "labelCenterX";
+            labelCenterX.Size = new Size(68, 20);
+            labelCenterX.TabIndex = 9;
+            labelCenterX.Text = "Center X:";
+            // 
+            // textBoxCenterX
+            // 
+            textBoxCenterX.Location = new Point(6, 259);
+            textBoxCenterX.Name = "textBoxCenterX";
+            textBoxCenterX.ReadOnly = true;
+            textBoxCenterX.Size = new Size(87, 27);
+            textBoxCenterX.TabIndex = 8;
             // 
             // findRectangleButton
             // 
@@ -564,5 +627,11 @@
         private TextBox movieRatingTextBox;
         private Label movieGenreLabel;
         private TextBox movieGenreTextBox;
+        private Label labelCenterY;
+        private TextBox textBoxCenterY;
+        private Label labelCenterX;
+        private TextBox textBoxCenterX;
+        private Label IdLabel;
+        private TextBox idTextBox;
     }
 }

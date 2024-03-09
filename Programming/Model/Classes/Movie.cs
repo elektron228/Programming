@@ -46,10 +46,7 @@ namespace Programming
             get { return _releaseYear; }
             set
             {
-                if (value < 1900 && value > 2024)
-                {
-                    throw new ArgumentException();
-                }
+                Validator.AssertValueInRange(value, 1900, 2024);
                 _releaseYear = value;
             }
         }
@@ -67,10 +64,7 @@ namespace Programming
             get { return _rating; }
             set
             {
-                if (value > 10.0 && value < 0)
-                {
-                    throw new ArgumentException();
-                }
+                Validator.AssertValueInRange(value, 0.0, 10.0);
                 _rating = value;
             }
         }

@@ -6,12 +6,25 @@ using System.Threading.Tasks;
 
 namespace Programming
 {
+    /// <summary>
+    /// Хранит информацию о прямоугольниках.
+    /// </summary>
     public class Rectangle
     {
         private Double _length;
         private Double _wide;
         private string _colour;
+        private int _centerX;
+        private int _centerY;
+        private int _id;
+        private static int _allRectangelsCount = 0;
+        Random rand = new Random();
         
+        /// <summary>
+        /// Возвращает центр прямоугольника.
+        /// </summary>
+        public Point2D Center {  get;private set; }
+
         /// <summary>
         /// Возвращает и задает длину. Должно быть не меньше нуля.
         /// </summary>
@@ -20,10 +33,8 @@ namespace Programming
             get { return _length; }
             set
             {
-                if (value < 0)
-                {
-                    throw new ArgumentException();
-                }
+                Validator.AssertOnPositiveValue(value);
+                Validator.AssertValueInRange(value, 0, 50);
                 _length = value;
             }
         }
@@ -36,10 +47,8 @@ namespace Programming
             get { return _wide; }
             set
             {
-                if (value < 0)
-                {
-                    throw new ArgumentException();
-                }
+                Validator.AssertOnPositiveValue(value);
+                Validator.AssertValueInRange(value, 0, 50);
                 _wide = value;
             }
         }
@@ -48,6 +57,20 @@ namespace Programming
         /// Возращает и задает цвет.
         /// </summary>
         public string Colour { get; set; }
+
+        /// <summary>
+        /// Возвращает количество прямоугольников.
+        /// </summary>
+        /// <returns></returns>
+        public static int AllRectanglesCount()
+        {
+            return _allRectangelsCount;
+        }
+
+        /// <summary>
+        /// Возвращает ID.
+        /// </summary>
+        public int ID { get=> _id; }
 
         /// <summary>
         /// Создает экземпляр класса <see cref="Rectangle"/>.
@@ -60,11 +83,13 @@ namespace Programming
             Length = length;
             Wide = wide; 
             Colour = colour;
-        }
 
-        /// <summary>
-        /// Создает пустой экземпляр класса <see cref="Rectangle"/>.
-        /// </summary>
-        public Rectangle() { }
+            _centerX = rand.Next(50, 150);
+            _centerY = rand.Next(50, 150);
+            Center = new Point2D(_centerY,_centerX);
+
+            _allRectangelsCount++;
+            _id = _allRectangelsCount;
+        }
     }
 }

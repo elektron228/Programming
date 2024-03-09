@@ -118,20 +118,21 @@ namespace Programming
         {
             Random random = new Random();
             Colour colour = (Colour)0;
+            string _rectColour;
             for (int i = 0; i < rectangles.Length; i++)
             {
                 //Получаем случайные значения длины и ширины.
                 Double recLength = Math.Round(random.NextDouble() * (1.00 + 50.00), 2);
                 Double recWide = Math.Round(random.NextDouble() * (1.00 + 50.00), 2);
-                //Присваиваем значение длины и ширины.
-                rectangles[i] = new Rectangle();
-                rectangles[i].Length = recLength;
-                rectangles[i].Wide = recWide;
-
+                
                 //Присваиваем случайное значение цвета из перечисления Colour.
                 int randomIndex = ChooseRandomEnumIndex(colour);
                 colour = (Colour)randomIndex;
-                rectangles[i].Colour = colour.ToString();
+                _rectColour = colour.ToString();
+               
+                //Инициализируем прямоугольник.
+                rectangles[i] = new Rectangle(recLength, recWide, _rectColour);
+
             }
         }
 
@@ -338,6 +339,9 @@ namespace Programming
             lengthTextBox.Text = _currentRectangle.Length.ToString();
             wideTextBox.Text = _currentRectangle.Wide.ToString();
             colourTextBox.Text = _currentRectangle.Colour.ToString();
+            textBoxCenterX.Text = _currentRectangle.Center.X.ToString();
+            textBoxCenterY.Text = _currentRectangle.Center.Y.ToString();
+            idTextBox.Text = _currentRectangle.ID.ToString();
         }
 
         /// <summary>
@@ -466,7 +470,7 @@ namespace Programming
                 }
                 
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 movieRatingTextBox.BackColor = Color.Orange;
             }
