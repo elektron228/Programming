@@ -60,7 +60,7 @@ namespace Programming
         /// </summary>
         public Double Area
         {
-            get => (((_p * (OuterRadius*OuterRadius)) - (_p * (InnerRadius * InnerRadius)))); 
+            get => (_p * (OuterRadius*OuterRadius)) - (_p * (InnerRadius * InnerRadius)); 
             private set { }
         }
 

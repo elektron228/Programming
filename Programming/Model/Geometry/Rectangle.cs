@@ -11,8 +11,8 @@ namespace Programming
     /// </summary>
     public class Rectangle
     {
-        private Double _length;
-        private Double _wide;
+        private int _length;
+        private int _wide;
         private string _colour;
         private int _centerX;
         private int _centerY;
@@ -23,18 +23,18 @@ namespace Programming
         /// <summary>
         /// Возвращает центр прямоугольника.
         /// </summary>
-        public Point2D Center {  get;private set; }
+        public Point2D Center {  get; set; }
 
         /// <summary>
         /// Возвращает и задает длину. Должно быть не меньше нуля.
         /// </summary>
-        public Double Length
+        public int Length
         {
             get { return _length; }
             set
             {
                 Validator.AssertOnPositiveValue(value);
-                Validator.AssertValueInRange(value, 0, 50);
+                Validator.AssertValueInRange(value, 1, 50);
                 _length = value;
             }
         }
@@ -42,13 +42,13 @@ namespace Programming
         /// <summary>
         /// Возвращает и задает ширину. Должно быть не меньше нуля.
         /// </summary>
-        public Double Wide
+        public int Wide
         {
             get { return _wide; }
             set
             {
                 Validator.AssertOnPositiveValue(value);
-                Validator.AssertValueInRange(value, 0, 50);
+                Validator.AssertValueInRange(value, 1, 50);
                 _wide = value;
             }
         }
@@ -78,15 +78,15 @@ namespace Programming
         /// <param name="length">Длина.</param>
         /// <param name="wide">Ширина.</param>
         /// <param name="colour">Цвет.</param>
-        public Rectangle(Double length, Double wide, string colour)
+        public Rectangle(int wide, int length, string colour)
         {
             Length = length;
             Wide = wide; 
             Colour = colour;
 
-            _centerX = rand.Next(50, 150);
-            _centerY = rand.Next(50, 150);
-            Center = new Point2D(_centerY,_centerX);
+            _centerX = rand.Next(50, 405);
+            _centerY = rand.Next(50, 445);
+            Center = new Point2D(_centerX,_centerY);
 
             _allRectangelsCount++;
             _id = _allRectangelsCount;

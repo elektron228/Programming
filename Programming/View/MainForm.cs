@@ -30,16 +30,19 @@ namespace Programming
             seasonComboBox.DataSource = seasonValues;
 
             //Создаем и инициализируем массив прямоугольников.
-            FillRectangleArray(_rectangles);
-            FillRectListBox(_rectangles);
+            FillRectangleArray(_rectangles, 5);
 
             //Создаем и инициализируем массив фильмов.
             FillMovieArray(_movies);
             FillMovieListBox(_movies);
         }
-        //Объявляем массив прямоугольников.
-        private Rectangle[] _rectangles = new Rectangle[5];
+        //Объявляем список прямоугольников.
+        private List<Rectangle> _rectangles = new List<Rectangle>(0);
         private Rectangle _currentRectangle;
+        private Rectangle _selectedRectangle;
+
+        //Объявляем список панелей.
+        private List<Panel> _rectanglePanels = new List<Panel>(0);
 
         //Объявляем массив фильмов.
         private Movie[] _movies = new Movie[5];
@@ -80,19 +83,27 @@ namespace Programming
                 MovieListBox.Items.Add(movie.Name.ToString());
             }
         }
-        
+
         /// <summary>
         /// Заполняем листбокс с прямоугольниками.
         /// </summary>
         /// <param name="rectangles"></param>
-        public void FillRectListBox(Rectangle[] rectangles)
+        public void FillRectListBox(List<Rectangle> rectangles)
         {
-            for (int i = 0; i < rectangles.Length; i++)
+            rectanglesListBox.Items.Clear();
+            RectanglesCollisionListBox.Items.Clear();
+            string rectangle = "";
+            for (int i = 0; i < rectangles.Count; i++)
             {
-                rectanglesListBox.Items.Add($"Rectangle {i + 1}");
+                rectangle = $"{rectangles[i].ID}. (X = {rectangles[i].Center.X}; Y = {rectangles[i].Center.Y}; W = {rectangles[i].Wide}; H = {rectangles[i].Length})";
+                RectanglesCollisionListBox.Items.Add(rectangle);
+                rectanglesListBox.Items.Add($"Rectangle {rectangles[i].ID}");
             }
+            ClearRectangleInfo();
+            FindCollisions();
+
         }
-       
+
         /// <summary>
         /// Функция заполняет листбокс с перечислениями. 
         /// Значения типа string.
@@ -109,43 +120,69 @@ namespace Programming
                 EnumerationListBox.Items.Add(type.Name);
             }
         }
-        
+
         /// <summary>
         /// Заполняет массив прямоугольников значениями.
         /// </summary>
         /// <param name="rectangles"></param>
-        public void FillRectangleArray(Rectangle[] rectangles)
+        public void FillRectangleArray(List<Rectangle> rectangles, int rectCount)
         {
             Random random = new Random();
             Colour colour = (Colour)0;
             string _rectColour;
-            for (int i = 0; i < rectangles.Length; i++)
+            for (int i = 0; i < rectCount; i++)
             {
+                Panel newPanel = new Panel();
                 //Получаем случайные значения длины и ширины.
-                Double recLength = Math.Round(random.NextDouble() * (1.00 + 50.00), 2);
-                Double recWide = Math.Round(random.NextDouble() * (1.00 + 50.00), 2);
-                
+                int recLength = random.Next(20, 50);
+                int recWide = random.Next(20, 50);
+
                 //Присваиваем случайное значение цвета из перечисления Colour.
                 int randomIndex = ChooseRandomEnumIndex(colour);
                 colour = (Colour)randomIndex;
                 _rectColour = colour.ToString();
-               
-                //Инициализируем прямоугольник.
-                rectangles[i] = new Rectangle(recLength, recWide, _rectColour);
 
+                Rectangle rect = new Rectangle(recWide, recLength, _rectColour);
+                //Инициализируем прямоугольник.
+                rectangles.Add(rect);
+                newPanel.Size = new Size(rect.Wide,rect.Length);
+                newPanel.Location = new Point(rect.Center.X,rect.Center.Y);
+                newPanel.BackColor = Color.FromArgb(127, 127, 255, 127);
+                newPanel.BorderStyle = BorderStyle.FixedSingle;
+                _rectanglePanels.Add(newPanel);
+                RectanglesPanel.Controls.Add(newPanel);
+                RectangleCollisions.Add(false);
+                _numb++;
             }
+
+            FillRectListBox(_rectangles);
+        }
+
+        public void ClearRectangleInfo()
+        {
+            RectanglesHeigthTextBox.Text = "";
+            RectanglesWidthTextBox.Text = "";
+            RectanglesXTextBox.Text = "";
+            RectanglesYTextBox.Text = "";
+            RectanglesIDTextBox.Text = "";
+            lengthTextBox.Text = "";
+            wideTextBox.Text = "";
+            colourTextBox.Text = "";
+            textBoxCenterX.Text = "";
+            textBoxCenterY.Text = "";
+            idTextBox.Text = "";
         }
 
         /// <summary>
-        /// Выполняем поиск индекса прямоугольника с максимальной шириной. Возвращает целое число.
+        /// Выполняет поиск индекса прямоугольника с максимальной шириной. Возвращает целое число.
         /// </summary>
         /// <param name="rectangles"></param>
         /// <returns></returns>
-        private int FindRectangleWithMaxWidth(Rectangle[] rectangles)
+        private int FindRectangleWithMaxWidth(List<Rectangle> rectangles)
         {
             int maxIndex = 0;
             Double maxWide = rectangles[0].Wide;
-            for (int i = 0; i < rectangles.Length; i++)
+            for (int i = 0; i < rectangles.Count; i++)
             {
                 if (rectangles[i].Wide > maxWide)
                 {
@@ -157,7 +194,7 @@ namespace Programming
         }
 
         /// <summary>
-        /// Выполняем поиск индекса фильма с максимальным рейтингом. Возвращает целое число.
+        /// Выполняет поиск индекса фильма с максимальным рейтингом. Возвращает целое число.
         /// </summary>
         /// <param name="movies"></param>
         /// <returns></returns>
@@ -198,7 +235,7 @@ namespace Programming
             //Получаем значение выбранного пункта (тип string)
             var selectedEnum = EnumerationListBox.SelectedItem;
             //Объявляем переменную для работы свитча
-            var enumValues = Enum.GetValues(typeof(Genre));
+            var enumValues = Enum.GetValues(typeof(Colour));
             //Очищаем ValuesListBox
             ValuesListBox.Items.Clear();
             //Заполняем ValuesListBox в зависимости от выбранного пункта
@@ -289,7 +326,7 @@ namespace Programming
         }
 
         /// <summary>
-        /// Меняем первую букву переданной строки на заглавную.
+        /// Меняет первую букву переданной строки на заглавную.
         /// </summary>
         /// <param name="str">Передаем изменяемую строку.</param>
         /// <returns>Возвращает изменённую строку.</returns>
@@ -301,7 +338,7 @@ namespace Programming
         }
 
         /// <summary>
-        /// Выполняем действие в зависимости от выбранного сезона.
+        /// Выполняет действие в зависимости от выбранного сезона.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -345,75 +382,83 @@ namespace Programming
         }
 
         /// <summary>
-        /// Проверяем введенное в colourTextBox значение.
+        /// Проверяет введенное в colourTextBox значение.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void colourTextBox_TextChanged(object sender, EventArgs e)
         {
-            //Получаем текст из текстбокса.
-            string changedColour = colourTextBox.Text;
-            //Получаем массив цветов из перечисления Colour.
-            string[] colours = Enum.GetNames(typeof(Colour));
-            //Сравниваем.
-            foreach (string colour in colours)
+            if (colourTextBox.Text != "")
             {
-                if (colour != changedColour)
+                //Получаем текст из текстбокса.
+                string changedColour = colourTextBox.Text;
+                //Получаем массив цветов из перечисления Colour.
+                string[] colours = Enum.GetNames(typeof(Colour));
+                //Сравниваем.
+                foreach (string colour in colours)
                 {
-                    colourTextBox.BackColor = Color.Orange;
+                    if (colour != changedColour)
+                    {
+                        colourTextBox.BackColor = Color.Orange;
+                    }
+                    else
+                    {
+                        colourTextBox.BackColor = Color.White;
+                        _currentRectangle.Colour = colour;
+                        break;
+                    }
                 }
-                else
-                {
-                    colourTextBox.BackColor = Color.White;
-                    _currentRectangle.Colour = colour;
-                    break;
-                }
-
             }
         }
 
         /// <summary>
-        /// Проверяем введенное в lengthTextBox значение.
+        /// Проверяет введенное в lengthTextBox значение.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void lengthTextBox_TextChanged(object sender, EventArgs e)
         {
-            string currentText = lengthTextBox.Text;
-            try
+            if (lengthTextBox.Text != "")
             {
-                Double.Parse(currentText);
-                lengthTextBox.BackColor = Color.White;
-                _currentRectangle.Length = Double.Parse(currentText);
-            }
-            catch (Exception ex)
-            {
-                lengthTextBox.BackColor = Color.Orange;
+                string currentText = lengthTextBox.Text;
+                try
+                {
+                    Double.Parse(currentText);
+                    lengthTextBox.BackColor = Color.White;
+                    _currentRectangle.Length = int.Parse(currentText);
+                }
+                catch (Exception ex)
+                {
+                    lengthTextBox.BackColor = Color.Orange;
+                }
             }
         }
 
         /// <summary>
-        /// Проверяем введенное в wideTextBox значение.
+        /// Проверяет введенное в wideTextBox значение.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void wideTextBox_TextChanged(object sender, EventArgs e)
         {
-            string currentText = wideTextBox.Text;
-            try
+            if (wideTextBox.Text != "")
             {
-                Double.Parse(currentText);
-                wideTextBox.BackColor = Color.White;
-                _currentRectangle.Wide = Double.Parse(currentText);
-            }
-            catch (Exception ex)
-            {
-                wideTextBox.BackColor = Color.Orange;
+                string currentText = wideTextBox.Text;
+                try
+                {
+                    int.Parse(currentText);
+                    wideTextBox.BackColor = Color.White;
+                    _currentRectangle.Wide = int.Parse(currentText);
+                }
+                catch (Exception ex)
+                {
+                    wideTextBox.BackColor = Color.Orange;
+                }
             }
         }
 
         /// <summary>
-        /// Заполняем текстбоксы значениями выбранного фильма.
+        /// Заполняет текстбоксы значениями выбранного фильма.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -427,9 +472,9 @@ namespace Programming
             movieReleaseYearTextBox.Text = _currentMovie.ReleaseYear.ToString();
             movieRatingTextBox.Text = _currentMovie.Rating.ToString();
         }
-       
+
         /// <summary>
-        /// Выполняем поиск прямоугольника с максимальной шириной.
+        /// Выполняет поиск прямоугольника с максимальной шириной.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -439,7 +484,7 @@ namespace Programming
         }
 
         /// <summary>
-        /// Выполняем поиск фильма с максимальым рейтингом.
+        /// Выполняет поиск фильма с максимальым рейтингом.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -449,7 +494,7 @@ namespace Programming
         }
 
         /// <summary>
-        /// Проверяем введенное в movieRatingTextBox значение.
+        /// Проверяет введенное в movieRatingTextBox значение.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -468,12 +513,280 @@ namespace Programming
                     movieRatingTextBox.BackColor = Color.White;
                     _currentMovie.Rating = Double.Parse(currentText);
                 }
-                
+
             }
             catch (Exception)
             {
                 movieRatingTextBox.BackColor = Color.Orange;
             }
         }
+
+        /// <summary>
+        /// Анимируем кнопку.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddRectPictBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            AddRectPictBox.Size = new Size(42, 42);
+            AddRectPictBox.Location = new Point(7, 200);
+        }
+
+        /// <summary>
+        /// Анимируем кнопку.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddRectPictBox_MouseLeave(object sender, EventArgs e)
+        {
+            AddRectPictBox.Size = new Size(40, 40);
+            AddRectPictBox.Location = new Point(8, 201);
+        }
+
+        /// <summary>
+        /// Анимируем кнопку.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DelRectPictBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            DelRectPictBox.Size = new Size(42, 42);
+            DelRectPictBox.Location = new Point(53, 200);
+        }
+
+        /// <summary>
+        /// Анимируем кнопку.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DelRectPictBox_MouseLeave(object sender, EventArgs e)
+        {
+            DelRectPictBox.Size = new Size(40, 40);
+            DelRectPictBox.Location = new Point(54, 201);
+        }
+
+        /// <summary>
+        /// Удаляет выбранный прямоугольник из списка.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DelRectPictBox_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                _rectangles.Remove(_selectedRectangle);
+
+
+                int selectedIndex = RectanglesCollisionListBox.SelectedIndex;
+                _rectanglePanels.RemoveAt(selectedIndex);
+                RectanglesPanel.Controls.RemoveAt(selectedIndex);
+                _numb--;
+
+                FillRectListBox(_rectangles);
+            }
+            catch(Exception ex) { }
+        }
+
+        /// <summary>
+        /// Добавляет прямоугольник в список.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddRectPictBox_Click(object sender, EventArgs e)
+        {
+            FillRectangleArray(_rectangles, 1);
+        }
+
+        /// <summary>
+        /// Меняет значения текстбоксов в зависимости от выбранного прямоугольника.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RectanglesCollisionListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                int selectedRectIndex = RectanglesCollisionListBox.SelectedIndex;
+                _selectedRectangle = _rectangles[selectedRectIndex];
+                RectanglesHeigthTextBox.Text = _selectedRectangle.Length.ToString();
+                RectanglesWidthTextBox.Text = _selectedRectangle.Wide.ToString();
+                RectanglesXTextBox.Text = _selectedRectangle.Center.X.ToString();
+                RectanglesYTextBox.Text = _selectedRectangle.Center.Y.ToString();
+                RectanglesIDTextBox.Text = _selectedRectangle.ID.ToString();
+            }
+            catch (ArgumentOutOfRangeException) { }
+
+        }
+
+        /// <summary>
+        /// Проверяем введенное в <see cref="RectanglesXTextBox"/> значение.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RectanglesXTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (RectanglesXTextBox.Text != "")
+            {
+                //Получаем текст из строки.
+                string currentText = RectanglesXTextBox.Text;
+                try
+                { 
+                    //Получаем индекс выбранного элемента.
+                    int selectedIndex = RectanglesCollisionListBox.SelectedIndex;
+                    //Пробуем парсить.
+                    int x = int.Parse(currentText);
+                    //Проверяем, находится ли введенное число в заданном диапазоне.
+                    Validator.AssertValueInRange(x, 50, 405);
+                    RectanglesXTextBox.BackColor = Color.White;
+                    //Меняем поля прямоугольника.
+                    _selectedRectangle.Center = new Point2D(x, _selectedRectangle.Center.Y);
+                    RectanglesCollisionListBox.Items[selectedIndex] = $"{_selectedRectangle.ID}. (X = {_selectedRectangle.Center.X}; Y = {_selectedRectangle.Center.Y}; W = {_selectedRectangle.Wide}; H = {_selectedRectangle.Length})";
+                    //Меняем соотвествующую панельку.
+                    _rectanglePanels[selectedIndex].Location = new Point(_selectedRectangle.Center.X, _selectedRectangle.Center.Y);
+                    FindCollisions();
+                }
+                catch (Exception ex)
+                {
+                    RectanglesXTextBox.BackColor = Color.Orange;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Проверяем введенное в <see cref="RectanglesYTextBox"/> значение.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RectanglesYTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (RectanglesYTextBox.Text != "")
+            {
+                //Получаем индекс выбранного элемента.
+                int selectedIndex = RectanglesCollisionListBox.SelectedIndex;
+                //Получаем текст из строки.
+                string currentText = RectanglesYTextBox.Text;
+                try
+                {
+                    //Пробуем парсить.
+                    int y = int.Parse(currentText);
+                    //Проверяем, находится ли введенное число в заданном диапазоне.
+                    Validator.AssertValueInRange(y, 50, 445);
+                    RectanglesYTextBox.BackColor = Color.White;
+                    //Меняем поля прямоугольника.
+                    _selectedRectangle.Center = new Point2D(_selectedRectangle.Center.X, y);
+                    RectanglesCollisionListBox.Items[selectedIndex] = $"{_selectedRectangle.ID}. (X = {_selectedRectangle.Center.X}; Y = {_selectedRectangle.Center.Y}; W = {_selectedRectangle.Wide}; H = {_selectedRectangle.Length})";
+                    //Меняем соотвествующую панельку.
+                    _rectanglePanels[selectedIndex].Location = new Point(_selectedRectangle.Center.X, _selectedRectangle.Center.Y);
+                    FindCollisions();
+                }
+                catch (Exception ex)
+                {
+                    RectanglesYTextBox.BackColor = Color.Orange;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Проверяем введенное в <see cref="RectanglesWidthTextBox"/> значение.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RectanglesWidthTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+            if (RectanglesWidthTextBox.Text != "")
+            {
+                //Получаем индекс выбранного элемента.
+                int selectedIndex = RectanglesCollisionListBox.SelectedIndex;
+                //Получаем текст из строки.
+                string currentText = RectanglesWidthTextBox.Text;
+                try
+                {
+                    //Пробуем парсить.
+                    int width = int.Parse(currentText);
+                    //Проверяем, находится ли введенное число в заданном диапазоне.
+                    Validator.AssertValueInRange(width, 1, 50);
+                    RectanglesWidthTextBox.BackColor = Color.White;
+                    //Меняем поля прямоугольника.
+                    _selectedRectangle.Wide = width;
+                    RectanglesCollisionListBox.Items[selectedIndex] = $"{_selectedRectangle.ID}. (X = {_selectedRectangle.Center.X}; Y = {_selectedRectangle.Center.Y}; W = {_selectedRectangle.Wide}; H = {_selectedRectangle.Length})";
+                    //Меняем соотвествующую панельку.
+                    _rectanglePanels[selectedIndex].Size = new Size(_selectedRectangle.Wide, _selectedRectangle.Length);
+                    FindCollisions();
+                }
+                catch (Exception ex)
+                {
+                    RectanglesWidthTextBox.BackColor = Color.Orange;
+                }
+            }
+        }
+
+        /// <summary>
+        /// Проверяем введенное в <see cref="RectanglesHeigthTextBox"/> значение.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RectanglesHeigthTextBox_TextChanged(object sender, EventArgs e)
+        {
+            if (RectanglesHeigthTextBox.Text != "")
+            {
+                //Получаем индекс выбранного элемента.
+                int selectedIndex = RectanglesCollisionListBox.SelectedIndex;
+                //Получаем текст из строки.
+                string currentText = RectanglesHeigthTextBox.Text;
+                try
+                {
+                    //Пробуем парсить.
+                    int heigth = int.Parse(currentText);
+                    //Проверяем, находится ли введенное число в заданном диапазоне.
+                    Validator.AssertValueInRange(heigth, 1, 50);
+                    RectanglesHeigthTextBox.BackColor = Color.White;
+                    //Меняем поля прямоугольника.
+                    _selectedRectangle.Length = heigth;
+                    RectanglesCollisionListBox.Items[selectedIndex] = $"{_selectedRectangle.ID}. (X = {_selectedRectangle.Center.X}; Y = {_selectedRectangle.Center.Y}; W = {_selectedRectangle.Wide}; H = {_selectedRectangle.Length})";
+                    //Меняем соотвествующую панельку.
+                    _rectanglePanels[selectedIndex].Size = new Size(_selectedRectangle.Wide, _selectedRectangle.Length);
+                    FindCollisions();
+                }
+                catch (Exception ex)
+                {
+                    RectanglesHeigthTextBox.BackColor = Color.Orange;
+                }
+            }
+        }
+
+        //Список для хранения информации о пересечении прямоугольников.
+        List< bool> RectangleCollisions = new List<bool>();
+
+        /// <summary>
+        /// Проверяет, пересекаются ли прямоугольники.
+        /// </summary>
+        private void FindCollisions()
+        {
+            for (int i = 0; i < _rectangles.Count; i++)
+            {
+                for (int j = 0; j < _rectangles.Count; j++)
+                {
+                    bool isCollision = CollisionManager.IsCollision(_rectangles[i], _rectangles[j]);
+                    if (isCollision && (i!=j))
+                    {
+                        RectangleCollisions[i] = true;
+                        break;
+                    }
+                    RectangleCollisions[i] = false;
+                }
+                //Если пересекаются то перекрашиваем.
+                if (RectangleCollisions[i] && _rectanglePanels[i].BackColor == Color.FromArgb(127, 127, 255, 127))
+                {
+                    _rectanglePanels[i].BackColor = Color.FromArgb(127, 255, 127, 127);
+                }
+                if (!RectangleCollisions[i] && _rectanglePanels[i].BackColor == Color.FromArgb(127, 255, 127, 127))
+                {
+                    _rectanglePanels[i].BackColor = Color.FromArgb(127, 127, 255, 127);
+                }
+            }
+
+        }
+
     }
 }

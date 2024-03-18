@@ -34,8 +34,8 @@ namespace Programming
         }
         public Point2D(int x, int y)
         {
-            _x = x;
-            _y = y;
+            X = x;
+            Y = y;
         }
     }
 }
