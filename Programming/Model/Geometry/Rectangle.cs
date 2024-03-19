@@ -14,11 +14,23 @@ namespace Programming
         private int _length;
         private int _wide;
         private string _colour;
-        private int _centerX;
-        private int _centerY;
         private int _id;
         private static int _allRectangelsCount = 0;
         Random rand = new Random();
+        
+        /// <summary>
+        /// Возвращает количество прямоугольников.
+        /// </summary>
+        /// <returns></returns>
+        public static int AllRectanglesCount()
+        {
+            return _allRectangelsCount;
+        }
+
+        /// <summary>
+        /// Возвращает ID.
+        /// </summary>
+        public int ID { get=> _id; }
         
         /// <summary>
         /// Возвращает центр прямоугольника.
@@ -34,7 +46,7 @@ namespace Programming
             set
             {
                 Validator.AssertOnPositiveValue(value);
-                Validator.AssertValueInRange(value, 1, 50);
+                Validator.AssertValueInRange(value, 1, 100);
                 _length = value;
             }
         }
@@ -48,7 +60,7 @@ namespace Programming
             set
             {
                 Validator.AssertOnPositiveValue(value);
-                Validator.AssertValueInRange(value, 1, 50);
+                Validator.AssertValueInRange(value, 1, 100);
                 _wide = value;
             }
         }
@@ -58,19 +70,6 @@ namespace Programming
         /// </summary>
         public string Colour { get; set; }
 
-        /// <summary>
-        /// Возвращает количество прямоугольников.
-        /// </summary>
-        /// <returns></returns>
-        public static int AllRectanglesCount()
-        {
-            return _allRectangelsCount;
-        }
-
-        /// <summary>
-        /// Возвращает ID.
-        /// </summary>
-        public int ID { get=> _id; }
 
         /// <summary>
         /// Создает экземпляр класса <see cref="Rectangle"/>.
@@ -84,9 +83,7 @@ namespace Programming
             Wide = wide; 
             Colour = colour;
 
-            _centerX = rand.Next(50, 405);
-            _centerY = rand.Next(50, 445);
-            Center = new Point2D(_centerX,_centerY);
+            Center = new Point2D(rand.Next(50, 405), rand.Next(50, 445));
 
             _allRectangelsCount++;
             _id = _allRectangelsCount;

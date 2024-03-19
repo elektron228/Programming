@@ -85,26 +85,6 @@ namespace Programming
         }
 
         /// <summary>
-        /// Заполняем листбокс с прямоугольниками.
-        /// </summary>
-        /// <param name="rectangles"></param>
-        public void FillRectListBox(List<Rectangle> rectangles)
-        {
-            rectanglesListBox.Items.Clear();
-            RectanglesCollisionListBox.Items.Clear();
-            string rectangle = "";
-            for (int i = 0; i < rectangles.Count; i++)
-            {
-                rectangle = $"{rectangles[i].ID}. (X = {rectangles[i].Center.X}; Y = {rectangles[i].Center.Y}; W = {rectangles[i].Wide}; H = {rectangles[i].Length})";
-                RectanglesCollisionListBox.Items.Add(rectangle);
-                rectanglesListBox.Items.Add($"Rectangle {rectangles[i].ID}");
-            }
-            ClearRectangleInfo();
-            FindCollisions();
-
-        }
-
-        /// <summary>
         /// Функция заполняет листбокс с перечислениями. 
         /// Значения типа string.
         /// </summary>
@@ -122,42 +102,69 @@ namespace Programming
         }
 
         /// <summary>
-        /// Заполняет массив прямоугольников значениями.
+        /// Выполняет поиск индекса фильма с максимальным рейтингом. Возвращает целое число.
+        /// </summary>
+        /// <param name="movies"></param>
+        /// <returns></returns>
+        private int FindMovieWithMaxRating(Movie[] movies)
+        {
+            int maxIndex = 0;
+            Double maxRating = movies[0].Rating;
+            for (int i = 0; i < movies.Length; i++)
+            {
+                if (movies[i].Rating > maxRating)
+                {
+                    maxRating = movies[i].Rating;
+                    maxIndex = i;
+                }
+            }
+            return maxIndex;
+        }
+
+        /// <summary>
+        /// Заполняем листбокс с прямоугольниками.
+        /// </summary>
+        /// <param name="rectangles"></param>
+        public void FillRectListBoxs(List<Rectangle> rectangles)
+        {
+            rectanglesListBox.Items.Clear();
+            RectanglesCollisionListBox.Items.Clear();
+            string rectangle;
+            for (int i = 0; i < rectangles.Count; i++)
+            {
+                rectangle = $"{rectangles[i].ID}. (X = {rectangles[i].Center.X}; Y = {rectangles[i].Center.Y}; W = {rectangles[i].Wide}; H = {rectangles[i].Length})";
+                RectanglesCollisionListBox.Items.Add(rectangle);
+                rectanglesListBox.Items.Add($"Rectangle {rectangles[i].ID}");
+            }
+            ClearRectangleInfo();
+            FindCollisions();
+
+        }
+
+        /// <summary>
+        /// Заполняет список прямоугольников значениями.
         /// </summary>
         /// <param name="rectangles"></param>
         public void FillRectangleArray(List<Rectangle> rectangles, int rectCount)
         {
-            Random random = new Random();
-            Colour colour = (Colour)0;
-            string _rectColour;
             for (int i = 0; i < rectCount; i++)
             {
-                Panel newPanel = new Panel();
-                //Получаем случайные значения длины и ширины.
-                int recLength = random.Next(20, 50);
-                int recWide = random.Next(20, 50);
-
-                //Присваиваем случайное значение цвета из перечисления Colour.
-                int randomIndex = ChooseRandomEnumIndex(colour);
-                colour = (Colour)randomIndex;
-                _rectColour = colour.ToString();
-
-                Rectangle rect = new Rectangle(recWide, recLength, _rectColour);
-                //Инициализируем прямоугольник.
+                //Создает прямоугольник.
+                Rectangle rect = RectangleFactory.Randomize();
                 rectangles.Add(rect);
-                newPanel.Size = new Size(rect.Wide,rect.Length);
-                newPanel.Location = new Point(rect.Center.X,rect.Center.Y);
-                newPanel.BackColor = Color.FromArgb(127, 127, 255, 127);
-                newPanel.BorderStyle = BorderStyle.FixedSingle;
+
+                //Создает панель.
+                Panel newPanel = RectangleFactory.PanelFactory(rect);
                 _rectanglePanels.Add(newPanel);
                 RectanglesPanel.Controls.Add(newPanel);
                 RectangleCollisions.Add(false);
-                _numb++;
             }
-
-            FillRectListBox(_rectangles);
+            FillRectListBoxs(_rectangles);
         }
 
+        /// <summary>
+        /// Очищает все текстбоксы связанные с прямоугольниками.
+        /// </summary>
         public void ClearRectangleInfo()
         {
             RectanglesHeigthTextBox.Text = "";
@@ -181,32 +188,12 @@ namespace Programming
         private int FindRectangleWithMaxWidth(List<Rectangle> rectangles)
         {
             int maxIndex = 0;
-            Double maxWide = rectangles[0].Wide;
+            int maxWide = rectangles[0].Wide;
             for (int i = 0; i < rectangles.Count; i++)
             {
                 if (rectangles[i].Wide > maxWide)
                 {
                     maxWide = rectangles[i].Wide;
-                    maxIndex = i;
-                }
-            }
-            return maxIndex;
-        }
-
-        /// <summary>
-        /// Выполняет поиск индекса фильма с максимальным рейтингом. Возвращает целое число.
-        /// </summary>
-        /// <param name="movies"></param>
-        /// <returns></returns>
-        private int FindMovieWithMaxRating(Movie[] movies)
-        {
-            int maxIndex = 0;
-            Double maxRating = movies[0].Rating;
-            for (int i = 0; i < movies.Length; i++)
-            {
-                if (movies[i].Rating > maxRating)
-                {
-                    maxRating = movies[i].Rating;
                     maxIndex = i;
                 }
             }
@@ -365,7 +352,7 @@ namespace Programming
         }
 
         /// <summary>
-        /// Заполняем текстбоксы значениями выбранного прямоугольника.
+        /// Заполняем текстбоксы на 2 вкладке значениями выбранного прямоугольника.
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
@@ -542,7 +529,7 @@ namespace Programming
             AddRectPictBox.Size = new Size(40, 40);
             AddRectPictBox.Location = new Point(8, 201);
         }
-
+        
         /// <summary>
         /// Анимируем кнопку.
         /// </summary>
@@ -576,15 +563,13 @@ namespace Programming
             {
                 _rectangles.Remove(_selectedRectangle);
 
-
                 int selectedIndex = RectanglesCollisionListBox.SelectedIndex;
                 _rectanglePanels.RemoveAt(selectedIndex);
                 RectanglesPanel.Controls.RemoveAt(selectedIndex);
-                _numb--;
 
-                FillRectListBox(_rectangles);
+                FillRectListBoxs(_rectangles);
             }
-            catch(Exception ex) { }
+            catch (Exception ex) { }
         }
 
         /// <summary>
@@ -630,7 +615,7 @@ namespace Programming
                 //Получаем текст из строки.
                 string currentText = RectanglesXTextBox.Text;
                 try
-                { 
+                {
                     //Получаем индекс выбранного элемента.
                     int selectedIndex = RectanglesCollisionListBox.SelectedIndex;
                     //Пробуем парсить.
@@ -756,7 +741,7 @@ namespace Programming
         }
 
         //Список для хранения информации о пересечении прямоугольников.
-        List< bool> RectangleCollisions = new List<bool>();
+        List<bool> RectangleCollisions = new List<bool>();
 
         /// <summary>
         /// Проверяет, пересекаются ли прямоугольники.
@@ -768,7 +753,7 @@ namespace Programming
                 for (int j = 0; j < _rectangles.Count; j++)
                 {
                     bool isCollision = CollisionManager.IsCollision(_rectangles[i], _rectangles[j]);
-                    if (isCollision && (i!=j))
+                    if (isCollision && (i != j))
                     {
                         RectangleCollisions[i] = true;
                         break;
