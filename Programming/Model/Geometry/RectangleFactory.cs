@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Programming
 {
+    /// <summary>
+    /// Содержит методы для создания прямоугольников.
+    /// </summary>
     static class RectangleFactory
     {
         static Random random = new Random();

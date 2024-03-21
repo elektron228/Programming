@@ -7,11 +7,17 @@ using System.Threading.Tasks;
 
 namespace Programming
 {
+    /// <summary>
+    /// Хранит информацию о точке.
+    /// </summary>
     public class Point2D
     {
         private int _x;
         private  int _y;
 
+        /// <summary>
+        /// Возвращает значение по <see cref="X"/>.
+        /// </summary>
         public int X
         {
             get => _x;
@@ -23,6 +29,9 @@ namespace Programming
 
         }
 
+        /// <summary>
+        /// Возвращет значение по <see cref="Y"/>.
+        /// </summary>
         public int Y
         {
             get => _y;
@@ -32,6 +41,12 @@ namespace Programming
                 _y = value;
             }
         }
+
+        /// <summary>
+        /// Создает экземпляр класса <see cref="Point2D"/>.
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
         public Point2D(int x, int y)
         {
             X = x;

@@ -333,13 +333,13 @@ namespace Programming.View.TabPages
                     RectangleCollisions[i] = false;
                 }
                 //Если пересекаются то перекрашиваем.
-                if (RectangleCollisions[i] && _rectanglePanels[i].BackColor == Color.FromArgb(127, 127, 255, 127))
+                if (RectangleCollisions[i] && _rectanglePanels[i].BackColor == AppColors.notCollision)
                 {
-                    _rectanglePanels[i].BackColor = Color.FromArgb(127, 255, 127, 127);
+                    _rectanglePanels[i].BackColor = AppColors.collision;
                 }
-                if (!RectangleCollisions[i] && _rectanglePanels[i].BackColor == Color.FromArgb(127, 255, 127, 127))
+                if (!RectangleCollisions[i] && _rectanglePanels[i].BackColor == AppColors.collision)
                 {
-                    _rectanglePanels[i].BackColor = Color.FromArgb(127, 127, 255, 127);
+                    _rectanglePanels[i].BackColor = AppColors.notCollision;
                 }
             }
 

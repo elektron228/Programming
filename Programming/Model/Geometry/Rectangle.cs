@@ -33,7 +33,7 @@ namespace Programming
         public int ID { get=> _id; }
         
         /// <summary>
-        /// Возвращает центр прямоугольника.
+        /// Возвращает и задает центр прямоугольника.
         /// </summary>
         public Point2D Center {  get; set; }
 

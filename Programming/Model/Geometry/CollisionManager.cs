@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace Programming
 {
+    /// <summary>
+    /// Класс, проверяющий пересечения.
+    /// </summary>
     public static class CollisionManager
     {
         /*
@@ -61,13 +64,13 @@ namespace Programming
             return true;
         }
 
-            /// <summary>
-            /// проверяет, пересекаются ли кольца.
-            /// </summary>
-            /// <param name="ring1"></param>
-            /// <param name="ring2"></param>
-            /// <returns></returns>
-            public static bool IsCollision(Ring ring1, Ring ring2)
+        /// <summary>
+        /// проверяет, пересекаются ли кольца.
+        /// </summary>
+        /// <param name="ring1"></param>
+        /// <param name="ring2"></param>
+        /// <returns></returns>
+        public static bool IsCollision(Ring ring1, Ring ring2)
         {
             bool result = false;
 
