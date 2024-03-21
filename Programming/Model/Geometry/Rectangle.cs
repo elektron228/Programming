@@ -83,7 +83,7 @@ namespace Programming
             Wide = wide; 
             Colour = colour;
 
-            Center = new Point2D(rand.Next(50, 405), rand.Next(50, 445));
+            Center = new Point2D(rand.Next(5, 350), rand.Next(5, 390));
 
             _allRectangelsCount++;
             _id = _allRectangelsCount;

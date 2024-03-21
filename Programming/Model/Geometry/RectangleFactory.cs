@@ -23,7 +23,7 @@ namespace Programming
             int recWide = random.Next(20, 100);
 
             //Присваиваем случайное значение цвета из перечисления Colour.
-            int randomIndex = MainForm.ChooseRandomEnumIndex(colour);
+            int randomIndex = ChooseRandomEnumIndex(colour);
             colour = (Colour)randomIndex;
             _rectColour = colour.ToString();
 
@@ -44,6 +44,18 @@ namespace Programming
             newPanel.BackColor = Color.FromArgb(127, 127, 255, 127);
             newPanel.BorderStyle = BorderStyle.FixedSingle;
             return newPanel;
+        }
+
+        /// <summary>
+        /// Выбирает случайный индекс из переданного перечисления.
+        /// </summary>
+        /// <param name="myEnum"></param>
+        /// <returns></returns>
+        public static int ChooseRandomEnumIndex(Enum myEnum)
+        {
+            Random rand = new Random();
+            Array values = Enum.GetValues(myEnum.GetType());
+            return rand.Next(0, values.Length);
         }
     }
 }
