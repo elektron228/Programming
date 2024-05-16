@@ -232,7 +232,10 @@ namespace InfoSystem
             }
             catch (Exception)
             {
-                CountTextBox.BackColor = Color.Orange;
+                if (CountTextBox.Text != "")
+                {
+                    CountTextBox.BackColor = Color.Orange;
+                }
             }
         }
 
