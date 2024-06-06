@@ -215,6 +215,7 @@ namespace InfoSystem
                 ManufacturerTextBox.BackColor = Color.Orange;
             }
         }
+        ///
 
         /// <summary>
         /// Изменяет количество товара.
