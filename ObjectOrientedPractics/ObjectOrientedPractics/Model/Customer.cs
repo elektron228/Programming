@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ObjectOrientedPractics.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,16 +10,17 @@ namespace ObjectOrientedPractics.Model
     /// <summary>
     /// Хранит информацию о покупателе.
     /// </summary>
-    internal class Customer
+    public class Customer
     {
-        private static int _id = 0;
+        private int _id;
+        private static int _idCounter = 0;
         private string _fullName;
         private string _adress;
 
         /// <summary>
         /// Возвращает ID покупателя.
         /// </summary>
-        public int CustomerID
+        public int ID
         {
             get { return _id; }
             private set { _id = value; }
@@ -32,10 +34,8 @@ namespace ObjectOrientedPractics.Model
             get { return _fullName; }
             set
             {
-                if (value.Length < 200)
-                {
-                    _fullName = value;
-                }
+                ValueValidator.AssertStringOnLength(value, 200, FullName);
+                _fullName = value;
             }
         }
 
@@ -47,10 +47,8 @@ namespace ObjectOrientedPractics.Model
             get { return _adress; }
             set
             {
-                if (value.Length < 500)
-                {
-                    _adress = value;
-                }
+                ValueValidator.AssertStringOnLength(value, 500, Adress);
+                _adress = value;
             }
         }
 
@@ -61,7 +59,8 @@ namespace ObjectOrientedPractics.Model
         /// <param name="adress">Адрес покупателя. Дожно быть до 500 символов.</param>
         public Customer(string fullName, string adress)
         {
-            _id++;
+            _idCounter++;
+            ID = _idCounter;
             _fullName = fullName;
             _adress = adress;
 

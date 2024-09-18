@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ObjectOrientedPractics.Services;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,12 +10,17 @@ namespace ObjectOrientedPractics.Model
     /// <summary>
     /// Хранит информацию о товаре.
     /// </summary>
-    internal class Item
+    public class Item
     {
         /// <summary>
         /// Id товара.
         /// </summary>
-        private static int _id = 0;
+        private int _id;
+            
+        /// <summary>
+        /// Счётчик ID.
+        /// </summary>
+        private static int _idCounter = 0;
 
         /// <summary>
         /// Название товара.
@@ -32,11 +38,12 @@ namespace ObjectOrientedPractics.Model
         private float _cost;
 
         /// <summary>
-        /// Возвращает Id.
+        /// Возвращает Id товара.
         /// </summary>
-        public int ItemID
+        public int ID
         {
             get { return _id; }
+            private set { _id = value; }
         }
 
         /// <summary>
@@ -47,10 +54,8 @@ namespace ObjectOrientedPractics.Model
             get { return _name; }
             set
             {
-                if (value.Length < 200)
-                {
-                    _name = value;
-                }
+                ValueValidator.AssertStringOnLength(value, 200, Name);
+                _name = value;
             }
         }
 
@@ -62,10 +67,8 @@ namespace ObjectOrientedPractics.Model
             get { return _info; }
             set
             {
-                if (value.Length < 1000)
-                {
-                    _info = value;
-                }
+                ValueValidator.AssertStringOnLength(value, 1000, Info);
+                _info = value;
             }
         }
 
@@ -77,9 +80,13 @@ namespace ObjectOrientedPractics.Model
             get { return _cost; }
             set
             {
-                if (value > 0 && value < 100000)
+                if (value >= 0 && value <= 100000)
                 {
                     _cost = value;
+                }
+                else
+                {
+                    throw new ArgumentException("Стоимость товара должна быть от 0 до 100 000");
                 }
             }
         }
@@ -92,7 +99,8 @@ namespace ObjectOrientedPractics.Model
         /// <param name="cost">Стоимость товара. Должна быть от 0 до 100 000.</param>
         public Item (string name, string info, float cost)
         {
-            _id++;
+            _idCounter++;
+            ID = _idCounter;
             Name = name;
             Info = info;
             Cost = cost;
