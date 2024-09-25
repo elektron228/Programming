@@ -15,7 +15,7 @@ namespace ObjectOrientedPractics.Model
         private int _id;
         private static int _idCounter = 0;
         private string _fullName;
-        private string _adress;
+        private Address _address = new Address();
 
         /// <summary>
         /// Возвращает ID покупателя.
@@ -42,13 +42,12 @@ namespace ObjectOrientedPractics.Model
         /// <summary>
         /// Возвращает и задаёт адрес покупателя. Должно быть до 500 символов.
         /// </summary>
-        public string Adress
+        public Address CustomerAddress
         {
-            get { return _adress; }
+            get { return _address; }
             set
             {
-                ValueValidator.AssertStringOnLength(value, 500, Adress);
-                _adress = value;
+                _address = value;
             }
         }
 
@@ -57,12 +56,12 @@ namespace ObjectOrientedPractics.Model
         /// </summary>
         /// <param name="fullName">Имя покупателя. Должно быть до 200 символов.</param>
         /// <param name="adress">Адрес покупателя. Дожно быть до 500 символов.</param>
-        public Customer(string fullName, string adress)
+        public Customer(string fullName, Address adress)
         {
             _idCounter++;
             ID = _idCounter;
-            _fullName = fullName;
-            _adress = adress;
+            FullName = fullName;
+            CustomerAddress = adress;
 
         }
     }

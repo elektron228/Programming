@@ -47,7 +47,7 @@
             this.ItemsTabControl.Location = new System.Drawing.Point(0, 0);
             this.ItemsTabControl.Name = "ItemsTabControl";
             this.ItemsTabControl.SelectedIndex = 0;
-            this.ItemsTabControl.Size = new System.Drawing.Size(544, 411);
+            this.ItemsTabControl.Size = new System.Drawing.Size(584, 411);
             this.ItemsTabControl.TabIndex = 0;
             // 
             // ItemsTabPage
@@ -56,19 +56,18 @@
             this.ItemsTabPage.Location = new System.Drawing.Point(4, 22);
             this.ItemsTabPage.Name = "ItemsTabPage";
             this.ItemsTabPage.Padding = new System.Windows.Forms.Padding(3);
-            this.ItemsTabPage.Size = new System.Drawing.Size(536, 385);
+            this.ItemsTabPage.Size = new System.Drawing.Size(576, 385);
             this.ItemsTabPage.TabIndex = 1;
             this.ItemsTabPage.Text = "Items";
             this.ItemsTabPage.UseVisualStyleBackColor = true;
             // 
             // itemsTab1
             // 
-            this.itemsTab1.AutoSize = true;
             this.itemsTab1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.itemsTab1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.itemsTab1.Location = new System.Drawing.Point(3, 3);
             this.itemsTab1.Name = "itemsTab1";
-            this.itemsTab1.Size = new System.Drawing.Size(530, 379);
+            this.itemsTab1.Size = new System.Drawing.Size(570, 379);
             this.itemsTab1.TabIndex = 0;
             // 
             // CustomerstTabPage
@@ -94,16 +93,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(544, 411);
+            this.ClientSize = new System.Drawing.Size(584, 411);
             this.Controls.Add(this.ItemsTabControl);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximumSize = new System.Drawing.Size(560, 450);
             this.MinimumSize = new System.Drawing.Size(560, 450);
             this.Name = "Mainform";
             this.Text = "Object Oriented Practics";
             this.ItemsTabControl.ResumeLayout(false);
             this.ItemsTabPage.ResumeLayout(false);
-            this.ItemsTabPage.PerformLayout();
             this.CustomerstTabPage.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -113,9 +110,9 @@
 
         private System.Windows.Forms.TabControl ItemsTabControl;
         private System.Windows.Forms.TabPage ItemsTabPage;
-        private View.Tabs.ItemsTab itemsTab1;
         private System.Windows.Forms.TabPage CustomerstTabPage;
         private View.Tabs.CustomersTab customersTab1;
+        private View.Tabs.ItemsTab itemsTab1;
     }
 }
 

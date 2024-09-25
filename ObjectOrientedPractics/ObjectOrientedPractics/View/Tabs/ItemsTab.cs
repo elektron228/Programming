@@ -21,6 +21,8 @@ namespace ObjectOrientedPractics.View.Tabs
         private void ItemsTab_Load(object sender, EventArgs e)
         {
             FillItemsListbox();
+            CategoryComboBox.DataSource = Enum.GetValues(typeof(Category));
+            CategoryComboBox.SelectedItem = null;
         }
 
         /// <summary>
@@ -40,7 +42,7 @@ namespace ObjectOrientedPractics.View.Tabs
         /// <param name="e"></param>
         private void AddItemButton_Click(object sender, EventArgs e)
         {
-            _items.Add(new Item("Example name", "Example description", 100 ));
+            _items.Add(new Item("Example name", "Example description", 100, Category.Food ));
             FillItemsListbox();
         }
 
@@ -82,6 +84,7 @@ namespace ObjectOrientedPractics.View.Tabs
             IDTextBox.Text = _selectedItem.ID.ToString();
             CostTextBox.Text = _selectedItem.Cost.ToString();
             DescriptionTextBox.Text = _selectedItem.Info;
+            CategoryComboBox.SelectedItem = _selectedItem.Category;
         }
 
         /// <summary>
@@ -93,6 +96,7 @@ namespace ObjectOrientedPractics.View.Tabs
             CostTextBox.Clear();
             IDTextBox.Clear();
             DescriptionTextBox.Clear();
+            CategoryComboBox.SelectedItem = null;
         }
 
         /// <summary>
@@ -169,6 +173,22 @@ namespace ObjectOrientedPractics.View.Tabs
             {
                 DescriptionTextBox.BackColor = Color.Orange;
             }
+        }
+
+        /// <summary>
+        /// Изменяет категорию товара.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void CategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                string ourCateg = CategoryComboBox.Text;
+                Category category = (Category)Enum.Parse(typeof(Category), ourCateg);
+                _selectedItem.Category = category;
+            }
+            catch (Exception) { }
         }
     }
 }
