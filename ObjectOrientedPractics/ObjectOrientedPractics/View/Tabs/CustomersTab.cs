@@ -26,12 +26,17 @@ namespace ObjectOrientedPractics.View.Tabs
         /// <summary>
         /// Список покупателей.
         /// </summary>
-        private List<Customer> _customers = new List<Customer>();
+        private List<Customer> _customers;
 
         /// <summary>
         /// Текущий покупатель.
         /// </summary>
         private Customer _selectedCustomer;
+
+        /// <summary>
+        /// Возвращает и задаёт список покупателей.
+        /// </summary>
+        public List<Customer> Customers { get { return _customers; } set { _customers = value; } }
 
         /// <summary>
         /// Заполняет листбокс покупателями.

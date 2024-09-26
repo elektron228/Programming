@@ -28,12 +28,17 @@ namespace ObjectOrientedPractics.View.Tabs
         /// <summary>
         /// Список товаров.
         /// </summary>
-        private List<Item> _items = new List<Item>();
+        private List<Item> _items ;
 
         /// <summary>
         /// Выбранный товар.
         /// </summary>
-        private Item _selectedItem;
+        private Item _selectedItem = new Item();
+
+        /// <summary>
+        /// Возвращает и задаёт список товаров.
+        /// </summary>
+        public List<Item> Items { get { return _items; } set { _items = value; } }
 
         /// <summary>
         /// Создаёт новый товар.

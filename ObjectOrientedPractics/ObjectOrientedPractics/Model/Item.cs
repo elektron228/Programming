@@ -112,5 +112,7 @@ namespace ObjectOrientedPractics.Model
             Cost = cost;
             Category = category;
         }
+
+        public Item() { }
     }
 }
