@@ -1,4 +1,6 @@
-﻿using System;
+﻿using ObjectOrientedPractics.Model;
+using ObjectOrientedPractics.View.Tabs;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -15,6 +17,14 @@ namespace ObjectOrientedPractics
         public Mainform()
         {
             InitializeComponent();
+            itemsTab1.Items = _store.Items;
+            customersTab1.Customers = _store.Customers;
         }
+
+        private Store _store = new Store();
+
+        
+
+
     }
 }

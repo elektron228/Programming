@@ -26,12 +26,17 @@ namespace ObjectOrientedPractics.View.Tabs
         /// <summary>
         /// Список покупателей.
         /// </summary>
-        private List<Customer> _customers = new List<Customer>();
+        private List<Customer> _customers;
 
         /// <summary>
         /// Текущий покупатель.
         /// </summary>
         private Customer _selectedCustomer;
+
+        /// <summary>
+        /// Возвращает и задаёт список покупателей.
+        /// </summary>
+        public List<Customer> Customers { get { return _customers; } set { _customers = value; } }
 
         /// <summary>
         /// Заполняет листбокс покупателями.
@@ -55,9 +60,11 @@ namespace ObjectOrientedPractics.View.Tabs
         private void UpdateTextBoxs()
         {
             _selectedCustomer = _customers[CustomersListBox.SelectedIndex];
+            CustomerAddressControl.OurAddress = _selectedCustomer.CustomerAddress;
             FullNameTextBox.Text = _selectedCustomer.FullName;
             IDTextBox.Text = _selectedCustomer.ID.ToString();
-            AdressTextBox.Text = _selectedCustomer.Adress;
+            CustomerAddressControl.UpdateTextBoxs();
+
         }
 
         /// <summary>
@@ -66,8 +73,8 @@ namespace ObjectOrientedPractics.View.Tabs
         private void ClearTextBoxs()
         {
             FullNameTextBox.Clear();
-            AdressTextBox.Clear();
             IDTextBox.Clear();
+            CustomerAddressControl.ClearTextBoxs();
         }
 
         /// <summary>
@@ -77,7 +84,7 @@ namespace ObjectOrientedPractics.View.Tabs
         /// <param name="e"></param>
         private void AddCustomerButton_Click(object sender, EventArgs e)
         {
-            _customers.Add(new Customer("Example full name", "Example adress"));
+            _customers.Add(new Customer("Example full name", new Address()));
             FillCustomersListbox();
         }
 
@@ -103,7 +110,6 @@ namespace ObjectOrientedPractics.View.Tabs
             if (CustomersListBox.SelectedIndex != -1)
             {
                 UpdateTextBoxs();
-
             }
             else
             {
@@ -129,22 +135,6 @@ namespace ObjectOrientedPractics.View.Tabs
             }
         }
 
-        /// <summary>
-        /// Изменяет адрес покупателя.
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void AdressTextBox_TextChanged(object sender, EventArgs e)
-        {
-            try
-            {
-                _selectedCustomer.Adress = AdressTextBox.Text;
-                AdressTextBox.BackColor = Color.White;
-            }
-            catch (ArgumentException)
-            {
-                AdressTextBox.BackColor = Color.Orange;
-            }
-        }
+        
     }
 }
