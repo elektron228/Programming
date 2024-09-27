@@ -36,13 +36,17 @@ namespace ObjectOrientedPractics.View.Controls
             try
             {
                 _address.Index = Int32.Parse(PostIndexTextBox.Text);
-                 PostIndexTextBox.BackColor = Color.White;
+                PostIndexTextBox.BackColor = Color.White;
             }
             catch (Exception)
             {
                 if (PostIndexTextBox.Text != "")
                 {
                     PostIndexTextBox.BackColor = Color.Orange;
+                }
+                else if (PostIndexTextBox.Text == "")
+                {
+                    PostIndexTextBox.BackColor = Color.White;
                 }
             }
         }

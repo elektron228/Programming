@@ -18,9 +18,9 @@ namespace ObjectOrientedPractics.View.Tabs
         {
             InitializeComponent();
         }
+
         private void ItemsTab_Load(object sender, EventArgs e)
         {
-            FillItemsListbox();
             CategoryComboBox.DataSource = Enum.GetValues(typeof(Category));
             CategoryComboBox.SelectedItem = null;
         }
@@ -90,6 +90,7 @@ namespace ObjectOrientedPractics.View.Tabs
             CostTextBox.Text = _selectedItem.Cost.ToString();
             DescriptionTextBox.Text = _selectedItem.Info;
             CategoryComboBox.SelectedItem = _selectedItem.Category;
+            FillItemsListbox();
         }
 
         /// <summary>

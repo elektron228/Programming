@@ -23,8 +23,6 @@ namespace ObjectOrientedPractics
 
         private Store _store = new Store();
 
-        
-
 
     }
 }
