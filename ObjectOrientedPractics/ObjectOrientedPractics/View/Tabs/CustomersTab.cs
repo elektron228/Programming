@@ -20,7 +20,6 @@ namespace ObjectOrientedPractics.View.Tabs
 
         private void CustomersTab_Load(object sender, EventArgs e)
         {
-            FillCustomersListbox();
         }
 
         /// <summary>
@@ -51,7 +50,6 @@ namespace ObjectOrientedPractics.View.Tabs
             {
                 CustomersListBox.Items.Add($"{customer.FullName}");
             }
-
         }
 
         /// <summary>
@@ -64,6 +62,7 @@ namespace ObjectOrientedPractics.View.Tabs
             FullNameTextBox.Text = _selectedCustomer.FullName;
             IDTextBox.Text = _selectedCustomer.ID.ToString();
             CustomerAddressControl.UpdateTextBoxs();
+            FillCustomersListbox();
 
         }
 
@@ -75,6 +74,7 @@ namespace ObjectOrientedPractics.View.Tabs
             FullNameTextBox.Clear();
             IDTextBox.Clear();
             CustomerAddressControl.ClearTextBoxs();
+            FillCustomersListbox();
         }
 
         /// <summary>
@@ -96,7 +96,6 @@ namespace ObjectOrientedPractics.View.Tabs
         private void RemoveCustomerButton_Click(object sender, EventArgs e)
         {
             _customers.Remove(_selectedCustomer);
-            FillCustomersListbox();
             ClearTextBoxs();
         }
 
