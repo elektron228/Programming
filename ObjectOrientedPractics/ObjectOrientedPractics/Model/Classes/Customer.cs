@@ -1,4 +1,5 @@
-﻿using ObjectOrientedPractics.Services;
+﻿using ObjectOrientedPractics.Model.Classes;
+using ObjectOrientedPractics.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,6 +17,7 @@ namespace ObjectOrientedPractics.Model
         private static int _idCounter = 0;
         private string _fullName;
         private Address _address = new Address();
+        private Cart _cart;
 
         /// <summary>
         /// Возвращает ID покупателя.
@@ -52,6 +54,15 @@ namespace ObjectOrientedPractics.Model
         }
 
         /// <summary>
+        /// Возвращает и задаёт корзину покупателя.
+        /// </summary>
+        public Cart CustomerCart
+        {
+            get { return _cart; }
+            set { _cart = value; }
+        }
+
+        /// <summary>
         /// Создаёт экземпляр класса <see cref="Customer"/>.
         /// </summary>
         /// <param name="fullName">Имя покупателя. Должно быть до 200 символов.</param>
@@ -62,6 +73,7 @@ namespace ObjectOrientedPractics.Model
             ID = _idCounter;
             FullName = fullName;
             CustomerAddress = adress;
+            CustomerCart = new Cart();
 
         }
     }
