@@ -17,8 +17,10 @@ namespace ObjectOrientedPractics
         public Mainform()
         {
             InitializeComponent();
-            itemsTab1.Items = _store.Items;
-            customersTab1.Customers = _store.Customers;
+            ItemsTab1.Items = _store.Items;
+            CustomersTab1.Customers = _store.Customers;
+            CartsTab1.Items = _store.Items;
+            CartsTab1.Customers = _store.Customers;
         }
 
         private Store _store = new Store();

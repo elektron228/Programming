@@ -18,6 +18,7 @@ namespace ObjectOrientedPractics.Model
         private string _fullName;
         private Address _address = new Address();
         private Cart _cart;
+        private List<Order> _orders;
 
         /// <summary>
         /// Возвращает ID покупателя.
@@ -63,6 +64,15 @@ namespace ObjectOrientedPractics.Model
         }
 
         /// <summary>
+        /// Возвращает и задаёт заказ.
+        /// </summary>
+        public List<Order> CustomerOrders
+        {
+            get { return _orders; }
+            set { _orders = value; }
+        }
+
+        /// <summary>
         /// Создаёт экземпляр класса <see cref="Customer"/>.
         /// </summary>
         /// <param name="fullName">Имя покупателя. Должно быть до 200 символов.</param>
@@ -72,6 +82,7 @@ namespace ObjectOrientedPractics.Model
             _idCounter++;
             ID = _idCounter;
             FullName = fullName;
+            CustomerCart = new Cart();
         }
     }
 }

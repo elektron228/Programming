@@ -107,7 +107,7 @@
             this.DescriptionTextBox.Location = new System.Drawing.Point(12, 208);
             this.DescriptionTextBox.Multiline = true;
             this.DescriptionTextBox.Name = "DescriptionTextBox";
-            this.DescriptionTextBox.Size = new System.Drawing.Size(309, 80);
+            this.DescriptionTextBox.Size = new System.Drawing.Size(310, 80);
             this.DescriptionTextBox.TabIndex = 18;
             this.DescriptionTextBox.TextChanged += new System.EventHandler(this.DescriptionTextBox_TextChanged);
             // 
@@ -144,7 +144,7 @@
             this.NameTextBox.Location = new System.Drawing.Point(12, 116);
             this.NameTextBox.Multiline = true;
             this.NameTextBox.Name = "NameTextBox";
-            this.NameTextBox.Size = new System.Drawing.Size(309, 73);
+            this.NameTextBox.Size = new System.Drawing.Size(310, 73);
             this.NameTextBox.TabIndex = 17;
             this.NameTextBox.TextChanged += new System.EventHandler(this.NameTextBox_TextChanged);
             // 
@@ -173,9 +173,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.RemoveItemButton.AutoSize = true;
             this.RemoveItemButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
-            this.RemoveItemButton.Location = new System.Drawing.Point(76, 3);
+            this.RemoveItemButton.Location = new System.Drawing.Point(75, 3);
             this.RemoveItemButton.Name = "RemoveItemButton";
-            this.RemoveItemButton.Size = new System.Drawing.Size(67, 44);
+            this.RemoveItemButton.Size = new System.Drawing.Size(66, 44);
             this.RemoveItemButton.TabIndex = 10;
             this.RemoveItemButton.Text = "Remove";
             this.RemoveItemButton.UseVisualStyleBackColor = true;
@@ -190,7 +190,7 @@
             this.AddItemButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.AddItemButton.Location = new System.Drawing.Point(3, 3);
             this.AddItemButton.Name = "AddItemButton";
-            this.AddItemButton.Size = new System.Drawing.Size(67, 44);
+            this.AddItemButton.Size = new System.Drawing.Size(66, 44);
             this.AddItemButton.TabIndex = 9;
             this.AddItemButton.Text = "Add";
             this.AddItemButton.UseVisualStyleBackColor = true;
@@ -210,7 +210,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(219, 50);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(218, 50);
             this.tableLayoutPanel1.TabIndex = 16;
             // 
             // ItemsListBox
@@ -222,7 +222,7 @@
             this.ItemsListBox.FormattingEnabled = true;
             this.ItemsListBox.Location = new System.Drawing.Point(6, 18);
             this.ItemsListBox.Name = "ItemsListBox";
-            this.ItemsListBox.Size = new System.Drawing.Size(216, 303);
+            this.ItemsListBox.Size = new System.Drawing.Size(215, 303);
             this.ItemsListBox.TabIndex = 14;
             this.ItemsListBox.SelectedIndexChanged += new System.EventHandler(this.ItemsListBox_SelectedIndexChanged);
             // 
@@ -252,7 +252,7 @@
             this.splitContainer1.Panel2.Controls.Add(this.NameTextBox);
             this.splitContainer1.Panel2.Controls.Add(this.CostTextBox);
             this.splitContainer1.Size = new System.Drawing.Size(562, 380);
-            this.splitContainer1.SplitterDistance = 225;
+            this.splitContainer1.SplitterDistance = 224;
             this.splitContainer1.TabIndex = 1;
             // 
             // ItemsTab
