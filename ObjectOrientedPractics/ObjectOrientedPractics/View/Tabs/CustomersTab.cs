@@ -84,7 +84,7 @@ namespace ObjectOrientedPractics.View.Tabs
         /// <param name="e"></param>
         private void AddCustomerButton_Click(object sender, EventArgs e)
         {
-            _customers.Add(new Customer("Example full name", new Address()));
+            _customers.Add(new Customer("Example full name"));
             FillCustomersListbox();
         }
 

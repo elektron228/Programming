@@ -67,14 +67,11 @@ namespace ObjectOrientedPractics.Model
         /// </summary>
         /// <param name="fullName">Имя покупателя. Должно быть до 200 символов.</param>
         /// <param name="adress">Адрес покупателя. Дожно быть до 500 символов.</param>
-        public Customer(string fullName, Address adress)
+        public Customer(string fullName)
         {
             _idCounter++;
             ID = _idCounter;
             FullName = fullName;
-            CustomerAddress = adress;
-            CustomerCart = new Cart();
-
         }
     }
 }
