@@ -62,8 +62,6 @@ namespace ObjectOrientedPractics.View.Tabs
             FullNameTextBox.Text = _selectedCustomer.FullName;
             IDTextBox.Text = _selectedCustomer.ID.ToString();
             CustomerAddressControl.UpdateTextBoxs();
-            FillCustomersListbox();
-
         }
 
         /// <summary>
@@ -127,6 +125,7 @@ namespace ObjectOrientedPractics.View.Tabs
             {
                 _selectedCustomer.FullName = FullNameTextBox.Text;
                 FullNameTextBox.BackColor = Color.White;
+                FillCustomersListbox();
             }
             catch (ArgumentException)
             {

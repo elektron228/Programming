@@ -85,12 +85,11 @@ namespace ObjectOrientedPractics.View.Tabs
         private void UpdateTextBoxs()
         {
             _selectedItem = _items[ItemsListBox.SelectedIndex];
-            NameTextBox.Text = _selectedItem.Name;
+            NameTextBox.Text = _selectedItem.Name.ToString();
             IDTextBox.Text = _selectedItem.ID.ToString();
             CostTextBox.Text = _selectedItem.Cost.ToString();
-            DescriptionTextBox.Text = _selectedItem.Info;
+            DescriptionTextBox.Text = _selectedItem.Info.ToString();
             CategoryComboBox.SelectedItem = _selectedItem.Category;
-            FillItemsListbox();
         }
 
         /// <summary>
@@ -134,6 +133,7 @@ namespace ObjectOrientedPractics.View.Tabs
             {
                 _selectedItem.Name = NameTextBox.Text;
                 NameTextBox.BackColor = Color.White;
+                FillItemsListbox();
             }
             catch (ArgumentException)
             {
@@ -151,7 +151,7 @@ namespace ObjectOrientedPractics.View.Tabs
         {
             try
             {
-                _selectedItem.Cost = Int32.Parse(CostTextBox.Text);
+                _selectedItem.Cost = float.Parse(CostTextBox.Text);
                 CostTextBox.BackColor = Color.White;
             }
             catch (Exception)

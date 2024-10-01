@@ -11,7 +11,7 @@ namespace ObjectOrientedPractics.Model.Classes
     /// </summary>
     public class Cart
     {
-        private List<Item> _items = new List<Item>();
+        private List<Item> _items;
 
         /// <summary>
         /// Возвращает и задаёт список товаров.
@@ -46,7 +46,7 @@ namespace ObjectOrientedPractics.Model.Classes
         /// </summary>
         public Cart()
         {
-
+            Items = new List<Item>();
         }
 
     }

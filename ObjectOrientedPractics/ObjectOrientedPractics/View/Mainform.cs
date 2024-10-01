@@ -25,6 +25,17 @@ namespace ObjectOrientedPractics
 
         private Store _store = new Store();
 
-
+        /// <summary>
+        /// Обновляет значения на вкладке с корзиной.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ItemsTabControl_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (ItemsTabControl.SelectedIndex == 2)
+            {
+                CartsTab1.RefreshData();
+            }
+        }
     }
 }

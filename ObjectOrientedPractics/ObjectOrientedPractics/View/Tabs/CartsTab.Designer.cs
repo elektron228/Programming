@@ -99,6 +99,7 @@
             this.AddToCartButton.TabIndex = 5;
             this.AddToCartButton.Text = "Add To Cart";
             this.AddToCartButton.UseVisualStyleBackColor = true;
+            this.AddToCartButton.Click += new System.EventHandler(this.AddToCartButton_Click);
             // 
             // ItemsLabel
             // 
@@ -165,6 +166,7 @@
             this.CreateOrderButton.TabIndex = 6;
             this.CreateOrderButton.Text = "Create Order";
             this.CreateOrderButton.UseVisualStyleBackColor = true;
+            this.CreateOrderButton.Click += new System.EventHandler(this.CreateOrderButton_Click);
             // 
             // RemoveItemButton
             // 
@@ -175,6 +177,7 @@
             this.RemoveItemButton.TabIndex = 7;
             this.RemoveItemButton.Text = "Remove Item";
             this.RemoveItemButton.UseVisualStyleBackColor = true;
+            this.RemoveItemButton.Click += new System.EventHandler(this.RemoveItemButton_Click);
             // 
             // ClearCartButton
             // 
@@ -185,6 +188,7 @@
             this.ClearCartButton.TabIndex = 8;
             this.ClearCartButton.Text = "Clear Cart";
             this.ClearCartButton.UseVisualStyleBackColor = true;
+            this.ClearCartButton.Click += new System.EventHandler(this.ClearCartButton_Click);
             // 
             // TotalCostLabel
             // 
@@ -207,6 +211,7 @@
             this.CartListBox.Name = "CartListBox";
             this.CartListBox.Size = new System.Drawing.Size(309, 134);
             this.CartListBox.TabIndex = 3;
+            this.CartListBox.SelectedIndexChanged += new System.EventHandler(this.CartListBox_SelectedIndexChanged);
             // 
             // CartLabel
             // 
@@ -220,11 +225,13 @@
             // 
             // CustomersComboBox
             // 
+            this.CustomersComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.CustomersComboBox.FormattingEnabled = true;
             this.CustomersComboBox.Location = new System.Drawing.Point(68, 16);
             this.CustomersComboBox.Name = "CustomersComboBox";
             this.CustomersComboBox.Size = new System.Drawing.Size(247, 21);
             this.CustomersComboBox.TabIndex = 1;
+            this.CustomersComboBox.SelectedIndexChanged += new System.EventHandler(this.CustomersComboBox_SelectedIndexChanged);
             // 
             // CustomerLable
             // 

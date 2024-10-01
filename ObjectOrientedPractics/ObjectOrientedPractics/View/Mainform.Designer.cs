@@ -73,6 +73,7 @@
             this.ItemsTabControl.SelectedIndex = 0;
             this.ItemsTabControl.Size = new System.Drawing.Size(584, 411);
             this.ItemsTabControl.TabIndex = 0;
+            this.ItemsTabControl.SelectedIndexChanged += new System.EventHandler(this.ItemsTabControl_SelectedIndexChanged);
             // 
             // ItemsTabPage
             // 
@@ -108,7 +109,9 @@
             // 
             // CartsTab1
             // 
+            this.CartsTab1.Customers = null;
             this.CartsTab1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.CartsTab1.Items = null;
             this.CartsTab1.Location = new System.Drawing.Point(3, 3);
             this.CartsTab1.Name = "CartsTab1";
             this.CartsTab1.Size = new System.Drawing.Size(570, 379);

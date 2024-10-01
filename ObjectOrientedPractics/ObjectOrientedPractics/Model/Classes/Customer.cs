@@ -18,7 +18,7 @@ namespace ObjectOrientedPractics.Model
         private string _fullName;
         private Address _address = new Address();
         private Cart _cart;
-        private List<Order> _orders;
+        private List<Order> _orders = new List<Order>();
 
         /// <summary>
         /// Возвращает ID покупателя.
