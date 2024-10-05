@@ -135,7 +135,7 @@ namespace ObjectOrientedPractics.View.Tabs
                 NameTextBox.BackColor = Color.White;
                 FillItemsListbox();
             }
-            catch (ArgumentException)
+            catch (Exception)
             {
                 NameTextBox.BackColor = Color.Orange;
             }
@@ -175,7 +175,7 @@ namespace ObjectOrientedPractics.View.Tabs
                 _selectedItem.Info = DescriptionTextBox.Text;
                 DescriptionTextBox.BackColor = Color.White;
             }
-            catch (ArgumentException)
+            catch (Exception)
             {
                 DescriptionTextBox.BackColor = Color.Orange;
             }

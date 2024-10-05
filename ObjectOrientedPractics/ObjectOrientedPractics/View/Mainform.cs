@@ -21,6 +21,7 @@ namespace ObjectOrientedPractics
             CustomersTab1.Customers = _store.Customers;
             CartsTab1.Items = _store.Items;
             CartsTab1.Customers = _store.Customers;
+            OrdersTab1.Customers = _store.Customers;
         }
 
         private Store _store = new Store();
@@ -32,10 +33,22 @@ namespace ObjectOrientedPractics
         /// <param name="e"></param>
         private void ItemsTabControl_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (ItemsTabControl.SelectedIndex == 2)
+            switch (ItemsTabControl.SelectedIndex)
             {
-                CartsTab1.RefreshData();
+                case 0:
+                    break; 
+                case 1:
+                    CustomersTab1.CustomerAddressControl.EnableTextBoxs();
+                    break;
+                case 2:
+                    CartsTab1.RefreshData();
+                    break;
+                case 3:
+                    OrdersTab1.RefreshData();
+                    OrdersTab1.AddressControl1.DisableTextBoxs();
+                    break;
             }
+            
         }
     }
 }

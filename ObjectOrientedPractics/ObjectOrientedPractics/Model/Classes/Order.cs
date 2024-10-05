@@ -15,9 +15,11 @@ namespace ObjectOrientedPractics.Model.Classes
         private static int _idCounter;
         private int _id;
         private float _totalPrice;
+        private string _customerFullName;
         private Address _deliveryAddress;
         private DateTime _creationDate;
-        private List<Item> _items;
+        private OrderStatus _status;
+        private List<Item> _items = new List<Item>();
 
         /// <summary>
         /// Возвращает ID заказа.
@@ -35,14 +37,20 @@ namespace ObjectOrientedPractics.Model.Classes
         {
             get
             {
-                _totalPrice = 0;
-                foreach (var item in _items)
-                {
-                    _totalPrice += item.Cost;
-                }
                 return _totalPrice;
             }
+            set { _totalPrice = value; }
         }
+
+        /// <summary>
+        /// Возвращает и задаёт имя покупателя, сделавшего заказ.
+        /// </summary>
+        public string CustomerFullName { get { return _customerFullName; } set { _customerFullName = value; } }
+
+        /// <summary>
+        /// Возвращает и задаёт статус товара.
+        /// </summary>
+        public OrderStatus Status { get { return _status; } set { _status = value; } }
 
         /// <summary>
         /// Возвращает и задаёт список товаров.
@@ -66,15 +74,23 @@ namespace ObjectOrientedPractics.Model.Classes
         /// <summary>
         /// Создаёт экземпляр класса <see cref="Order"/>.
         /// </summary>
-        /// <param name="items"></param>
-        /// <param name="deliveryAddress"></param>
-        public Order(List<Item> items, Address deliveryAddress)
+        /// <param name="items">Список товаров.</param>
+        /// <param name="deliveryAddress">Адрес доставки.</param>
+        /// <param name="customerName">Имя покупателя.</param>
+        /// <param name="totalPrice">Итоговая цена.</param>
+        public Order(List<Item> items, Address deliveryAddress, string customerName, float totalPrice)
         {
             _idCounter++;
             _id = _idCounter;
-            Items = items;
+            foreach (Item item in items)
+            {
+                _items.Add(item);
+            }
             CustomerAddress = deliveryAddress;
             CreationDate = DateTime.Now;
+            Status = OrderStatus.New;
+            CustomerFullName = customerName;
+            TotalPrice = totalPrice;
         }
     }
 }

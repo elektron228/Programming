@@ -21,8 +21,6 @@ namespace ObjectOrientedPractics.View.Tabs
 
         private void CartsTab_Load(object sender, EventArgs e)
         {
-            FillItemsListbox();
-            FillCustomersComboBox();
         }
 
         private Customer CurrentCustomer {  get; set; }
@@ -126,9 +124,11 @@ namespace ObjectOrientedPractics.View.Tabs
         /// <param name="e"></param>
         private void AddToCartButton_Click(object sender, EventArgs e)
         {
-            CurrentCustomer.CustomerCart.Items.Add(Items[ItemsListBox.SelectedIndex] );
-            RefreshCartListBox();
-            
+            if (ItemsListBox.SelectedIndex != -1 && CustomersComboBox.SelectedIndex != -1)
+            {
+                CurrentCustomer.CustomerCart.Items.Add(Items[ItemsListBox.SelectedIndex]);
+                RefreshCartListBox();
+            }
 
         }
 
@@ -139,10 +139,11 @@ namespace ObjectOrientedPractics.View.Tabs
         /// <param name="e"></param>
         private void RemoveItemButton_Click(object sender, EventArgs e)
         {
-            
-            CurrentCustomer.CustomerCart.Items.RemoveAt(_cartListBoxSelectedIndex);
-            RefreshCartListBox();
-            
+            if (ItemsListBox.SelectedIndex != -1 && CustomersComboBox.SelectedIndex != -1)
+            {
+                CurrentCustomer.CustomerCart.Items.RemoveAt(_cartListBoxSelectedIndex);
+                RefreshCartListBox();
+            }
         }
 
         /// <summary>
@@ -152,8 +153,11 @@ namespace ObjectOrientedPractics.View.Tabs
         /// <param name="e"></param>
         private void ClearCartButton_Click(object sender, EventArgs e)
         {
-            CurrentCustomer.CustomerCart.Items.Clear();
-            RefreshCartListBox();
+            if (CustomersComboBox.SelectedIndex != -1)
+            {
+                CurrentCustomer.CustomerCart.Items.Clear();
+                RefreshCartListBox();
+            }
         }
 
         /// <summary>
@@ -173,9 +177,12 @@ namespace ObjectOrientedPractics.View.Tabs
         /// <param name="e"></param>
         private void CreateOrderButton_Click(object sender, EventArgs e)
         {
-            CurrentCustomer.CustomerOrders.Add(new Order(CurrentCustomer.CustomerCart.Items, CurrentCustomer.CustomerAddress));
-            CurrentCustomer.CustomerCart.Items.Clear();
-            RefreshCartListBox();
+            if ( CustomersComboBox.SelectedIndex != -1 && CurrentCustomer.CustomerCart.Items.Count != 0)
+            {
+                CurrentCustomer.CustomerOrders.Add(new Order(CurrentCustomer.CustomerCart.Items, CurrentCustomer.CustomerAddress, CurrentCustomer.FullName, CurrentCustomer.CustomerCart.Amount));
+                CurrentCustomer.CustomerCart.Items.Clear();
+                RefreshCartListBox();
+            }
         }
     }
 }

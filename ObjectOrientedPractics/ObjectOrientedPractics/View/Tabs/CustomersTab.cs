@@ -22,14 +22,7 @@ namespace ObjectOrientedPractics.View.Tabs
         {
         }
 
-        /// <summary>
-        /// Список покупателей.
-        /// </summary>
         private List<Customer> _customers;
-
-        /// <summary>
-        /// Текущий покупатель.
-        /// </summary>
         private Customer _selectedCustomer;
 
         /// <summary>
@@ -127,7 +120,7 @@ namespace ObjectOrientedPractics.View.Tabs
                 FullNameTextBox.BackColor = Color.White;
                 FillCustomersListbox();
             }
-            catch (ArgumentException)
+            catch (Exception)
             {
                 FullNameTextBox.BackColor = Color.Orange;
             }
