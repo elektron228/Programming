@@ -22,14 +22,7 @@ namespace ObjectOrientedPractics.View.Tabs
         {
         }
 
-        /// <summary>
-        /// Список покупателей.
-        /// </summary>
         private List<Customer> _customers;
-
-        /// <summary>
-        /// Текущий покупатель.
-        /// </summary>
         private Customer _selectedCustomer;
 
         /// <summary>
@@ -62,8 +55,6 @@ namespace ObjectOrientedPractics.View.Tabs
             FullNameTextBox.Text = _selectedCustomer.FullName;
             IDTextBox.Text = _selectedCustomer.ID.ToString();
             CustomerAddressControl.UpdateTextBoxs();
-            FillCustomersListbox();
-
         }
 
         /// <summary>
@@ -84,7 +75,7 @@ namespace ObjectOrientedPractics.View.Tabs
         /// <param name="e"></param>
         private void AddCustomerButton_Click(object sender, EventArgs e)
         {
-            _customers.Add(new Customer("Example full name", new Address()));
+            _customers.Add(new Customer("Example full name"));
             FillCustomersListbox();
         }
 
@@ -127,8 +118,9 @@ namespace ObjectOrientedPractics.View.Tabs
             {
                 _selectedCustomer.FullName = FullNameTextBox.Text;
                 FullNameTextBox.BackColor = Color.White;
+                FillCustomersListbox();
             }
-            catch (ArgumentException)
+            catch (Exception)
             {
                 FullNameTextBox.BackColor = Color.Orange;
             }

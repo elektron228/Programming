@@ -12,29 +12,11 @@ namespace ObjectOrientedPractics.Model
     /// </summary>
     public class Item
     {
-        /// <summary>
-        /// Id товара.
-        /// </summary>
-        private int _id;
-            
-        /// <summary>
-        /// Счётчик ID.
-        /// </summary>
+        
+        private readonly int _id;
         private static int _idCounter = 0;
-
-        /// <summary>
-        /// Название товара.
-        /// </summary>
         private string _name;
-
-        /// <summary>
-        /// Информация о товаре.
-        /// </summary>
         private string _info;
-
-        /// <summary>
-        /// Стоимость товара.
-        /// </summary>
         private float _cost;
 
         /// <summary>
@@ -43,7 +25,6 @@ namespace ObjectOrientedPractics.Model
         public int ID
         {
             get { return _id; }
-            private set { _id = value; }
         }
 
         /// <summary>
@@ -106,7 +87,7 @@ namespace ObjectOrientedPractics.Model
         public Item (string name, string info, float cost, Category category)
         {
             _idCounter++;
-            ID = _idCounter;
+            _id = _idCounter;
             Name = name;
             Info = info;
             Cost = cost;

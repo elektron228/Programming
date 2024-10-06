@@ -63,7 +63,7 @@ namespace ObjectOrientedPractics.View.Controls
                 _address.Country = CountryTextBox.Text;
                 CountryTextBox.BackColor = Color.White;
             }
-            catch (ArgumentException)
+            catch (Exception)
             {
                 CountryTextBox.BackColor = Color.Orange;
             }
@@ -81,7 +81,7 @@ namespace ObjectOrientedPractics.View.Controls
                 _address.City = CityTextBox.Text;
                 CityTextBox.BackColor = Color.White;
             }
-            catch (ArgumentException)
+            catch (Exception)
             {
                 CityTextBox.BackColor = Color.Orange;
             }
@@ -99,7 +99,7 @@ namespace ObjectOrientedPractics.View.Controls
                 _address.Street = StreetTextBox.Text;
                 StreetTextBox.BackColor = Color.White;
             }
-            catch (ArgumentException)
+            catch (Exception)
             {
                 StreetTextBox.BackColor = Color.Orange;
             }
@@ -117,7 +117,7 @@ namespace ObjectOrientedPractics.View.Controls
                 _address.Building = BuildingTextBox.Text;
                 BuildingTextBox.BackColor = Color.White;
             }
-            catch (ArgumentException)
+            catch (Exception)
             {
                 BuildingTextBox.BackColor = Color.Orange;
             }
@@ -135,7 +135,7 @@ namespace ObjectOrientedPractics.View.Controls
                 _address.Apartment = ApartmentTextBox.Text;
                 ApartmentTextBox.BackColor = Color.White;
             }
-            catch (ArgumentException)
+            catch (Exception)
             {
                 ApartmentTextBox.BackColor = Color.Orange;
             }
@@ -166,6 +166,34 @@ namespace ObjectOrientedPractics.View.Controls
             StreetTextBox.Clear();
             BuildingTextBox.Clear();  
             ApartmentTextBox.Clear();
+
+        }
+
+        /// <summary>
+        /// Запрещает редактировать текстбоксы.
+        /// </summary>
+        public void DisableTextBoxs()
+        {
+            PostIndexTextBox.ReadOnly = true;
+            CountryTextBox.ReadOnly = true;
+            CityTextBox.ReadOnly = true;
+            StreetTextBox.ReadOnly = true;
+            BuildingTextBox.ReadOnly = true;
+            ApartmentTextBox.ReadOnly = true;
+
+        }
+        
+        /// <summary>
+        /// Разрешает редактировать текстбоксы.в
+        /// </summary>
+        public void EnableTextBoxs()
+        {
+            PostIndexTextBox.ReadOnly = false;
+            CountryTextBox.ReadOnly = false;
+            CityTextBox.ReadOnly = false;
+            StreetTextBox.ReadOnly = false;
+            BuildingTextBox.ReadOnly = false;
+            ApartmentTextBox.ReadOnly = false;
 
         }
     }

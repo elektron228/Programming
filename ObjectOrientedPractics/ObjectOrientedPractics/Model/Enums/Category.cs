@@ -9,5 +9,6 @@ public enum Category
     Toys,
     Electronics,
     Accessories,
-    Books
+    Books,
+
 }
