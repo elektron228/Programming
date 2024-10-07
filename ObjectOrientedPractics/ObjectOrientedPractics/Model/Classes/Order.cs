@@ -13,13 +13,13 @@ namespace ObjectOrientedPractics.Model.Classes
     public class Order
     {
         private static int _idCounter;
-        private int _id;
-        private float _totalPrice;
-        private string _customerFullName;
-        private Address _deliveryAddress;
-        private DateTime _creationDate;
-        private OrderStatus _status;
-        private List<Item> _items = new List<Item>();
+        private protected int _id;
+        private protected float _totalPrice;
+        private protected string _customerFullName;
+        private protected Address _deliveryAddress;
+        private protected DateTime _creationDate;
+        private protected OrderStatus _status;
+        private protected List<Item> _items = new List<Item>();
 
         /// <summary>
         /// Возвращает ID заказа.
