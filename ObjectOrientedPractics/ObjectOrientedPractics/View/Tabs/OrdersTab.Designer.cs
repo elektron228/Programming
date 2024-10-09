@@ -37,6 +37,10 @@
             this.CustomerFullNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DeliveryAddressColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.TotalCostColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.PriorityOptionsPanel = new System.Windows.Forms.Panel();
+            this.PriorityOptionsLabel = new System.Windows.Forms.Label();
+            this.DeliverytimeComboBox = new System.Windows.Forms.ComboBox();
+            this.DeliveryTimeLabel = new System.Windows.Forms.Label();
             this.OrderItemsLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.OrderItemsListBox = new System.Windows.Forms.ListBox();
             this.OrderItemsLabel = new System.Windows.Forms.Label();
@@ -51,18 +55,14 @@
             this.CreatedLabel = new System.Windows.Forms.Label();
             this.IdLabel = new System.Windows.Forms.Label();
             this.SelectedOrderLabel = new System.Windows.Forms.Label();
-            this.PriorityOptionsPanel = new System.Windows.Forms.Panel();
-            this.PriorityOptionsLabel = new System.Windows.Forms.Label();
-            this.DeliverytimeComboBox = new System.Windows.Forms.ComboBox();
-            this.DeliveryTimeLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.OrdersTabSplitContainer)).BeginInit();
             this.OrdersTabSplitContainer.Panel1.SuspendLayout();
             this.OrdersTabSplitContainer.Panel2.SuspendLayout();
             this.OrdersTabSplitContainer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.OrdersDataGridView)).BeginInit();
+            this.PriorityOptionsPanel.SuspendLayout();
             this.OrderItemsLayoutPanel.SuspendLayout();
             this.AmountTableLayoutPanel.SuspendLayout();
-            this.PriorityOptionsPanel.SuspendLayout();
             this.SuspendLayout();
             // 
             // OrdersTabSplitContainer
@@ -170,6 +170,44 @@
             this.TotalCostColumn.Name = "TotalCostColumn";
             this.TotalCostColumn.ReadOnly = true;
             // 
+            // PriorityOptionsPanel
+            // 
+            this.PriorityOptionsPanel.Controls.Add(this.PriorityOptionsLabel);
+            this.PriorityOptionsPanel.Controls.Add(this.DeliverytimeComboBox);
+            this.PriorityOptionsPanel.Controls.Add(this.DeliveryTimeLabel);
+            this.PriorityOptionsPanel.Location = new System.Drawing.Point(179, 3);
+            this.PriorityOptionsPanel.Name = "PriorityOptionsPanel";
+            this.PriorityOptionsPanel.Size = new System.Drawing.Size(201, 105);
+            this.PriorityOptionsPanel.TabIndex = 11;
+            // 
+            // PriorityOptionsLabel
+            // 
+            this.PriorityOptionsLabel.AutoSize = true;
+            this.PriorityOptionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.PriorityOptionsLabel.Location = new System.Drawing.Point(3, 0);
+            this.PriorityOptionsLabel.Name = "PriorityOptionsLabel";
+            this.PriorityOptionsLabel.Size = new System.Drawing.Size(97, 13);
+            this.PriorityOptionsLabel.TabIndex = 18;
+            this.PriorityOptionsLabel.Text = "Priority Options:";
+            // 
+            // DeliverytimeComboBox
+            // 
+            this.DeliverytimeComboBox.FormattingEnabled = true;
+            this.DeliverytimeComboBox.Location = new System.Drawing.Point(83, 23);
+            this.DeliverytimeComboBox.Name = "DeliverytimeComboBox";
+            this.DeliverytimeComboBox.Size = new System.Drawing.Size(115, 21);
+            this.DeliverytimeComboBox.TabIndex = 16;
+            this.DeliverytimeComboBox.SelectedIndexChanged += new System.EventHandler(this.DeliverytimeComboBox_SelectedIndexChanged);
+            // 
+            // DeliveryTimeLabel
+            // 
+            this.DeliveryTimeLabel.AutoSize = true;
+            this.DeliveryTimeLabel.Location = new System.Drawing.Point(3, 27);
+            this.DeliveryTimeLabel.Name = "DeliveryTimeLabel";
+            this.DeliveryTimeLabel.Size = new System.Drawing.Size(74, 13);
+            this.DeliveryTimeLabel.TabIndex = 17;
+            this.DeliveryTimeLabel.Text = "Delivery Time:";
+            // 
             // OrderItemsLayoutPanel
             // 
             this.OrderItemsLayoutPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -206,6 +244,7 @@
             // 
             // StatusComboBox
             // 
+            this.StatusComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.StatusComboBox.FormattingEnabled = true;
             this.StatusComboBox.Location = new System.Drawing.Point(53, 77);
             this.StatusComboBox.Name = "StatusComboBox";
@@ -314,43 +353,6 @@
             this.SelectedOrderLabel.TabIndex = 1;
             this.SelectedOrderLabel.Text = "Selected order";
             // 
-            // PriorityOptionsPanel
-            // 
-            this.PriorityOptionsPanel.Controls.Add(this.PriorityOptionsLabel);
-            this.PriorityOptionsPanel.Controls.Add(this.DeliverytimeComboBox);
-            this.PriorityOptionsPanel.Controls.Add(this.DeliveryTimeLabel);
-            this.PriorityOptionsPanel.Location = new System.Drawing.Point(179, 3);
-            this.PriorityOptionsPanel.Name = "PriorityOptionsPanel";
-            this.PriorityOptionsPanel.Size = new System.Drawing.Size(201, 105);
-            this.PriorityOptionsPanel.TabIndex = 11;
-            // 
-            // PriorityOptionsLabel
-            // 
-            this.PriorityOptionsLabel.AutoSize = true;
-            this.PriorityOptionsLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.PriorityOptionsLabel.Location = new System.Drawing.Point(3, 0);
-            this.PriorityOptionsLabel.Name = "PriorityOptionsLabel";
-            this.PriorityOptionsLabel.Size = new System.Drawing.Size(97, 13);
-            this.PriorityOptionsLabel.TabIndex = 18;
-            this.PriorityOptionsLabel.Text = "Priority Options:";
-            // 
-            // DeliverytimeComboBox
-            // 
-            this.DeliverytimeComboBox.FormattingEnabled = true;
-            this.DeliverytimeComboBox.Location = new System.Drawing.Point(83, 23);
-            this.DeliverytimeComboBox.Name = "DeliverytimeComboBox";
-            this.DeliverytimeComboBox.Size = new System.Drawing.Size(115, 21);
-            this.DeliverytimeComboBox.TabIndex = 16;
-            // 
-            // DeliveryTimeLabel
-            // 
-            this.DeliveryTimeLabel.AutoSize = true;
-            this.DeliveryTimeLabel.Location = new System.Drawing.Point(3, 27);
-            this.DeliveryTimeLabel.Name = "DeliveryTimeLabel";
-            this.DeliveryTimeLabel.Size = new System.Drawing.Size(74, 13);
-            this.DeliveryTimeLabel.TabIndex = 17;
-            this.DeliveryTimeLabel.Text = "Delivery Time:";
-            // 
             // OrdersTab
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -366,11 +368,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.OrdersTabSplitContainer)).EndInit();
             this.OrdersTabSplitContainer.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.OrdersDataGridView)).EndInit();
+            this.PriorityOptionsPanel.ResumeLayout(false);
+            this.PriorityOptionsPanel.PerformLayout();
             this.OrderItemsLayoutPanel.ResumeLayout(false);
             this.AmountTableLayoutPanel.ResumeLayout(false);
             this.AmountTableLayoutPanel.PerformLayout();
-            this.PriorityOptionsPanel.ResumeLayout(false);
-            this.PriorityOptionsPanel.PerformLayout();
             this.ResumeLayout(false);
 
         }

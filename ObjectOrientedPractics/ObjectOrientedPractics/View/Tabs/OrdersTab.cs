@@ -25,13 +25,25 @@ namespace ObjectOrientedPractics.View.Tabs
         {
             StatusComboBox.DataSource = Enum.GetValues(typeof(OrderStatus));
             StatusComboBox.SelectedItem = null;
+            PriorityOptionsPanel.Visible = false;
+
+            DeliverytimeComboBox.DataSource = _desiredDeliveryTime;
+            DeliverytimeComboBox.SelectedItem = null;
         }
 
         private int _selectedOrderIndex;
 
         private string ourStatus;
 
+        private string _selectedDeliveryTime;
+
+        private string[] _desiredDeliveryTime = new string[] { "9:00 - 11:00", "11:00 - 13:00", "13:00 - 15:00", "15:00 - 17:00", "17:00 - 19:00", "19:00 - 21:00" };
+
+        private int _selectedCustomerId;
+
         private Order _selectedorder;
+
+        private PriorityOrder _selectedPriorityOrder;
 
         private List<Order> _orders = new List<Order>();
 
@@ -89,6 +101,19 @@ namespace ObjectOrientedPractics.View.Tabs
             {
                 _selectedOrderIndex = OrdersDataGridView.SelectedRows[0].Index;
                 _selectedorder = _orders[_selectedOrderIndex];
+               
+                if (_selectedorder is PriorityOrder)
+                {
+                    PriorityOptionsPanel.Visible = true;
+                    _selectedPriorityOrder = _orders[_selectedOrderIndex] as PriorityOrder;
+                    DeliverytimeComboBox.SelectedIndex = ((int)_selectedPriorityOrder.DesiredDeliveryTime - 1);
+                }
+                else if (_selectedorder is Order)
+                {
+                    PriorityOptionsPanel.Visible = false;
+                    _selectedPriorityOrder = null;
+                }
+
                 AddressControl1.OurAddress = _orders[_selectedOrderIndex].CustomerAddress;
                 AddressControl1.UpdateTextBoxs();
                 IdTextBox.Text = _selectedorder.ID.ToString();
@@ -127,6 +152,41 @@ namespace ObjectOrientedPractics.View.Tabs
                 OrderStatus orderStatus = (OrderStatus)Enum.Parse(typeof(OrderStatus), ourStatus);
                 _selectedorder.Status = orderStatus;
                 OrdersDataGridView.SelectedRows[0].Cells[2].Value = orderStatus;
+            }
+            catch (Exception) { }
+        }
+
+        /// <summary>
+        /// Изменяет время доставки.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void DeliverytimeComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                _selectedDeliveryTime = DeliverytimeComboBox.Text;
+                switch (_selectedDeliveryTime)
+                {
+                    case "9:00 - 11:00":
+                        _selectedPriorityOrder.DesiredDeliveryTime = DeliveryTime.Morning;
+                        break;
+                    case "11:00 - 13:00":
+                        _selectedPriorityOrder.DesiredDeliveryTime = DeliveryTime.Lunch;
+                        break;
+                    case "13:00 - 15:00":
+                        _selectedPriorityOrder.DesiredDeliveryTime = DeliveryTime.Afternoon;
+                        break;
+                    case "15:00 - 17:00":
+                        _selectedPriorityOrder.DesiredDeliveryTime = DeliveryTime.Evening;
+                        break;
+                    case "17:00 - 19:00":
+                        _selectedPriorityOrder.DesiredDeliveryTime = DeliveryTime.LateEvening;
+                        break;
+                    case "19:00 - 21:00":
+                        _selectedPriorityOrder.DesiredDeliveryTime = DeliveryTime.Night;
+                        break;
+                }
             }
             catch (Exception) { }
         }

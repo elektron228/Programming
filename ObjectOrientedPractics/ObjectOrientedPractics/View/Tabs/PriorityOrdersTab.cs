@@ -70,6 +70,7 @@ namespace ObjectOrientedPractics.View.Tabs
         private void RefreshOrdersList()
         {
             _orders.Clear();
+            _priorityOrders.Clear();
             foreach (Customer customer in Customers)
             {
                 if (customer.CustomerOrders.Count != 0)
@@ -121,6 +122,7 @@ namespace ObjectOrientedPractics.View.Tabs
                 CreatedDateTextBox.Text = _selectedorder.CreationDate.ToString();
                 StatusComboBox.SelectedItem = _selectedorder.Status;
                 TotalCostLabel.Text = _selectedorder.TotalPrice.ToString();
+                DeliverytimeComboBox.SelectedIndex = ((int)_selectedorder.DesiredDeliveryTime - 1);
                 FillOrderItemsListBox();
             }
             catch (Exception) { }
@@ -164,28 +166,33 @@ namespace ObjectOrientedPractics.View.Tabs
         /// <param name="e"></param>
         private void DeliverytimeComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            _selectedDeliveryTime = DeliverytimeComboBox.Text;
-            switch(_selectedDeliveryTime)
+            try
             {
-                case "9:00 - 11:00":
-                    _selectedorder.DesiredDeliveryTime = DeliveryTime.Morning;
-                    break;
-                case "11:00 - 13:00":
-                    _selectedorder.DesiredDeliveryTime = DeliveryTime.Lunch;
-                    break;
-                case "13:00 - 15:00":
-                    _selectedorder.DesiredDeliveryTime = DeliveryTime.Afternoon;
-                    break;
-                case "15:00 - 17:00":
-                    _selectedorder.DesiredDeliveryTime = DeliveryTime.Evening;
-                    break;
-                case "17:00 - 19:00":
-                    _selectedorder.DesiredDeliveryTime = DeliveryTime.LateEvening;
-                    break;
-                case "19:00 - 21:00":
-                    _selectedorder.DesiredDeliveryTime = DeliveryTime.Night;
-                    break;
+                _selectedDeliveryTime = DeliverytimeComboBox.Text;
+                switch (_selectedDeliveryTime)
+                {
+                    case "9:00 - 11:00":
+                        _selectedorder.DesiredDeliveryTime = DeliveryTime.Morning;
+                        break;
+                    case "11:00 - 13:00":
+                        _selectedorder.DesiredDeliveryTime = DeliveryTime.Lunch;
+                        break;
+                    case "13:00 - 15:00":
+                        _selectedorder.DesiredDeliveryTime = DeliveryTime.Afternoon;
+                        break;
+                    case "15:00 - 17:00":
+                        _selectedorder.DesiredDeliveryTime = DeliveryTime.Evening;
+                        break;
+                    case "17:00 - 19:00":
+                        _selectedorder.DesiredDeliveryTime = DeliveryTime.LateEvening;
+                        break;
+                    case "19:00 - 21:00":
+                        _selectedorder.DesiredDeliveryTime = DeliveryTime.Night;
+                        break;
+                }
             }
+            catch (Exception) { }
+            
         }
 
         /// <summary>
@@ -196,6 +203,7 @@ namespace ObjectOrientedPractics.View.Tabs
         private void AdditemButton_Click(object sender, EventArgs e)
         {
             _selectedorder.Items.Add(Items[rand.Next(Items.Count)]);
+            RefreshData();
         }
 
         /// <summary>
@@ -206,6 +214,7 @@ namespace ObjectOrientedPractics.View.Tabs
         private void RemoveItemButton_Click(object sender, EventArgs e)
         {
             _selectedorder.Items.RemoveAt(OrderItemsListBox.SelectedIndex);
+            RefreshData();
         }
 
         /// <summary>
@@ -215,14 +224,22 @@ namespace ObjectOrientedPractics.View.Tabs
         /// <param name="e"></param>
         private void ClearOrderButton_Click(object sender, EventArgs e)
         {
-            
+            DateTime deliveryDate = DateTime.Now.Date;
             _selectedCustomerId = _selectedorder.CustomerId;
-            _orders.Remove(_selectedorder);
+            
             foreach (var customer in Customers)
             {
                 if (customer.ID == _selectedCustomerId)
                 {
-                    customer.CustomerOrders.Add(new Order(customer.CustomerCart.Items, customer.CustomerAddress, customer.FullName, customer.CustomerCart.Amount, customer.ID));
+                    foreach (var order in customer.CustomerOrders)
+                    {
+                        if (order.ID == _selectedorder.ID)
+                        {
+                            customer.CustomerOrders.Remove(order);
+                            break;
+                        }
+                    }
+                    customer.CustomerOrders.Add(new PriorityOrder(customer.CustomerCart.Items, customer.CustomerAddress, customer.FullName, customer.CustomerCart.Amount, customer.ID, DeliveryTime.Morning, deliveryDate));
                     RefreshData();
                     break;
                 }

@@ -38,9 +38,13 @@ namespace ObjectOrientedPractics.Model.Classes
         {
             get
             {
+                _totalPrice = 0;
+                foreach (var item in _items)
+                {
+                    _totalPrice += item.Cost;
+                }
                 return _totalPrice;
             }
-            set { _totalPrice = value; }
         }
 
         /// <summary>
@@ -96,7 +100,6 @@ namespace ObjectOrientedPractics.Model.Classes
             CreationDate = DateTime.Now;
             Status = OrderStatus.New;
             CustomerFullName = customerName;
-            TotalPrice = totalPrice;
             CustomerId = customerId;
         }
     }

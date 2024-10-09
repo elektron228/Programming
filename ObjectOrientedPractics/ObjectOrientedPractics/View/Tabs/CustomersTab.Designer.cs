@@ -40,6 +40,7 @@
             this.IdLabel = new System.Windows.Forms.Label();
             this.IDTextBox = new System.Windows.Forms.TextBox();
             this.FullNameTextBox = new System.Windows.Forms.TextBox();
+            this.PriorityCheckBox = new System.Windows.Forms.CheckBox();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
@@ -61,6 +62,7 @@
             // 
             // splitContainer1.Panel2
             // 
+            this.splitContainer1.Panel2.Controls.Add(this.PriorityCheckBox);
             this.splitContainer1.Panel2.Controls.Add(this.CustomerAddressControl);
             this.splitContainer1.Panel2.Controls.Add(this.SelectedCustomerLabel);
             this.splitContainer1.Panel2.Controls.Add(this.FullNameLabel);
@@ -142,7 +144,7 @@
             // 
             // CustomerAddressControl
             // 
-            this.CustomerAddressControl.Location = new System.Drawing.Point(3, 81);
+            this.CustomerAddressControl.Location = new System.Drawing.Point(3, 103);
             this.CustomerAddressControl.Name = "CustomerAddressControl";
             this.CustomerAddressControl.OurAddress = null;
             this.CustomerAddressControl.Size = new System.Drawing.Size(325, 157);
@@ -192,6 +194,17 @@
             this.FullNameTextBox.TabIndex = 23;
             this.FullNameTextBox.TextChanged += new System.EventHandler(this.FullNameTextBox_TextChanged);
             // 
+            // PriorityCheckBox
+            // 
+            this.PriorityCheckBox.AutoSize = true;
+            this.PriorityCheckBox.Location = new System.Drawing.Point(11, 72);
+            this.PriorityCheckBox.Name = "PriorityCheckBox";
+            this.PriorityCheckBox.Size = new System.Drawing.Size(68, 17);
+            this.PriorityCheckBox.TabIndex = 30;
+            this.PriorityCheckBox.Text = "Is Priority";
+            this.PriorityCheckBox.UseVisualStyleBackColor = true;
+            this.PriorityCheckBox.CheckedChanged += new System.EventHandler(this.PriorityCheckBox_CheckedChanged);
+            // 
             // CustomersTab
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -226,5 +239,6 @@
         private System.Windows.Forms.TextBox IDTextBox;
         private System.Windows.Forms.TextBox FullNameTextBox;
         public Controls.AddressControl CustomerAddressControl;
+        private System.Windows.Forms.CheckBox PriorityCheckBox;
     }
 }
