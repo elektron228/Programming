@@ -38,7 +38,7 @@ namespace ObjectOrientedPractics.Model.Classes
         /// <param name="totalPrice">Итоговая цена.</param>
         /// <param name="desiredDeliveryTime">Время доставки.</param>
         /// <param name="deliveryDate">Дата доставки.</param>
-        public PriorityOrder(List<Item> items, Address deliveryAddress, string customerName, float totalPrice, DeliveryTime desiredDeliveryTime, DateTime deliveryDate) : base(items, deliveryAddress, customerName, totalPrice)
+        public PriorityOrder(List<Item> items, Address deliveryAddress, string customerName, float totalPrice, int customerId, DeliveryTime desiredDeliveryTime, DateTime deliveryDate) : base(items, deliveryAddress, customerName, totalPrice, customerId)
         {
             DesiredDeliveryTime = desiredDeliveryTime;
             DeliveryDate = deliveryDate;

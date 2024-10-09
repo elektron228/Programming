@@ -179,7 +179,7 @@ namespace ObjectOrientedPractics.View.Tabs
         {
             if ( CustomersComboBox.SelectedIndex != -1 && CurrentCustomer.CustomerCart.Items.Count != 0)
             {
-                CurrentCustomer.CustomerOrders.Add(new Order(CurrentCustomer.CustomerCart.Items, CurrentCustomer.CustomerAddress, CurrentCustomer.FullName, CurrentCustomer.CustomerCart.Amount));
+                CurrentCustomer.CustomerOrders.Add(new Order(CurrentCustomer.CustomerCart.Items, CurrentCustomer.CustomerAddress, CurrentCustomer.FullName, CurrentCustomer.CustomerCart.Amount, CurrentCustomer.ID));
                 CurrentCustomer.CustomerCart.Items.Clear();
                 RefreshCartListBox();
             }

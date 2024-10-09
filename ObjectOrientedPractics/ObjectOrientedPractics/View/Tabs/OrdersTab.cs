@@ -29,6 +29,8 @@ namespace ObjectOrientedPractics.View.Tabs
 
         private int _selectedOrderIndex;
 
+        private string ourStatus;
+
         private Order _selectedorder;
 
         private List<Order> _orders = new List<Order>();
@@ -121,7 +123,7 @@ namespace ObjectOrientedPractics.View.Tabs
         {
             try
             {
-                string ourStatus = StatusComboBox.Text;
+                ourStatus = StatusComboBox.Text;
                 OrderStatus orderStatus = (OrderStatus)Enum.Parse(typeof(OrderStatus), ourStatus);
                 _selectedorder.Status = orderStatus;
                 OrdersDataGridView.SelectedRows[0].Cells[2].Value = orderStatus;
