@@ -13,13 +13,14 @@ namespace ObjectOrientedPractics.Model.Classes
     public class Order
     {
         private static int _idCounter;
-        private int _id;
-        private float _totalPrice;
-        private string _customerFullName;
-        private Address _deliveryAddress;
-        private DateTime _creationDate;
-        private OrderStatus _status;
-        private List<Item> _items = new List<Item>();
+        private protected int _id;
+        private protected float _totalPrice;
+        private protected string _customerFullName;
+        private protected int _customerId;
+        private protected Address _deliveryAddress;
+        private protected DateTime _creationDate;
+        private protected OrderStatus _status;
+        private protected List<Item> _items = new List<Item>();
 
         /// <summary>
         /// Возвращает ID заказа.
@@ -37,15 +38,24 @@ namespace ObjectOrientedPractics.Model.Classes
         {
             get
             {
+                _totalPrice = 0;
+                foreach (var item in _items)
+                {
+                    _totalPrice += item.Cost;
+                }
                 return _totalPrice;
             }
-            set { _totalPrice = value; }
         }
 
         /// <summary>
         /// Возвращает и задаёт имя покупателя, сделавшего заказ.
         /// </summary>
         public string CustomerFullName { get { return _customerFullName; } set { _customerFullName = value; } }
+
+        /// <summary>
+        /// Возвращает id покупателя.
+        /// </summary>
+        public int CustomerId { get { return _customerId; } private set { _customerId = value; } }
 
         /// <summary>
         /// Возвращает и задаёт статус товара.
@@ -78,7 +88,7 @@ namespace ObjectOrientedPractics.Model.Classes
         /// <param name="deliveryAddress">Адрес доставки.</param>
         /// <param name="customerName">Имя покупателя.</param>
         /// <param name="totalPrice">Итоговая цена.</param>
-        public Order(List<Item> items, Address deliveryAddress, string customerName, float totalPrice)
+        public Order(List<Item> items, Address deliveryAddress, string customerName, float totalPrice, int customerId)
         {
             _idCounter++;
             _id = _idCounter;
@@ -90,7 +100,7 @@ namespace ObjectOrientedPractics.Model.Classes
             CreationDate = DateTime.Now;
             Status = OrderStatus.New;
             CustomerFullName = customerName;
-            TotalPrice = totalPrice;
+            CustomerId = customerId;
         }
     }
 }

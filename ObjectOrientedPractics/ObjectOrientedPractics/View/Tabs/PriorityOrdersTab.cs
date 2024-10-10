@@ -1,11 +1,10 @@
-﻿using ObjectOrientedPractics.Model;
-using ObjectOrientedPractics.Model.Classes;
+﻿using ObjectOrientedPractics.Model.Classes;
+using ObjectOrientedPractics.Model;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Drawing.Text;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,19 +12,17 @@ using System.Windows.Forms;
 
 namespace ObjectOrientedPractics.View.Tabs
 {
-    public partial class OrdersTab : UserControl
+    public partial class PriorityOrdersTab : UserControl
     {
-        public OrdersTab()
+        public PriorityOrdersTab()
         {
             InitializeComponent();
         }
 
-        
-        private void OrdersTab_Load(object sender, EventArgs e)
+        private void PriorityOrdersTab_Load(object sender, EventArgs e)
         {
             StatusComboBox.DataSource = Enum.GetValues(typeof(OrderStatus));
             StatusComboBox.SelectedItem = null;
-            PriorityOptionsPanel.Visible = false;
 
             DeliverytimeComboBox.DataSource = _desiredDeliveryTime;
             DeliverytimeComboBox.SelectedItem = null;
@@ -33,21 +30,30 @@ namespace ObjectOrientedPractics.View.Tabs
 
         private int _selectedOrderIndex;
 
-        private string ourStatus;
-
         private string _selectedDeliveryTime;
 
         private string[] _desiredDeliveryTime = new string[] { "9:00 - 11:00", "11:00 - 13:00", "13:00 - 15:00", "15:00 - 17:00", "17:00 - 19:00", "19:00 - 21:00" };
 
         private int _selectedCustomerId;
 
-        private Order _selectedorder;
-
-        private PriorityOrder _selectedPriorityOrder;
+        private PriorityOrder _selectedorder;
 
         private List<Order> _orders = new List<Order>();
+        
+        private List<PriorityOrder> _priorityOrders = new List<PriorityOrder>();
 
+        private Random rand = new Random();
+
+
+        /// <summary>
+        /// Возвращает и задаёт список покупателей.
+        /// </summary>
         public List<Customer> Customers { get; set; }
+
+        /// <summary>
+        /// Возвращает и задаёт список товаров.
+        /// </summary>
+        public List<Item> Items { get; set; }
 
         /// <summary>
         /// Обновляет данные при переключении на вкладку.
@@ -64,9 +70,10 @@ namespace ObjectOrientedPractics.View.Tabs
         private void RefreshOrdersList()
         {
             _orders.Clear();
-            foreach(Customer customer in Customers)
+            _priorityOrders.Clear();
+            foreach (Customer customer in Customers)
             {
-                if(customer.CustomerOrders.Count != 0)
+                if (customer.CustomerOrders.Count != 0)
                 {
                     foreach (Order order in customer.CustomerOrders)
                     {
@@ -82,11 +89,19 @@ namespace ObjectOrientedPractics.View.Tabs
         private void RefreshDataGrid()
         {
             OrdersDataGridView.Rows.Clear();
-            foreach(Order order in _orders)
+            foreach (Order order in _orders)
             {
-                OrdersDataGridView.Rows.Add(order.ID, order.CreationDate, order.Status, order.CustomerFullName, 
-                    $"{order.CustomerAddress.Country},{order.CustomerAddress.City}{order.CustomerAddress.Street},{order.CustomerAddress.Building},{order.CustomerAddress.Apartment}", 
-                    order.TotalPrice);
+                if (order is PriorityOrder)
+                {
+                    _priorityOrders.Add(order as PriorityOrder);
+                }
+
+            }
+            foreach (PriorityOrder order in _priorityOrders)
+            {
+                OrdersDataGridView.Rows.Add(order.ID, order.CreationDate, order.Status, order.CustomerFullName,
+                $"{order.CustomerAddress.Country},{order.CustomerAddress.City}{order.CustomerAddress.Street},{order.CustomerAddress.Building},{order.CustomerAddress.Apartment}",
+                order.TotalPrice);
             }
         }
 
@@ -100,29 +115,17 @@ namespace ObjectOrientedPractics.View.Tabs
             try
             {
                 _selectedOrderIndex = OrdersDataGridView.SelectedRows[0].Index;
-                _selectedorder = _orders[_selectedOrderIndex];
-               
-                if (_selectedorder is PriorityOrder)
-                {
-                    PriorityOptionsPanel.Visible = true;
-                    _selectedPriorityOrder = _orders[_selectedOrderIndex] as PriorityOrder;
-                    DeliverytimeComboBox.SelectedIndex = ((int)_selectedPriorityOrder.DesiredDeliveryTime - 1);
-                }
-                else if (_selectedorder is Order)
-                {
-                    PriorityOptionsPanel.Visible = false;
-                    _selectedPriorityOrder = null;
-                }
-
+                _selectedorder = _priorityOrders[_selectedOrderIndex];
                 AddressControl1.OurAddress = _orders[_selectedOrderIndex].CustomerAddress;
                 AddressControl1.UpdateTextBoxs();
                 IdTextBox.Text = _selectedorder.ID.ToString();
                 CreatedDateTextBox.Text = _selectedorder.CreationDate.ToString();
                 StatusComboBox.SelectedItem = _selectedorder.Status;
                 TotalCostLabel.Text = _selectedorder.TotalPrice.ToString();
+                DeliverytimeComboBox.SelectedIndex = ((int)_selectedorder.DesiredDeliveryTime - 1);
                 FillOrderItemsListBox();
             }
-            catch(Exception) { }
+            catch (Exception) { }
         }
 
         /// <summary>
@@ -131,7 +134,7 @@ namespace ObjectOrientedPractics.View.Tabs
         private void FillOrderItemsListBox()
         {
             OrderItemsListBox.Items.Clear();
-            foreach (Item item in _orders[_selectedOrderIndex].Items)
+            foreach (Item item in _priorityOrders[_selectedOrderIndex].Items)
             {
                 OrderItemsListBox.Items.Add(item.Name);
             }
@@ -148,7 +151,7 @@ namespace ObjectOrientedPractics.View.Tabs
         {
             try
             {
-                ourStatus = StatusComboBox.Text;
+                string ourStatus = StatusComboBox.Text;
                 OrderStatus orderStatus = (OrderStatus)Enum.Parse(typeof(OrderStatus), ourStatus);
                 _selectedorder.Status = orderStatus;
                 OrdersDataGridView.SelectedRows[0].Cells[2].Value = orderStatus;
@@ -169,27 +172,80 @@ namespace ObjectOrientedPractics.View.Tabs
                 switch (_selectedDeliveryTime)
                 {
                     case "9:00 - 11:00":
-                        _selectedPriorityOrder.DesiredDeliveryTime = DeliveryTime.Morning;
+                        _selectedorder.DesiredDeliveryTime = DeliveryTime.Morning;
                         break;
                     case "11:00 - 13:00":
-                        _selectedPriorityOrder.DesiredDeliveryTime = DeliveryTime.Lunch;
+                        _selectedorder.DesiredDeliveryTime = DeliveryTime.Lunch;
                         break;
                     case "13:00 - 15:00":
-                        _selectedPriorityOrder.DesiredDeliveryTime = DeliveryTime.Afternoon;
+                        _selectedorder.DesiredDeliveryTime = DeliveryTime.Afternoon;
                         break;
                     case "15:00 - 17:00":
-                        _selectedPriorityOrder.DesiredDeliveryTime = DeliveryTime.Evening;
+                        _selectedorder.DesiredDeliveryTime = DeliveryTime.Evening;
                         break;
                     case "17:00 - 19:00":
-                        _selectedPriorityOrder.DesiredDeliveryTime = DeliveryTime.LateEvening;
+                        _selectedorder.DesiredDeliveryTime = DeliveryTime.LateEvening;
                         break;
                     case "19:00 - 21:00":
-                        _selectedPriorityOrder.DesiredDeliveryTime = DeliveryTime.Night;
+                        _selectedorder.DesiredDeliveryTime = DeliveryTime.Night;
                         break;
                 }
             }
             catch (Exception) { }
+            
+        }
+
+        /// <summary>
+        /// Добавляет случайный товар в заказ.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AdditemButton_Click(object sender, EventArgs e)
+        {
+            _selectedorder.Items.Add(Items[rand.Next(Items.Count)]);
+            RefreshData();
+        }
+
+        /// <summary>
+        /// Удаляет выбранный товар из заказа.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RemoveItemButton_Click(object sender, EventArgs e)
+        {
+            _selectedorder.Items.RemoveAt(OrderItemsListBox.SelectedIndex);
+            RefreshData();
+        }
+
+        /// <summary>
+        /// Пересоздааёт заказ.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ClearOrderButton_Click(object sender, EventArgs e)
+        {
+            DateTime deliveryDate = DateTime.Now.Date;
+            _selectedCustomerId = _selectedorder.CustomerId;
+            
+            foreach (var customer in Customers)
+            {
+                if (customer.ID == _selectedCustomerId)
+                {
+                    foreach (var order in customer.CustomerOrders)
+                    {
+                        if (order.ID == _selectedorder.ID)
+                        {
+                            customer.CustomerOrders.Remove(order);
+                            break;
+                        }
+                    }
+                    customer.CustomerOrders.Add(new PriorityOrder(customer.CustomerCart.Items, customer.CustomerAddress, customer.FullName, customer.CustomerCart.Amount, customer.ID, DeliveryTime.Morning, deliveryDate));
+                    RefreshData();
+                    break;
+                }
+            }
+            
+            
         }
     }
 }
-

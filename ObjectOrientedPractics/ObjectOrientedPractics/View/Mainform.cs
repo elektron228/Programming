@@ -22,6 +22,8 @@ namespace ObjectOrientedPractics
             CartsTab1.Items = _store.Items;
             CartsTab1.Customers = _store.Customers;
             OrdersTab1.Customers = _store.Customers;
+            PriorityOrdersTab1.Items = _store.Items;
+            PriorityOrdersTab1.Customers = _store.Customers;
         }
 
         private Store _store = new Store();
@@ -46,6 +48,10 @@ namespace ObjectOrientedPractics
                 case 3:
                     OrdersTab1.RefreshData();
                     OrdersTab1.AddressControl1.DisableTextBoxs();
+                    break;
+                case 4:
+                    PriorityOrdersTab1.RefreshData();
+                    PriorityOrdersTab1.AddressControl1.DisableTextBoxs();
                     break;
             }
             

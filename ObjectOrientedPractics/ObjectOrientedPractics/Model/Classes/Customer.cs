@@ -19,6 +19,7 @@ namespace ObjectOrientedPractics.Model
         private Address _address = new Address();
         private Cart _cart;
         private List<Order> _orders = new List<Order>();
+        private bool _isPriority = false;
 
         /// <summary>
         /// Возвращает ID покупателя.
@@ -28,6 +29,11 @@ namespace ObjectOrientedPractics.Model
             get { return _id; }
             private set { _id = value; }
         }
+
+        /// <summary>
+        /// Возвращает и задаёт приоритет.
+        /// </summary>
+        public bool IsPriority { get { return _isPriority; } set { _isPriority = value; } }
 
         /// <summary>
         /// Возвращает и задаёт имя покупателя. Должно быть до 200 символов.
