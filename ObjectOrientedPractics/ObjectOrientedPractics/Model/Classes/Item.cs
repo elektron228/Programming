@@ -75,7 +75,7 @@ namespace ObjectOrientedPractics.Model
         /// <summary>
         /// Возвращает и задаёт категорию товара.
         /// </summary>
-        public Category Category { get; set; }
+        public Category Category { get; set; } = new Category();
 
         /// <summary>
         /// Создаёт экземпляр класса <see cref="Item"/>.
@@ -83,15 +83,14 @@ namespace ObjectOrientedPractics.Model
         /// <param name="name">Название товара. Должно быть до 200 символов.</param>
         /// <param name="info">Информация о товаре. Должно быть до 1000 символов.</param>
         /// <param name="cost">Стоимость товара. Должна быть от 0 до 100 000.</param>
-        /// <param name="category">Категория товара товара.</param>
-        public Item (string name, string info, float cost, Category category)
+        public Item (string name, string info, float cost)
         {
             _idCounter++;
             _id = _idCounter;
             Name = name;
             Info = info;
             Cost = cost;
-            Category = category;
+            Category = Category.Food;
         }
 
         public Item() { }

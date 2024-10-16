@@ -47,7 +47,7 @@ namespace ObjectOrientedPractics.View.Tabs
         /// <param name="e"></param>
         private void AddItemButton_Click(object sender, EventArgs e)
         {
-            _items.Add(new Item("Example name", "Example description", 100, Category.Food ));
+            _items.Add(new Item("Example name", "Example description", 100));
             FillItemsListbox();
         }
 

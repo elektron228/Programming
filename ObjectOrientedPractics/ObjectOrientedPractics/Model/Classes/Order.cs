@@ -20,7 +20,7 @@ namespace ObjectOrientedPractics.Model.Classes
         private protected Address _deliveryAddress;
         private protected DateTime _creationDate;
         private protected OrderStatus _status;
-        private protected List<Item> _items = new List<Item>();
+        private protected List<Item> _items;
 
         /// <summary>
         /// Возвращает ID заказа.
@@ -92,10 +92,7 @@ namespace ObjectOrientedPractics.Model.Classes
         {
             _idCounter++;
             _id = _idCounter;
-            foreach (Item item in items)
-            {
-                _items.Add(item);
-            }
+            Items = items;
             CustomerAddress = deliveryAddress;
             CreationDate = DateTime.Now;
             Status = OrderStatus.New;
