@@ -1,4 +1,5 @@
 ﻿using ObjectOrientedPractics.Model;
+using ObjectOrientedPractics.Model.Classes;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;

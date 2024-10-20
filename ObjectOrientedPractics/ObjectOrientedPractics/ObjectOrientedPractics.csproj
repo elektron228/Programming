@@ -56,6 +56,7 @@
     <Compile Include="Model\Classes\Store.cs" />
     <Compile Include="Model\Enums\DeliveryTime.cs" />
     <Compile Include="Model\Enums\OrderStatus.cs" />
+    <Compile Include="Model\IDiscount.cs" />
     <Compile Include="Services\ValueValidator.cs" />
     <Compile Include="View\Controls\AddressControl.cs">
       <SubType>UserControl</SubType>

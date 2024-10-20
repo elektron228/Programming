@@ -1,15 +1,16 @@
-﻿using System;
+﻿using ObjectOrientedPractics.Model.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ObjectOrientedPractics.Model.Classes
+namespace ObjectOrientedPractics.Model
 {
     /// <summary>
     /// Хранит данные о накопительной скидке.
     /// </summary>
-    public class PointsDiscount
+    public class PointsDiscount : IDiscount
     {
         private int _points = 0;
 

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Runtime.Remoting.Messaging;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ObjectOrientedPractics.Model.Classes
+namespace ObjectOrientedPractics.Model.Classes.Orders
 {
     /// <summary>
     /// Хранит информацию о заказе.
@@ -14,7 +15,7 @@ namespace ObjectOrientedPractics.Model.Classes
     {
         private static int _idCounter;
         private protected int _id;
-        private protected float _totalPrice;
+        private protected double _amount;
         private protected string _customerFullName;
         private protected int _customerId;
         private protected Address _deliveryAddress;
@@ -34,16 +35,33 @@ namespace ObjectOrientedPractics.Model.Classes
         /// <summary>
         /// Возвращает общую стоимость корзины.
         /// </summary>
-        public float TotalPrice
+        public double Amount
         {
             get
             {
-                _totalPrice = 0;
+                _amount = 0;
                 foreach (var item in _items)
                 {
-                    _totalPrice += item.Cost;
+                    _amount += item.Cost;
                 }
-                return _totalPrice;
+                return _amount;
+            }
+        }
+
+        /// <summary>
+        /// Возвращает размер применённой скидки.
+        /// </summary>
+        public float DiscounAmount 
+        { 
+            get; 
+            private set; 
+        }
+
+        public double TotalPrice
+        {
+            get
+            {
+               return Amount - DiscounAmount;
             }
         }
 

@@ -1,5 +1,5 @@
 ﻿using ObjectOrientedPractics.Model;
-using ObjectOrientedPractics.Services;
+using ObjectOrientedPractics;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ObjectOrientedPractics.Model.Classes;
 
 namespace ObjectOrientedPractics.View.Tabs
 {

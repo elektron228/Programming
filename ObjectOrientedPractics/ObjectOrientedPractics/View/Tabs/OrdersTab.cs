@@ -1,5 +1,6 @@
 ﻿using ObjectOrientedPractics.Model;
 using ObjectOrientedPractics.Model.Classes;
+using ObjectOrientedPractics.Model.Classes.Orders;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -86,7 +87,7 @@ namespace ObjectOrientedPractics.View.Tabs
             {
                 OrdersDataGridView.Rows.Add(order.ID, order.CreationDate, order.Status, order.CustomerFullName, 
                     $"{order.CustomerAddress.Country},{order.CustomerAddress.City}{order.CustomerAddress.Street},{order.CustomerAddress.Building},{order.CustomerAddress.Apartment}", 
-                    order.TotalPrice);
+                    order.Amount);
             }
         }
 
@@ -119,7 +120,7 @@ namespace ObjectOrientedPractics.View.Tabs
                 IdTextBox.Text = _selectedorder.ID.ToString();
                 CreatedDateTextBox.Text = _selectedorder.CreationDate.ToString();
                 StatusComboBox.SelectedItem = _selectedorder.Status;
-                TotalCostLabel.Text = _selectedorder.TotalPrice.ToString();
+                TotalCostLabel.Text = _selectedorder.Amount.ToString();
                 FillOrderItemsListBox();
             }
             catch(Exception) { }

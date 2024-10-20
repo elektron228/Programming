@@ -1,12 +1,14 @@
-﻿using System;
+﻿using ObjectOrientedPractics.Model;
+using ObjectOrientedPractics.Model.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ObjectOrientedPractics.Model.Classes.Discounts
+namespace ObjectOrientedPractics.Model
 {
-    public class PercentDiscount
+    public class PercentDiscount : IDiscount
     {
         private int _percent = 1;
         private Category _category;

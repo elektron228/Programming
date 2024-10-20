@@ -9,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ObjectOrientedPractics.Model.Classes.Orders;
 
 namespace ObjectOrientedPractics.View.Tabs
 {
@@ -101,7 +102,7 @@ namespace ObjectOrientedPractics.View.Tabs
             {
                 OrdersDataGridView.Rows.Add(order.ID, order.CreationDate, order.Status, order.CustomerFullName,
                 $"{order.CustomerAddress.Country},{order.CustomerAddress.City}{order.CustomerAddress.Street},{order.CustomerAddress.Building},{order.CustomerAddress.Apartment}",
-                order.TotalPrice);
+                order.Amount);
             }
         }
 
@@ -121,7 +122,7 @@ namespace ObjectOrientedPractics.View.Tabs
                 IdTextBox.Text = _selectedorder.ID.ToString();
                 CreatedDateTextBox.Text = _selectedorder.CreationDate.ToString();
                 StatusComboBox.SelectedItem = _selectedorder.Status;
-                TotalCostLabel.Text = _selectedorder.TotalPrice.ToString();
+                TotalCostLabel.Text = _selectedorder.Amount.ToString();
                 DeliverytimeComboBox.SelectedIndex = ((int)_selectedorder.DesiredDeliveryTime - 1);
                 FillOrderItemsListBox();
             }
