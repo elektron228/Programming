@@ -103,5 +103,10 @@ namespace ObjectOrientedPractics.Model
                 }
             }
         }
+
+        public PercentDiscount(Category category)
+        {
+            _category = category;
+        }
     }
 }
