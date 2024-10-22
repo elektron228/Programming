@@ -87,7 +87,7 @@ namespace ObjectOrientedPractics.View.Tabs
             {
                 OrdersDataGridView.Rows.Add(order.ID, order.CreationDate, order.Status, order.CustomerFullName, 
                     $"{order.CustomerAddress.Country},{order.CustomerAddress.City}{order.CustomerAddress.Street},{order.CustomerAddress.Building},{order.CustomerAddress.Apartment}", 
-                    order.Amount);
+                    order.Amount, order.TotalPrice);
             }
         }
 
@@ -121,6 +121,7 @@ namespace ObjectOrientedPractics.View.Tabs
                 CreatedDateTextBox.Text = _selectedorder.CreationDate.ToString();
                 StatusComboBox.SelectedItem = _selectedorder.Status;
                 TotalCostLabel.Text = _selectedorder.Amount.ToString();
+                TotalPriceLabel.Text = _selectedorder.TotalPrice.ToString();
                 FillOrderItemsListBox();
             }
             catch(Exception) { }

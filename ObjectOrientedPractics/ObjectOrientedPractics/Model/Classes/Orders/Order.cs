@@ -21,7 +21,7 @@ namespace ObjectOrientedPractics.Model.Classes.Orders
         private protected Address _deliveryAddress;
         private protected DateTime _creationDate;
         private protected OrderStatus _status;
-        private protected List<Item> _items;
+        private protected List<Item> _items = new List<Item>();
 
         /// <summary>
         /// Возвращает ID заказа.
@@ -61,7 +61,8 @@ namespace ObjectOrientedPractics.Model.Classes.Orders
         {
             get
             {
-               return Amount - DiscounAmount;
+               double amount = Amount;
+               return amount - DiscounAmount;
             }
         }
 
@@ -105,17 +106,21 @@ namespace ObjectOrientedPractics.Model.Classes.Orders
         /// <param name="items">Список товаров.</param>
         /// <param name="deliveryAddress">Адрес доставки.</param>
         /// <param name="customerName">Имя покупателя.</param>
-        /// <param name="totalPrice">Итоговая цена.</param>
+        /// <param name="totalPrice">Размер скидки.</param>
         public Order(List<Item> items, Address deliveryAddress, string customerName, float totalPrice, int customerId)
         {
             _idCounter++;
             _id = _idCounter;
-            Items = items;
+            foreach (Item item in items)
+            {
+                _items.Add(item);
+            }
             CustomerAddress = deliveryAddress;
             CreationDate = DateTime.Now;
             Status = OrderStatus.New;
             CustomerFullName = customerName;
             CustomerId = customerId;
+            DiscounAmount = totalPrice;
         }
     }
 }

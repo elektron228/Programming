@@ -67,6 +67,23 @@ namespace ObjectOrientedPractics.View.Tabs
         }
 
         /// <summary>
+        /// Заполняет листбокс возможными скидками.
+        /// </summary>
+        private void FillCheckedListBox()
+        {
+            DiscountsCheckedListBox.Items.Clear();
+            foreach (var discount in CurrentCustomer.Discounts)
+            {
+                DiscountsCheckedListBox.Items.Add(discount.Info);
+            }
+            for(int i = 0; i < DiscountsCheckedListBox.Items.Count; i++)
+            {
+                DiscountsCheckedListBox.SetItemChecked(i, true);
+            }
+            
+        }
+
+        /// <summary>
         /// Обновляет значения товаров и покупателей.
         /// </summary>
         public void RefreshData()
@@ -74,7 +91,11 @@ namespace ObjectOrientedPractics.View.Tabs
             FillCustomersComboBox();
             FillItemsListbox();
             CartListBox.Items.Clear();
+            AmountLabelNumb.Text = "0";
+            DiscountAmountPrice.Text = "0";
             TotalCostLabel.Text = "0";
+            DiscountsCheckedListBox.Items.Clear();
+            
         }
 
         /// <summary>
@@ -96,7 +117,17 @@ namespace ObjectOrientedPractics.View.Tabs
                 CartListBox.Items.Clear ();
             }
             
-            TotalCostLabel.Text = CurrentCustomer.CustomerCart.Amount.ToString();
+            AmountLabelNumb.Text = CurrentCustomer.CustomerCart.Amount.ToString();
+            double discountAmount = 0;
+            for (int i = 0; i < DiscountsCheckedListBox.Items.Count; i++)
+            {
+                if (DiscountsCheckedListBox.GetItemChecked(i))
+                {
+                    discountAmount += (CurrentCustomer.Discounts[i].Calculate(CurrentCustomer.CustomerCart.Items));
+                }
+            }
+            DiscountAmountPrice.Text = $"{discountAmount}";
+            TotalCostLabel.Text = $"{CurrentCustomer.CustomerCart.Amount - discountAmount}";
         }
 
         /// <summary>
@@ -115,6 +146,7 @@ namespace ObjectOrientedPractics.View.Tabs
             {
                 CurrentCustomer = Customers[CustomersComboBox.SelectedIndex];
                 RefreshCartListBox();
+                FillCheckedListBox();
             }
         }
 
@@ -180,21 +212,57 @@ namespace ObjectOrientedPractics.View.Tabs
         {
             if ( CustomersComboBox.SelectedIndex != -1 && CurrentCustomer.CustomerCart.Items.Count != 0)
             {
+                int discountSum = 0;
                 if (CurrentCustomer.IsPriority)
                 {
+                    for (int i = 0; i < DiscountsCheckedListBox.Items.Count; i++)
+                    {
+                        if (DiscountsCheckedListBox.GetItemChecked(i))
+                        {
+                            discountSum += Convert.ToInt32(CurrentCustomer.Discounts[i].Calculate(CurrentCustomer.CustomerCart.Items));
+                        }
+                    }
+                    for (int i = 0; i < DiscountsCheckedListBox.Items.Count; i++)
+                    {
+                        if (DiscountsCheckedListBox.GetItemChecked(i))
+                        {
+                            CurrentCustomer.Discounts[i].Apply(CurrentCustomer.CustomerCart.Items);
+                        }
+                    }
+                    foreach (var discount in CurrentCustomer.Discounts)
+                    {
+                        discount.Update(CurrentCustomer.CustomerCart.Items);
+                    }
                     DateTime deliveryDate = DateTime.Now.Date;
-                    CurrentCustomer.CustomerOrders.Add(new PriorityOrder(CurrentCustomer.CustomerCart.Items, CurrentCustomer.CustomerAddress, CurrentCustomer.FullName, CurrentCustomer.CustomerCart.Amount, CurrentCustomer.ID, DeliveryTime.Morning, deliveryDate)) ;
+                    CurrentCustomer.CustomerOrders.Add(new PriorityOrder(CurrentCustomer.CustomerCart.Items, CurrentCustomer.CustomerAddress, CurrentCustomer.FullName, discountSum , CurrentCustomer.ID, DeliveryTime.Morning, deliveryDate)) ;
                     CurrentCustomer.CustomerCart.Items.Clear();
                     RefreshCartListBox();
                 }
                 else
                 {
-                    CurrentCustomer.CustomerOrders.Add(new Order(CurrentCustomer.CustomerCart.Items, CurrentCustomer.CustomerAddress, CurrentCustomer.FullName, CurrentCustomer.CustomerCart.Amount, CurrentCustomer.ID));
+                    
+                    for (int i = 0; i < DiscountsCheckedListBox.Items.Count; i++)
+                    {
+                        if (DiscountsCheckedListBox.GetItemChecked(i))
+                        {
+                            CurrentCustomer.Discounts[i].Apply(CurrentCustomer.CustomerCart.Items);
+                        }
+                    }
+                    foreach (var discount in CurrentCustomer.Discounts)
+                    {
+                        discount.Update(CurrentCustomer.CustomerCart.Items);
+                    }
+                    CurrentCustomer.CustomerOrders.Add(new Order(CurrentCustomer.CustomerCart.Items, CurrentCustomer.CustomerAddress, CurrentCustomer.FullName, Convert.ToInt32(DiscountAmountPrice.Text) , CurrentCustomer.ID));
                     CurrentCustomer.CustomerCart.Items.Clear();
                     RefreshCartListBox();
                 }
                 
             }
+        }
+
+        private void DiscountsCheckedListBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }

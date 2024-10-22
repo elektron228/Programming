@@ -46,7 +46,6 @@ namespace ObjectOrientedPractics.Model
         /// <returns></returns>
         public double Calculate(List<Item> items)
         {
-            int percent = _percent;
             double sum = 0;
             foreach (var item in items)
             {
@@ -55,13 +54,8 @@ namespace ObjectOrientedPractics.Model
                     sum += item.Cost;
                 }
             }
-            double sum2 = sum;
-            while((sum2 >= 1000) && (percent < 10))
-            {
-                sum -= 1000;
-                percent++;
-            }
-            return (sum / 100) * percent;
+            
+            return (sum / 100) * _percent;
         }
 
         /// <summary>
@@ -79,14 +73,8 @@ namespace ObjectOrientedPractics.Model
                     sum += item.Cost;
                 }
             }
-            double sum2 = sum;
-            while ((sum2 >= 1000) && (_percent < 10))
-            {
-                sum -= 1000;
-                _percent++;
-            }
-            return (sum / 100) * _percent;
 
+            return (sum / 100) * _percent;
         }
 
         /// <summary>
@@ -95,12 +83,19 @@ namespace ObjectOrientedPractics.Model
         /// <param name="items"></param>
         public void Update(List<Item> items)
         {
+
             foreach (var item in items)
             {
                 if (item.Category == _category)
                 {
                     _totalSum += item.Cost;
                 }
+            }
+            double sum2 = _totalSum;
+            while ((sum2 >= 1000) && (_percent < 10))
+            {
+                sum2 -= 1000;
+                _percent++;
             }
         }
 

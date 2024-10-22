@@ -124,9 +124,8 @@ namespace ObjectOrientedPractics.Model
             {
                 sum += item.Cost;
             }
-            double points = (sum / 100) * 10;
 
-            _points += Convert.ToInt32(points);
+            _points += Convert.ToInt32(sum / 10);
         }
     }
 }
