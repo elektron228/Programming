@@ -51,7 +51,7 @@ namespace ObjectOrientedPractics.Model.Classes.Orders
         /// <summary>
         /// Возвращает размер применённой скидки.
         /// </summary>
-        public float DiscounAmount 
+        public double DiscounAmount 
         { 
             get; 
             private set; 
