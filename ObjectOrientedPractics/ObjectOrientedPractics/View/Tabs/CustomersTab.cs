@@ -1,4 +1,6 @@
 ﻿using ObjectOrientedPractics.Model;
+using ObjectOrientedPractics.Model.Classes;
+using ObjectOrientedPractics.View.Forms;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -45,6 +47,19 @@ namespace ObjectOrientedPractics.View.Tabs
             }
         }
 
+        private void FillDiscountsListBox()
+        {
+            DiscountsListBox.Items.Clear();
+            if (_selectedCustomer != null)
+            {
+                foreach (IDiscount discount in _selectedCustomer.Discounts)
+                {
+                    DiscountsListBox.Items.Add($"{discount.Info}");
+                }
+            }
+            
+        }
+
         /// <summary>
         /// Обновляет текстбоксы.
         /// </summary>
@@ -56,6 +71,8 @@ namespace ObjectOrientedPractics.View.Tabs
             IDTextBox.Text = _selectedCustomer.ID.ToString();
             PriorityCheckBox.Checked = _selectedCustomer.IsPriority;
             CustomerAddressControl.UpdateTextBoxs();
+            FillDiscountsListBox();
+
         }
 
         /// <summary>
@@ -67,6 +84,7 @@ namespace ObjectOrientedPractics.View.Tabs
             IDTextBox.Clear();
             CustomerAddressControl.ClearTextBoxs();
             FillCustomersListbox();
+            FillDiscountsListBox();
         }
 
         /// <summary>
@@ -78,6 +96,7 @@ namespace ObjectOrientedPractics.View.Tabs
         {
             _customers.Add(new Customer("Example full name"));
             FillCustomersListbox();
+            FillDiscountsListBox();
         }
 
         /// <summary>
@@ -143,6 +162,57 @@ namespace ObjectOrientedPractics.View.Tabs
                 
             }
             
+        }
+
+        /// <summary>
+        /// Добавляет процентную скидку.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void AddDiscountButton_Click(object sender, EventArgs e)
+        {
+            if(_selectedCustomer != null)
+            {
+                Category category;
+                AddDiscountForm addDiscountForm = new AddDiscountForm();
+                addDiscountForm.ShowDialog();
+                if (addDiscountForm.IsChanged)
+                {
+                    bool isContains = false;
+                    foreach(var discount in _selectedCustomer.Discounts)
+                    {
+                        if (discount is PercentDiscount)
+                        {
+                            PercentDiscount percentDiscount1 = (PercentDiscount)discount;
+                            if (percentDiscount1.Category == addDiscountForm.Category)
+                            {
+                                isContains = true;
+                            }
+                        }
+                    }
+                    if (!isContains)
+                    {
+                        category = addDiscountForm.Category;
+                        PercentDiscount percentDiscount = new PercentDiscount(category);
+                        _selectedCustomer.Discounts.Add(percentDiscount);
+                    }
+                }
+                FillDiscountsListBox();
+            }
+        }
+
+        /// <summary>
+        /// Удаляет процентную скидку.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void RemoveDiscountButton_Click(object sender, EventArgs e)
+        {
+            if (_selectedCustomer != null && DiscountsListBox.SelectedIndex != 0)
+            {
+                _selectedCustomer.Discounts.RemoveAt(DiscountsListBox.SelectedIndex);
+                FillDiscountsListBox();
+            }
         }
     }
 }

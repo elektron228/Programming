@@ -1,11 +1,11 @@
-﻿using ObjectOrientedPractics.Services;
+﻿using ObjectOrientedPractics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ObjectOrientedPractics.Model
+namespace ObjectOrientedPractics.Model.Classes
 {
     public class Address
     {

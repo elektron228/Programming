@@ -31,12 +31,6 @@
             this.OrdersTabSplitContainer = new System.Windows.Forms.SplitContainer();
             this.OrdersLabel = new System.Windows.Forms.Label();
             this.OrdersDataGridView = new System.Windows.Forms.DataGridView();
-            this.IdColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CreatedTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.OrderStatusColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.CustomerFullNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.DeliveryAddressColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.TotalCostColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.PriorityOptionsPanel = new System.Windows.Forms.Panel();
             this.PriorityOptionsLabel = new System.Windows.Forms.Label();
             this.DeliverytimeComboBox = new System.Windows.Forms.ComboBox();
@@ -45,7 +39,6 @@
             this.OrderItemsListBox = new System.Windows.Forms.ListBox();
             this.OrderItemsLabel = new System.Windows.Forms.Label();
             this.StatusComboBox = new System.Windows.Forms.ComboBox();
-            this.AddressControl1 = new ObjectOrientedPractics.View.Controls.AddressControl();
             this.CreatedDateTextBox = new System.Windows.Forms.TextBox();
             this.AmountTableLayoutPanel = new System.Windows.Forms.TableLayoutPanel();
             this.AmountLabel = new System.Windows.Forms.Label();
@@ -55,6 +48,16 @@
             this.CreatedLabel = new System.Windows.Forms.Label();
             this.IdLabel = new System.Windows.Forms.Label();
             this.SelectedOrderLabel = new System.Windows.Forms.Label();
+            this.IdColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CreatedTimeColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.OrderStatusColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.CustomerFullNameColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DeliveryAddressColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TotalCostColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.TotalPriceColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.AddressControl1 = new ObjectOrientedPractics.View.Controls.AddressControl();
+            this.TotalPriceLabel = new System.Windows.Forms.Label();
+            this.TotalLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.OrdersTabSplitContainer)).BeginInit();
             this.OrdersTabSplitContainer.Panel1.SuspendLayout();
             this.OrdersTabSplitContainer.Panel2.SuspendLayout();
@@ -78,6 +81,8 @@
             // 
             // OrdersTabSplitContainer.Panel2
             // 
+            this.OrdersTabSplitContainer.Panel2.Controls.Add(this.TotalPriceLabel);
+            this.OrdersTabSplitContainer.Panel2.Controls.Add(this.TotalLabel);
             this.OrdersTabSplitContainer.Panel2.Controls.Add(this.PriorityOptionsPanel);
             this.OrdersTabSplitContainer.Panel2.Controls.Add(this.OrderItemsLayoutPanel);
             this.OrdersTabSplitContainer.Panel2.Controls.Add(this.OrderItemsLabel);
@@ -120,7 +125,8 @@
             this.OrderStatusColumn,
             this.CustomerFullNameColumn,
             this.DeliveryAddressColumn,
-            this.TotalCostColumn});
+            this.TotalCostColumn,
+            this.TotalPriceColumn});
             this.OrdersDataGridView.Location = new System.Drawing.Point(3, 16);
             this.OrdersDataGridView.MultiSelect = false;
             this.OrdersDataGridView.Name = "OrdersDataGridView";
@@ -130,45 +136,6 @@
             this.OrdersDataGridView.Size = new System.Drawing.Size(344, 514);
             this.OrdersDataGridView.TabIndex = 0;
             this.OrdersDataGridView.SelectionChanged += new System.EventHandler(this.OrdersDataGridView_SelectionChanged);
-            // 
-            // IdColumn
-            // 
-            this.IdColumn.HeaderText = "ID";
-            this.IdColumn.Name = "IdColumn";
-            this.IdColumn.ReadOnly = true;
-            this.IdColumn.Width = 30;
-            // 
-            // CreatedTimeColumn
-            // 
-            this.CreatedTimeColumn.HeaderText = "Created";
-            this.CreatedTimeColumn.Name = "CreatedTimeColumn";
-            this.CreatedTimeColumn.ReadOnly = true;
-            // 
-            // OrderStatusColumn
-            // 
-            this.OrderStatusColumn.HeaderText = "Order Status";
-            this.OrderStatusColumn.Name = "OrderStatusColumn";
-            this.OrderStatusColumn.ReadOnly = true;
-            // 
-            // CustomerFullNameColumn
-            // 
-            this.CustomerFullNameColumn.HeaderText = "Customer Full Name";
-            this.CustomerFullNameColumn.Name = "CustomerFullNameColumn";
-            this.CustomerFullNameColumn.ReadOnly = true;
-            this.CustomerFullNameColumn.Width = 130;
-            // 
-            // DeliveryAddressColumn
-            // 
-            this.DeliveryAddressColumn.HeaderText = "Delivery Address";
-            this.DeliveryAddressColumn.Name = "DeliveryAddressColumn";
-            this.DeliveryAddressColumn.ReadOnly = true;
-            this.DeliveryAddressColumn.Width = 250;
-            // 
-            // TotalCostColumn
-            // 
-            this.TotalCostColumn.HeaderText = "Total Cost";
-            this.TotalCostColumn.Name = "TotalCostColumn";
-            this.TotalCostColumn.ReadOnly = true;
             // 
             // PriorityOptionsPanel
             // 
@@ -251,14 +218,6 @@
             this.StatusComboBox.Size = new System.Drawing.Size(121, 21);
             this.StatusComboBox.TabIndex = 1;
             this.StatusComboBox.SelectedIndexChanged += new System.EventHandler(this.StatusComboBox_SelectedIndexChanged);
-            // 
-            // AddressControl1
-            // 
-            this.AddressControl1.Location = new System.Drawing.Point(3, 114);
-            this.AddressControl1.Name = "AddressControl1";
-            this.AddressControl1.OurAddress = null;
-            this.AddressControl1.Size = new System.Drawing.Size(380, 139);
-            this.AddressControl1.TabIndex = 0;
             // 
             // CreatedDateTextBox
             // 
@@ -354,6 +313,82 @@
             this.SelectedOrderLabel.TabIndex = 1;
             this.SelectedOrderLabel.Text = "Selected order";
             // 
+            // IdColumn
+            // 
+            this.IdColumn.HeaderText = "ID";
+            this.IdColumn.Name = "IdColumn";
+            this.IdColumn.ReadOnly = true;
+            this.IdColumn.Width = 30;
+            // 
+            // CreatedTimeColumn
+            // 
+            this.CreatedTimeColumn.HeaderText = "Created";
+            this.CreatedTimeColumn.Name = "CreatedTimeColumn";
+            this.CreatedTimeColumn.ReadOnly = true;
+            // 
+            // OrderStatusColumn
+            // 
+            this.OrderStatusColumn.HeaderText = "Order Status";
+            this.OrderStatusColumn.Name = "OrderStatusColumn";
+            this.OrderStatusColumn.ReadOnly = true;
+            // 
+            // CustomerFullNameColumn
+            // 
+            this.CustomerFullNameColumn.HeaderText = "Customer Full Name";
+            this.CustomerFullNameColumn.Name = "CustomerFullNameColumn";
+            this.CustomerFullNameColumn.ReadOnly = true;
+            this.CustomerFullNameColumn.Width = 130;
+            // 
+            // DeliveryAddressColumn
+            // 
+            this.DeliveryAddressColumn.HeaderText = "Delivery Address";
+            this.DeliveryAddressColumn.Name = "DeliveryAddressColumn";
+            this.DeliveryAddressColumn.ReadOnly = true;
+            this.DeliveryAddressColumn.Width = 250;
+            // 
+            // TotalCostColumn
+            // 
+            this.TotalCostColumn.HeaderText = "Amount";
+            this.TotalCostColumn.Name = "TotalCostColumn";
+            this.TotalCostColumn.ReadOnly = true;
+            // 
+            // TotalPriceColumn
+            // 
+            this.TotalPriceColumn.HeaderText = "Total Price";
+            this.TotalPriceColumn.Name = "TotalPriceColumn";
+            this.TotalPriceColumn.ReadOnly = true;
+            // 
+            // AddressControl1
+            // 
+            this.AddressControl1.Location = new System.Drawing.Point(3, 114);
+            this.AddressControl1.Name = "AddressControl1";
+            this.AddressControl1.OurAddress = null;
+            this.AddressControl1.Size = new System.Drawing.Size(380, 139);
+            this.AddressControl1.TabIndex = 0;
+            // 
+            // TotalPriceLabel
+            // 
+            this.TotalPriceLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.TotalPriceLabel.AutoSize = true;
+            this.TotalPriceLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.TotalPriceLabel.Location = new System.Drawing.Point(346, 482);
+            this.TotalPriceLabel.Name = "TotalPriceLabel";
+            this.TotalPriceLabel.Size = new System.Drawing.Size(34, 20);
+            this.TotalPriceLabel.TabIndex = 13;
+            this.TotalPriceLabel.Text = "0,0";
+            this.TotalPriceLabel.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
+            // 
+            // TotalLabel
+            // 
+            this.TotalLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.TotalLabel.AutoSize = true;
+            this.TotalLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.TotalLabel.Location = new System.Drawing.Point(329, 469);
+            this.TotalLabel.Name = "TotalLabel";
+            this.TotalLabel.Size = new System.Drawing.Size(51, 13);
+            this.TotalLabel.TabIndex = 14;
+            this.TotalLabel.Text = "TOTAL:";
+            // 
             // OrdersTab
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -387,12 +422,6 @@
         private System.Windows.Forms.TableLayoutPanel AmountTableLayoutPanel;
         private System.Windows.Forms.Label AmountLabel;
         private System.Windows.Forms.Label TotalCostLabel;
-        private System.Windows.Forms.DataGridViewTextBoxColumn IdColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CreatedTimeColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn OrderStatusColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn CustomerFullNameColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn DeliveryAddressColumn;
-        private System.Windows.Forms.DataGridViewTextBoxColumn TotalCostColumn;
         private System.Windows.Forms.Label StatusLabel;
         private System.Windows.Forms.TextBox CreatedDateTextBox;
         private System.Windows.Forms.Label IdLabel;
@@ -407,5 +436,14 @@
         private System.Windows.Forms.Label PriorityOptionsLabel;
         private System.Windows.Forms.ComboBox DeliverytimeComboBox;
         private System.Windows.Forms.Label DeliveryTimeLabel;
+        private System.Windows.Forms.DataGridViewTextBoxColumn IdColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CreatedTimeColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn OrderStatusColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn CustomerFullNameColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DeliveryAddressColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TotalCostColumn;
+        private System.Windows.Forms.DataGridViewTextBoxColumn TotalPriceColumn;
+        private System.Windows.Forms.Label TotalPriceLabel;
+        private System.Windows.Forms.Label TotalLabel;
     }
 }

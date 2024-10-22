@@ -1,12 +1,7 @@
-﻿using ObjectOrientedPractics.Model.Classes;
-using ObjectOrientedPractics.Services;
-using System;
+﻿using ObjectOrientedPractics.Model.Classes.Orders;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace ObjectOrientedPractics.Model
+namespace ObjectOrientedPractics.Model.Classes
 {
     /// <summary>
     /// Хранит информацию о покупателе.
@@ -20,6 +15,7 @@ namespace ObjectOrientedPractics.Model
         private Cart _cart;
         private List<Order> _orders = new List<Order>();
         private bool _isPriority = false;
+        
 
         /// <summary>
         /// Возвращает ID покупателя.
@@ -79,6 +75,11 @@ namespace ObjectOrientedPractics.Model
         }
 
         /// <summary>
+        /// Возвращает и задаёт скидки.
+        /// </summary>
+        public List<IDiscount> Discounts { get; set; } = new List<IDiscount>();
+
+        /// <summary>
         /// Создаёт экземпляр класса <see cref="Customer"/>.
         /// </summary>
         /// <param name="fullName">Имя покупателя. Должно быть до 200 символов.</param>
@@ -89,6 +90,8 @@ namespace ObjectOrientedPractics.Model
             ID = _idCounter;
             FullName = fullName;
             CustomerCart = new Cart();
+            PointsDiscount points = new PointsDiscount();
+            Discounts.Add(points);
         }
     }
 }
