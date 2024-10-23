@@ -9,7 +9,7 @@ namespace ObjectOrientedPractics.Model.Classes
     /// <summary>
     /// Хранит информацию о корзине товаров.
     /// </summary>
-    public class Cart
+    public class Cart : ICloneable
     {
         private List<Item> _items;
 
@@ -49,5 +49,13 @@ namespace ObjectOrientedPractics.Model.Classes
             Items = new List<Item>();
         }
 
+        /// <summary>
+        /// Создаёт копию корзины.
+        /// </summary>
+        /// <returns></returns>
+        public object Clone()
+        {
+            return new Cart() { Items = this.Items };
+        }
     }
 }

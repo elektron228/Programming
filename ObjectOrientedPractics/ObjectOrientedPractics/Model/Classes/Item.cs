@@ -10,7 +10,7 @@ namespace ObjectOrientedPractics.Model.Classes
     /// <summary>
     /// Хранит информацию о товаре.
     /// </summary>
-    public class Item
+    public class Item : ICloneable,IEquatable<object>, IComparable<float>
     {
         
         private readonly int _id;
@@ -93,6 +93,46 @@ namespace ObjectOrientedPractics.Model.Classes
             Category = Category.Food;
         }
 
-        public Item() { }
+        /// <summary>
+        /// Создаёт копию товара.
+        /// </summary>
+        /// <returns></returns>
+        public object Clone()
+        {
+            return new Item(this.Name, this.Info, this.Cost) {Category = this.Category };
+        }
+
+        /// <summary>
+        /// Сравнивает объекты адреса
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object other)
+        {
+            if (other is Item)
+            {
+                return (Item)other == (Item)this;
+
+            }
+            return false;
+        }
+
+        /// <summary>
+        /// Сравнивает процент скидки.
+        /// </summary>
+        /// <param name="cost"></param>
+        /// <returns></returns>
+        public int CompareTo(float cost)
+        {
+            if (_cost < cost)
+            {
+                return -1;
+            }
+            if (_cost > cost)
+            {
+                return 1;
+            }
+            return 0;
+        }
     }
 }

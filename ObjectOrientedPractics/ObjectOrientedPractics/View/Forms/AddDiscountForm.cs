@@ -27,7 +27,6 @@ namespace ObjectOrientedPractics.View.Forms
         private void AddDiscountForm_Load(object sender, EventArgs e)
         {
             CategoryComboBox.DataSource = Enum.GetValues(typeof(Category));
-            CategoryComboBox.SelectedItem = null;
         }
 
         private void CategoryComboBox_SelectedIndexChanged(object sender, EventArgs e)

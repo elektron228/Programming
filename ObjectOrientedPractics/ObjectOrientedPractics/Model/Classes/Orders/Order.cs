@@ -11,7 +11,7 @@ namespace ObjectOrientedPractics.Model.Classes.Orders
     /// <summary>
     /// Хранит информацию о заказе.
     /// </summary>
-    public class Order
+    public class Order : IEquatable<object>
     {
         private static int _idCounter;
         private protected int _id;
@@ -121,6 +121,21 @@ namespace ObjectOrientedPractics.Model.Classes.Orders
             CustomerFullName = customerName;
             CustomerId = customerId;
             DiscounAmount = totalPrice;
+        }
+
+        /// <summary>
+        /// Сравнивает объекты адреса
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object other)
+        {
+            if (other is Order)
+            {
+                return (Order)other == (Order)this;
+
+            }
+            return false;
         }
     }
 }

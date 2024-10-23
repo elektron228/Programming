@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace ObjectOrientedPractics.Model
 {
-    public class PercentDiscount : IDiscount
+    public class PercentDiscount : IDiscount, IComparable<int>
     {
         private int _percent = 1;
         private Category _category;
@@ -99,9 +99,31 @@ namespace ObjectOrientedPractics.Model
             }
         }
 
+        /// <summary>
+        /// Создаёт экземпляр класса <see cref="PercentDiscount"/>
+        /// </summary>
+        /// <param name="category"></param>
         public PercentDiscount(Category category)
         {
             _category = category;
+        }
+
+        /// <summary>
+        /// Сравнивает процент скидки.
+        /// </summary>
+        /// <param name="percent"></param>
+        /// <returns></returns>
+        public int CompareTo(int percent)
+        {
+            if (_percent < percent)
+            {
+                return -1;
+            }
+            if(_percent > percent)
+            {
+                return 1;
+            }
+            return 0;
         }
     }
 }
