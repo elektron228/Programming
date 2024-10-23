@@ -10,7 +10,7 @@ namespace ObjectOrientedPractics.Model
     /// <summary>
     /// Хранит данные о накопительной скидке.
     /// </summary>
-    public class PointsDiscount : IDiscount
+    public class PointsDiscount : IDiscount, IComparable<int>
     {
         private int _points = 0;
 
@@ -126,6 +126,24 @@ namespace ObjectOrientedPractics.Model
             }
 
             _points += Convert.ToInt32(sum / 10);
+        }
+
+        /// <summary>
+        /// Сравнивает процент скидки.
+        /// </summary>
+        /// <param name="points"></param>
+        /// <returns></returns>
+        public int CompareTo(int points)
+        {
+            if (_points < points)
+            {
+                return -1;
+            }
+            if (_points > points)
+            {
+                return 1;
+            }
+            return 0;
         }
     }
 }

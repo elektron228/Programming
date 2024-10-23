@@ -34,7 +34,7 @@ namespace ObjectOrientedPractics.View.Tabs
         /// <summary>
         /// Выбранный товар.
         /// </summary>
-        private Item _selectedItem = new Item();
+        private Item _selectedItem;
 
         /// <summary>
         /// Возвращает и задаёт список товаров.

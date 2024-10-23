@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ObjectOrientedPractics.Model.Classes
 {
-    public class Address
+    public class Address : ICloneable , IEquatable<object>
     {
         private int _index;
         private string _country;
@@ -19,88 +19,88 @@ namespace ObjectOrientedPractics.Model.Classes
         /// <summary>
         /// Возвращет и задаёт индекс. Целое шестизначное число.
         /// </summary>
-        public int Index 
-        { 
-            get { return _index; } 
-            set 
+        public int Index
+        {
+            get { return _index; }
+            set
             {
                 if (value.ToString().Length != 6)
                 {
                     throw new ArgumentException("Индекс должен быть шестизначным числом.");
                 }
-                _index = value; 
-            } 
+                _index = value;
+            }
         }
 
         /// <summary>
         ///Возвращает и задаёт страну. Не более 50 символов. 
         /// </summary>
-        public string Country 
-        { 
-            get { return _country; } 
-            set 
+        public string Country
+        {
+            get { return _country; }
+            set
             {
                 ValueValidator.AssertStringOnLength(value, 50, "Country");
-                _country = value; 
-            } 
+                _country = value;
+            }
         }
 
         /// <summary>
         /// Возвращает и задаёт город. Не более 50 символов.
         /// </summary>
-        public string City 
-        { 
-            get { return _city; } 
-            set 
+        public string City
+        {
+            get { return _city; }
+            set
             {
                 ValueValidator.AssertStringOnLength(value, 50, "City");
-                _city = value; 
-            } 
+                _city = value;
+            }
         }
 
         /// <summary>
         /// Возвращает и задаёт улицу. Не более 100 символов.
         /// </summary>
-        public string Street 
-        { 
-            get { return _street; } 
-            set 
+        public string Street
+        {
+            get { return _street; }
+            set
             {
                 ValueValidator.AssertStringOnLength(value, 100, "Street");
-                _street = value; 
-            } 
+                _street = value;
+            }
         }
 
         /// <summary>
         /// Возвращает и задаёт номер дома. Не более 10 символов.
         /// </summary>
-        public string Building 
-        { 
-            get { return _building; } 
-            set 
+        public string Building
+        {
+            get { return _building; }
+            set
             {
                 ValueValidator.AssertStringOnLength(value, 10, "Building");
-                _building = value; 
-            } 
+                _building = value;
+            }
         }
 
         /// <summary>
         /// Возвращает и задаёт номер квартиры. Не более 10 символов.
         /// </summary>
-        public string Apartment 
-        { 
+        public string Apartment
+        {
             get { return _apartment; }
-            set 
+            set
             {
                 ValueValidator.AssertStringOnLength(value, 10, "Apartment");
-                _apartment = value; 
-            } 
+                _apartment = value;
+            }
         }
 
         /// <summary>
         /// Создаёт экземпляр класса <see cref="Address"/>.
         /// </summary>
-        public Address() 
+        public Address()
         {
             Index = 111111;
             Country = "Example country";
@@ -127,6 +127,30 @@ namespace ObjectOrientedPractics.Model.Classes
             Street = street;
             Building = building;
             Apartment = apartment;
+        }
+
+        /// <summary>
+        /// Копирует объект адреса.
+        /// </summary>
+        /// <returns></returns>
+        public object Clone()
+        {
+            return new Address(this.Index, this.Country, this.City, this.Street, this.Building, this.Apartment);
+        }
+
+        /// <summary>
+        /// Сравнивает объекты адреса
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        public override bool Equals(object other)
+        {
+            if (other is Address)
+            {
+                return (Address)other == (Address)this;
+
+            }
+            return false;
         }
     }
 }
