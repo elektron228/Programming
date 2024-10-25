@@ -30,6 +30,7 @@ namespace ObjectOrientedPractics.View.Tabs
 
             DeliverytimeComboBox.DataSource = _desiredDeliveryTime;
             DeliverytimeComboBox.SelectedItem = null;
+            AddressControl1.DisableTextBoxs();
         }
 
         private int _selectedOrderIndex;
@@ -39,8 +40,6 @@ namespace ObjectOrientedPractics.View.Tabs
         private string _selectedDeliveryTime;
 
         private string[] _desiredDeliveryTime = new string[] { "9:00 - 11:00", "11:00 - 13:00", "13:00 - 15:00", "15:00 - 17:00", "17:00 - 19:00", "19:00 - 21:00" };
-
-        private int _selectedCustomerId;
 
         private Order _selectedorder;
 

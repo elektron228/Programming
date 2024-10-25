@@ -38,6 +38,8 @@ namespace ObjectOrientedPractics.View.Tabs
 
         private List<Item> _displayedItems = new List<Item>();
 
+        public event EventHandler ItemsChanged;
+
         /// <summary>
         /// Выбранный товар.
         /// </summary>
@@ -60,6 +62,7 @@ namespace ObjectOrientedPractics.View.Tabs
             _items.Add(new Item("Example name", "Example description", 100));
             SortByComboBox_SelectedIndexChanged(sender, e);
             FillItemsListbox();
+            OnItemsChanged();
         }
 
         /// <summary>
@@ -205,6 +208,7 @@ namespace ObjectOrientedPractics.View.Tabs
                 string ourCateg = CategoryComboBox.Text;
                 Category category = (Category)Enum.Parse(typeof(Category), ourCateg);
                 _selectedItem.Category = category;
+
             }
             catch (Exception) { }
         }
@@ -287,6 +291,10 @@ namespace ObjectOrientedPractics.View.Tabs
                     FillItemsListbox();
                     break;
             }
+        }
+        private void OnItemsChanged()
+        {
+            ItemsChanged?.Invoke(this, EventArgs.Empty);
         }
     }
 }

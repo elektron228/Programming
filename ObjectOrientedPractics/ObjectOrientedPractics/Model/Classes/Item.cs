@@ -1,6 +1,7 @@
 ﻿using ObjectOrientedPractics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,10 @@ namespace ObjectOrientedPractics.Model.Classes
         private string _info;
         private float _cost;
 
+        public event EventHandler NameChanged;
+        public event EventHandler CostChanged;
+        public event EventHandler InfoChanged;
+
         /// <summary>
         /// Возвращает Id товара.
         /// </summary>
@@ -35,9 +40,14 @@ namespace ObjectOrientedPractics.Model.Classes
             get { return _name; }
             set
             {
-                ValueValidator.AssertStringOnLength(value, 200, Name);
-                _name = value;
+                if (_name != value)
+                {
+                    ValueValidator.AssertStringOnLength(value, 200, Name);
+                    _name = value;
+                    OnNameChanged();
+                }
             }
+                
         }
 
         /// <summary>
@@ -48,8 +58,12 @@ namespace ObjectOrientedPractics.Model.Classes
             get { return _info; }
             set
             {
-                ValueValidator.AssertStringOnLength(value, 1000, Info);
-                _info = value;
+                if (_info != value)
+                {
+                    ValueValidator.AssertStringOnLength(value, 1000, Info);
+                    _info = value;
+                    OnInfoChanged();
+                }
             }
         }
 
@@ -61,14 +75,19 @@ namespace ObjectOrientedPractics.Model.Classes
             get { return _cost; }
             set
             {
-                if (value >= 0 && value <= 100000)
+                if( _cost != value)
                 {
-                    _cost = value;
+                    if (value >= 0 && value <= 100000)
+                    {
+                        _cost = value;
+                        OnCostChanged();
+                    }
+                    else
+                    {
+                        throw new ArgumentException("Стоимость товара должна быть от 0 до 100 000");
+                    }
                 }
-                else
-                {
-                    throw new ArgumentException("Стоимость товара должна быть от 0 до 100 000");
-                }
+                
             }
         }
 
@@ -133,6 +152,24 @@ namespace ObjectOrientedPractics.Model.Classes
                 return 1;
             }
             return 0;
+        }
+
+        private void OnNameChanged()
+        {
+            NameChanged?.Invoke(this, EventArgs.Empty);
+            Debug.Write("\n NameChanged");
+        }
+
+        private void OnCostChanged()
+        {
+            CostChanged?.Invoke(this, EventArgs.Empty);
+            Debug.Write("\n CostChanged");
+        }
+
+        private void OnInfoChanged()
+        {
+            InfoChanged?.Invoke(this, EventArgs.Empty);
+            Debug.Write("\n InfoChanged");
         }
     }
 }
