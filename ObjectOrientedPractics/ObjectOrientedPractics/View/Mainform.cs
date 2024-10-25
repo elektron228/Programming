@@ -25,6 +25,8 @@ namespace ObjectOrientedPractics
             OrdersTab1.Customers = _store.Customers;
             PriorityOrdersTab1.Items = _store.Items;
             PriorityOrdersTab1.Customers = _store.Customers;
+
+            ItemsTab1.ItemsChanged += ItemsTab_ItemsChanged;
         }
 
         private Store _store = new Store();
@@ -41,21 +43,27 @@ namespace ObjectOrientedPractics
                 case 0:
                     break; 
                 case 1:
-                    CustomersTab1.CustomerAddressControl.EnableTextBoxs();
                     break;
                 case 2:
-                    CartsTab1.RefreshData();
                     break;
                 case 3:
                     OrdersTab1.RefreshData();
-                    OrdersTab1.AddressControl1.DisableTextBoxs();
                     break;
                 case 4:
                     PriorityOrdersTab1.RefreshData();
-                    PriorityOrdersTab1.AddressControl1.DisableTextBoxs();
                     break;
             }
             
+        }
+
+        /// <summary>
+        /// Обновляет данные на вкладке с корзиной.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void ItemsTab_ItemsChanged(object sender, EventArgs e)
+        {
+            CartsTab1.RefreshData(); 
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using ObjectOrientedPractics;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +17,8 @@ namespace ObjectOrientedPractics.Model.Classes
         private string _building;
         private string _apartment;
 
+        public event EventHandler AddressChanged;
+
         /// <summary>
         /// Возвращет и задаёт индекс. Целое шестизначное число.
         /// </summary>
@@ -24,11 +27,16 @@ namespace ObjectOrientedPractics.Model.Classes
             get { return _index; }
             set
             {
-                if (value.ToString().Length != 6)
+                if (_index != value)
                 {
-                    throw new ArgumentException("Индекс должен быть шестизначным числом.");
+                    if (value.ToString().Length != 6)
+                    {
+                        throw new ArgumentException("Индекс должен быть шестизначным числом.");
+                    }
+                    _index = value;
+                    OnAddressChanged();
                 }
-                _index = value;
+                
             }
         }
 
@@ -40,8 +48,13 @@ namespace ObjectOrientedPractics.Model.Classes
             get { return _country; }
             set
             {
-                ValueValidator.AssertStringOnLength(value, 50, "Country");
-                _country = value;
+                if (_country != value)
+                {
+                    ValueValidator.AssertStringOnLength(value, 50, "Country");
+                    _country = value;
+                    OnAddressChanged();
+                }
+                
             }
         }
 
@@ -53,8 +66,12 @@ namespace ObjectOrientedPractics.Model.Classes
             get { return _city; }
             set
             {
-                ValueValidator.AssertStringOnLength(value, 50, "City");
-                _city = value;
+                if (_city != value)
+                {
+                    ValueValidator.AssertStringOnLength(value, 50, "City");
+                    _city = value;
+                    OnAddressChanged();
+                }
             }
         }
 
@@ -66,8 +83,12 @@ namespace ObjectOrientedPractics.Model.Classes
             get { return _street; }
             set
             {
-                ValueValidator.AssertStringOnLength(value, 100, "Street");
-                _street = value;
+                if (_street != value)
+                {
+                    ValueValidator.AssertStringOnLength(value, 100, "Street");
+                    _street = value;
+                    OnAddressChanged();
+                }
             }
         }
 
@@ -79,8 +100,12 @@ namespace ObjectOrientedPractics.Model.Classes
             get { return _building; }
             set
             {
-                ValueValidator.AssertStringOnLength(value, 10, "Building");
-                _building = value;
+                if (_building != value)
+                {
+                    ValueValidator.AssertStringOnLength(value, 10, "Building");
+                    _building = value;
+                    OnAddressChanged();
+                }
             }
         }
 
@@ -92,8 +117,12 @@ namespace ObjectOrientedPractics.Model.Classes
             get { return _apartment; }
             set
             {
-                ValueValidator.AssertStringOnLength(value, 10, "Apartment");
-                _apartment = value;
+                if (_apartment != value)
+                {
+                    ValueValidator.AssertStringOnLength(value, 10, "Apartment");
+                    _apartment = value;
+                    OnAddressChanged();
+                }
             }
         }
 
@@ -151,6 +180,12 @@ namespace ObjectOrientedPractics.Model.Classes
 
             }
             return false;
+        }
+
+        private void OnAddressChanged()
+        {
+            AddressChanged?.Invoke(this, EventArgs.Empty);
+            Debug.Write("\nAddressChenged");
         }
     }
 }

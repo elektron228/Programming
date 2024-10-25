@@ -27,6 +27,9 @@ namespace ObjectOrientedPractics.View.Tabs
 
             DeliverytimeComboBox.DataSource = _desiredDeliveryTime;
             DeliverytimeComboBox.SelectedItem = null;
+
+            AddressControl1.DisableTextBoxs();
+
         }
 
         private int _selectedOrderIndex;
