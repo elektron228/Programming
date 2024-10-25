@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using ObjectOrientedPractics.Model.Classes;
+using ObjectOrientedPractics.Services;
+using System.Net.NetworkInformation;
 
 namespace ObjectOrientedPractics.View.Tabs
 {
@@ -24,6 +26,9 @@ namespace ObjectOrientedPractics.View.Tabs
         {
             CategoryComboBox.DataSource = Enum.GetValues(typeof(Category));
             CategoryComboBox.SelectedItem = null;
+            _displayedItems = _items;
+            SortByComboBox.DataSource = _sorts;
+            SortByComboBox.SelectedIndex = 0;
         }
 
         /// <summary>
@@ -31,10 +36,14 @@ namespace ObjectOrientedPractics.View.Tabs
         /// </summary>
         private List<Item> _items ;
 
+        private List<Item> _displayedItems = new List<Item>();
+
         /// <summary>
         /// Выбранный товар.
         /// </summary>
         private Item _selectedItem;
+
+        private string[] _sorts = new string[] {"Name", "Cost (Ascending", "Cost (Descending)" };
 
         /// <summary>
         /// Возвращает и задаёт список товаров.
@@ -49,6 +58,7 @@ namespace ObjectOrientedPractics.View.Tabs
         private void AddItemButton_Click(object sender, EventArgs e)
         {
             _items.Add(new Item("Example name", "Example description", 100));
+            SortByComboBox_SelectedIndexChanged(sender, e);
             FillItemsListbox();
         }
 
@@ -60,6 +70,7 @@ namespace ObjectOrientedPractics.View.Tabs
         private void RemoveItemButton_Click(object sender, EventArgs e)
         {
             _items.Remove(_selectedItem);
+            SortByComboBox_SelectedIndexChanged(sender, e);
             FillItemsListbox();
             ClearTextBoxs();
         }
@@ -73,7 +84,7 @@ namespace ObjectOrientedPractics.View.Tabs
             ItemsListBox.Items.Clear();
 
             //Заполняет.
-            foreach (Item item in _items)
+            foreach (Item item in _displayedItems)
             {
                 ItemsListBox.Items.Add($"{item.Name}");
             }
@@ -85,7 +96,7 @@ namespace ObjectOrientedPractics.View.Tabs
         /// </summary>
         private void UpdateTextBoxs()
         {
-            _selectedItem = _items[ItemsListBox.SelectedIndex];
+            _selectedItem = _displayedItems[ItemsListBox.SelectedIndex];
             NameTextBox.Text = _selectedItem.Name.ToString();
             IDTextBox.Text = _selectedItem.ID.ToString();
             CostTextBox.Text = _selectedItem.Cost.ToString();
@@ -196,6 +207,86 @@ namespace ObjectOrientedPractics.View.Tabs
                 _selectedItem.Category = category;
             }
             catch (Exception) { }
+        }
+
+        /// <summary>
+        /// Выполнет поиск по имени товара.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SearchStringTextBox_TextChanged(object sender, EventArgs e)
+        {
+            string searchTerm = SearchStringTextBox.Text;
+            if (!string.IsNullOrEmpty(searchTerm))
+            {
+                // Фильтрация по подстроке в имени
+                _displayedItems = new DataTools().Filter(_items, p => p.Name.Contains(searchTerm));
+                FillItemsListbox();
+            }
+            else
+            {
+                _displayedItems = _items;
+                // Отображение всех продуктов
+                FillItemsListbox();
+                
+            }
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void SortByComboBox_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            DataTools dataTools = new DataTools();
+            switch (SortByComboBox.SelectedIndex)
+            {
+                case 0:
+                    if (!string.IsNullOrEmpty(SearchStringTextBox.Text))
+                    {
+                        _displayedItems = dataTools.Sort(_displayedItems, new DataTools.SortCriteria(dataTools.SortByName));
+                        FillItemsListbox();
+                    }
+                    else
+                    {
+                        _displayedItems = dataTools.Sort(_items, new DataTools.SortCriteria(dataTools.SortByName));
+                        FillItemsListbox();
+
+                    }
+                    
+                    break;
+                case 1:
+                    if (!string.IsNullOrEmpty(SearchStringTextBox.Text))
+                    {
+                        _displayedItems = dataTools.Sort(_displayedItems, new DataTools.SortCriteria(dataTools.SortByPriceAscending));
+                        FillItemsListbox();
+                    }
+                    else
+                    {
+                        _displayedItems = dataTools.Sort(_items, new DataTools.SortCriteria(dataTools.SortByPriceAscending));
+                        FillItemsListbox();
+
+                    }
+                    break;
+                case 2:
+                    if (!string.IsNullOrEmpty(SearchStringTextBox.Text))
+                    {
+                        _displayedItems = dataTools.Sort(_displayedItems, new DataTools.SortCriteria(dataTools.SortByPriceDescending));
+                        FillItemsListbox();
+                    }
+                    else
+                    {
+                        _displayedItems = dataTools.Sort(_items, new DataTools.SortCriteria(dataTools.SortByPriceDescending));
+                        FillItemsListbox();
+
+                    }
+                    break;
+                default:
+                    _displayedItems = _items;
+                    FillItemsListbox();
+                    break;
+            }
         }
     }
 }
