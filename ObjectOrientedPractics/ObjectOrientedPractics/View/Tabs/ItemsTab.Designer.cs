@@ -45,6 +45,10 @@
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.ItemsListBox = new System.Windows.Forms.ListBox();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.FindLabel = new System.Windows.Forms.Label();
+            this.SearchStringTextBox = new System.Windows.Forms.TextBox();
+            this.SortByComboBox = new System.Windows.Forms.ComboBox();
+            this.OrderByLabel = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
@@ -107,7 +111,7 @@
             this.DescriptionTextBox.Location = new System.Drawing.Point(12, 208);
             this.DescriptionTextBox.Multiline = true;
             this.DescriptionTextBox.Name = "DescriptionTextBox";
-            this.DescriptionTextBox.Size = new System.Drawing.Size(310, 80);
+            this.DescriptionTextBox.Size = new System.Drawing.Size(311, 80);
             this.DescriptionTextBox.TabIndex = 18;
             this.DescriptionTextBox.TextChanged += new System.EventHandler(this.DescriptionTextBox_TextChanged);
             // 
@@ -144,7 +148,7 @@
             this.NameTextBox.Location = new System.Drawing.Point(12, 116);
             this.NameTextBox.Multiline = true;
             this.NameTextBox.Name = "NameTextBox";
-            this.NameTextBox.Size = new System.Drawing.Size(310, 73);
+            this.NameTextBox.Size = new System.Drawing.Size(311, 73);
             this.NameTextBox.TabIndex = 17;
             this.NameTextBox.TextChanged += new System.EventHandler(this.NameTextBox_TextChanged);
             // 
@@ -210,7 +214,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(218, 50);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(217, 50);
             this.tableLayoutPanel1.TabIndex = 16;
             // 
             // ItemsListBox
@@ -220,9 +224,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.ItemsListBox.FormattingEnabled = true;
-            this.ItemsListBox.Location = new System.Drawing.Point(6, 18);
+            this.ItemsListBox.Location = new System.Drawing.Point(6, 44);
             this.ItemsListBox.Name = "ItemsListBox";
-            this.ItemsListBox.Size = new System.Drawing.Size(215, 303);
+            this.ItemsListBox.Size = new System.Drawing.Size(214, 251);
             this.ItemsListBox.TabIndex = 14;
             this.ItemsListBox.SelectedIndexChanged += new System.EventHandler(this.ItemsListBox_SelectedIndexChanged);
             // 
@@ -234,7 +238,11 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.SortByComboBox);
+            this.splitContainer1.Panel1.Controls.Add(this.OrderByLabel);
+            this.splitContainer1.Panel1.Controls.Add(this.FindLabel);
             this.splitContainer1.Panel1.Controls.Add(this.tableLayoutPanel1);
+            this.splitContainer1.Panel1.Controls.Add(this.SearchStringTextBox);
             this.splitContainer1.Panel1.Controls.Add(this.ItemsLabel);
             this.splitContainer1.Panel1.Controls.Add(this.ItemsListBox);
             // 
@@ -252,8 +260,49 @@
             this.splitContainer1.Panel2.Controls.Add(this.NameTextBox);
             this.splitContainer1.Panel2.Controls.Add(this.CostTextBox);
             this.splitContainer1.Size = new System.Drawing.Size(562, 380);
-            this.splitContainer1.SplitterDistance = 224;
+            this.splitContainer1.SplitterDistance = 223;
             this.splitContainer1.TabIndex = 1;
+            // 
+            // FindLabel
+            // 
+            this.FindLabel.AutoSize = true;
+            this.FindLabel.Location = new System.Drawing.Point(3, 22);
+            this.FindLabel.Name = "FindLabel";
+            this.FindLabel.Size = new System.Drawing.Size(30, 13);
+            this.FindLabel.TabIndex = 26;
+            this.FindLabel.Text = "Find:";
+            // 
+            // SearchStringTextBox
+            // 
+            this.SearchStringTextBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SearchStringTextBox.Location = new System.Drawing.Point(40, 18);
+            this.SearchStringTextBox.Name = "SearchStringTextBox";
+            this.SearchStringTextBox.Size = new System.Drawing.Size(180, 20);
+            this.SearchStringTextBox.TabIndex = 25;
+            this.SearchStringTextBox.TextChanged += new System.EventHandler(this.SearchStringTextBox_TextChanged);
+            // 
+            // SortByComboBox
+            // 
+            this.SortByComboBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.SortByComboBox.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.SortByComboBox.FormattingEnabled = true;
+            this.SortByComboBox.Location = new System.Drawing.Point(61, 301);
+            this.SortByComboBox.Name = "SortByComboBox";
+            this.SortByComboBox.Size = new System.Drawing.Size(159, 21);
+            this.SortByComboBox.TabIndex = 26;
+            this.SortByComboBox.SelectedIndexChanged += new System.EventHandler(this.SortByComboBox_SelectedIndexChanged);
+            // 
+            // OrderByLabel
+            // 
+            this.OrderByLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.OrderByLabel.AutoSize = true;
+            this.OrderByLabel.Location = new System.Drawing.Point(3, 303);
+            this.OrderByLabel.Name = "OrderByLabel";
+            this.OrderByLabel.Size = new System.Drawing.Size(51, 13);
+            this.OrderByLabel.TabIndex = 25;
+            this.OrderByLabel.Text = "Order By:";
             // 
             // ItemsTab
             // 
@@ -294,5 +343,9 @@
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
         private System.Windows.Forms.ListBox ItemsListBox;
         private System.Windows.Forms.SplitContainer splitContainer1;
+        private System.Windows.Forms.Label FindLabel;
+        private System.Windows.Forms.TextBox SearchStringTextBox;
+        private System.Windows.Forms.ComboBox SortByComboBox;
+        private System.Windows.Forms.Label OrderByLabel;
     }
 }
