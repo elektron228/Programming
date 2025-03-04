@@ -5,8 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Contacts"
         mc:Ignorable="d"
-        Title="MainWindow" Height="400" Width="500">
+        Title="Contacts"  Height="400" Width="500">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="113*"/>
+            <RowDefinition Height="15*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250*"/>
+            <ColumnDefinition Width="250*"/>
+        </Grid.ColumnDefinitions>
+        <GroupBox Header="Edit Contact" Margin="15,15,4,0"/>
+        <GroupBox Header="Read Contact" Margin="6,15,15,0" Grid.Column="1"/>
 
     </Grid>
 </Window>
