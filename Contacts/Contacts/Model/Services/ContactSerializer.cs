@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace View.Model.Services
 {
-    class ContactSerializer
+    public class ContactSerializer
     {
         private string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Contacts", "contacts.json");
 
@@ -25,12 +25,12 @@ namespace View.Model.Services
         /// Выполняет сохранение объектов класса <see cref="Contact"/> в файл, используя механизм сериализации.
         /// </summary>
         /// <param name="contacts"></param>
-        public void SaveContact(List<Contact> contacts)
+        public void SaveContact(Contact contact)
         {
             try
             {
                 // Сериализуем объект Contact в JSON строку
-                string jsonString = JsonConvert.SerializeObject(contacts);
+                string jsonString = JsonConvert.SerializeObject(contact);
 
                 // Записываем JSON строку в файл
                 File.WriteAllText(_filePath, jsonString);
@@ -46,28 +46,28 @@ namespace View.Model.Services
         /// Выполняет загрузку объектов класса <see cref="Contact"/> из файла, используя механизм десериализации.
         /// </summary>
         /// <param name="contacts"></param>
-        public void LoadContacts(ref List<Contact> contacts)
+        public Contact LoadContact(Contact contact)
         {
             try
             {
                 // Проверяем, существует ли файл
                 if (!File.Exists(_filePath))
                 {
-                    return;
+                    return null;
                 }
 
                 // Читаем JSON строку из файла
                 string jsonString = File.ReadAllText(_filePath);
 
                 // Десериализуем JSON строку в объект Contact
-                contacts = JsonConvert.DeserializeObject<List<Contact>>(jsonString);
+                contact = JsonConvert.DeserializeObject<Contact>(jsonString);
 
-                return;
+                return contact;
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Ошибка при загрузке контакта из файла: {ex.Message}");
-                return; 
+                return null; 
             }
         }
 
