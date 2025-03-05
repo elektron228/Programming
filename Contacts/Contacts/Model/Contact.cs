@@ -19,11 +19,10 @@ namespace View.Model
         public string Name 
         { 
             get 
-            { 
-                return _name; 
-            } 
+            { return _name; } 
             set 
             {
+                /*
                 if (string.IsNullOrEmpty(value))
                 {
                     throw new ArgumentException("Имя не может быть пустым.");
@@ -33,7 +32,7 @@ namespace View.Model
                 {
                     throw new ArgumentException("Имя должно содержать только буквы русского алфавита.");
                 }
-
+                */
                 _name = value;
             } 
         }
@@ -44,11 +43,10 @@ namespace View.Model
         public string Email 
         { 
             get 
-            { 
-                return _email; 
-            } 
+            { return _email; } 
             set 
             {
+                /*
                 if (string.IsNullOrEmpty(value))
                 {
                     throw new ArgumentException("Email не может быть пустым.");
@@ -58,7 +56,7 @@ namespace View.Model
                 {
                     throw new ArgumentException("Некорректный формат email.");
                 }
-
+                */
                 _email = value;
             } 
         }
@@ -71,6 +69,7 @@ namespace View.Model
             get { return _phone; }
             set
             {
+                /*
                 if (string.IsNullOrEmpty(value))
                 {
                     throw new ArgumentException("Номер телефона не может быть пустым.");
@@ -80,7 +79,7 @@ namespace View.Model
                 {
                     throw new ArgumentException("Некорректный формат номера телефона. Используйте формат: +7 XXXxxxxxxx");
                 }
-
+                */
                 _phone = value;
             }
         }
@@ -97,5 +96,6 @@ namespace View.Model
             Email = email;  
             Phone = phone;  
         }
+
     }
 }

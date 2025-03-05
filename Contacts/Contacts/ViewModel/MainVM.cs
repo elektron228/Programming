@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using View.Model;
@@ -26,6 +27,7 @@ namespace View.ViewModel
             set 
             {
                 CurrentContact.Name = value; 
+                OnPropertyChanged();
             } 
         }
 
@@ -41,6 +43,7 @@ namespace View.ViewModel
             set
             {
                 CurrentContact.Email = value;
+                OnPropertyChanged();
             }
         }
 
@@ -56,7 +59,21 @@ namespace View.ViewModel
             set
             {
                 CurrentContact.Phone = value;
+                OnPropertyChanged();
             }
+        }
+
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        public MainVM()
+        {
+            CurrentContact = new Contact("Иванов Иван Иванович", "+79235678909", "ivanov1999@gmail.com");
+            Name = "Петров Иван Иванович";
+            Phone = "+79235678909";
+            Email = "ivanov1999@gmail.com";
         }
     }
 }
