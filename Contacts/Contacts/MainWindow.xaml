@@ -5,18 +5,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Contacts"
         mc:Ignorable="d"
-        Title="Contacts"  Height="400" Width="500">
-    <Grid>
+        Title="Contacts" Height="400" Width="500"
+        WindowStartupLocation="CenterScreen">
+    <Grid Margin="15">
         <Grid.RowDefinitions>
-            <RowDefinition Height="113*"/>
-            <RowDefinition Height="15*"/>
+            <RowDefinition Height="157*"/>
+            <RowDefinition Height="20*"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250*"/>
-            <ColumnDefinition Width="250*"/>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <GroupBox Header="Edit Contact" Margin="15,15,4,0"/>
-        <GroupBox Header="Read Contact" Margin="6,15,15,0" Grid.Column="1"/>
+        <GroupBox x:Name="EditContactGroupBox" Header="Edit Contact" Margin="3,3,3,3">
+            <StackPanel x:Name="EditContactStackPanel" Margin="0">
+                <Label x:Name="EditContactNameLabel" Content="Name:" Height="25" />
+                <DockPanel Height="25" LastChildFill="True" Margin="4,0,0,0">
+                    <TextBox x:Name="EditContactNameTextBox" TextWrapping="Wrap" Height="21"/>
+                </DockPanel>
+                <Label x:Name="EditContactNumberLabel" Content="Phone Number:" Height="25" />
+                <DockPanel Height="25" LastChildFill="True" Margin="4,0,0,0">
+                    <TextBox x:Name="EditContactNumberTextBox" TextWrapping="Wrap" Height="21" />
+                </DockPanel>
+                <Label x:Name="EditContactEmailLabel" Content="Email:" Height="25" />
+                <DockPanel Height="25" LastChildFill="True" Margin="4,0,0,0">
+                    <TextBox x:Name="EditContactEmailTextBox" TextWrapping="Wrap" Height="21"/>
+                </DockPanel>
+            </StackPanel>
+        </GroupBox>
+        <GroupBox x:Name="ReadContactGroupBox" Header="Read Contact" Margin="3,3,3,3" Grid.Column="1">
+            <StackPanel x:Name="EditContactStackPanel1" Margin="0">
+                <Label x:Name="ReadContactNameLabel" Content="Name:" Height="25" />
+                <Label x:Name="ReadContactCurrentNameLabel" Content="Current Name" Height="25" FontWeight="Bold" />
+                <Label x:Name="ReadContactNumberLabel" Content="Phone Number:" Height="25" />
+                <Label x:Name="ReadContactCurrentNumberLabel" Content="Current Number" Height="25" FontWeight="Bold" />
+                <Label x:Name="ReadContactEmailLabel" Content="Email:" Height="25" />
+                <Label x:Name="ReadContactCurrentEmailLabel" Content="Email" Height="25" FontWeight="Bold" />
+            </StackPanel>
+        </GroupBox>
+
+        <Grid Grid.Column="1" Grid.Row="1" Margin="0,1,0,0">
+            <Button x:Name="LoadButton" Content="Load"  Height="25" Width="75" Grid.Column="2" Margin="2,2,3,2"/>
+            <Button x:Name="SaveButton" Content="Save"  Height="25" Width="75" Grid.Column="1" Margin="2,2,3,2"/>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+        </Grid>
 
     </Grid>
 </Window>
