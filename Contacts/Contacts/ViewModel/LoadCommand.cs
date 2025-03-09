@@ -12,13 +12,7 @@ namespace View.ViewModel
     public class LoadCommand : ICommand
     {
         private ContactSerializer _serializer;
-        private Contact _contact;
-
-        public LoadCommand(ContactSerializer serializer, Contact contact)
-        {
-            _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
-            _contact = contact ?? throw new ArgumentNullException(nameof(contact));
-        }
+        private readonly MainVM _viewModel;
 
         public event EventHandler CanExecuteChanged;
 
@@ -31,13 +25,10 @@ namespace View.ViewModel
         {
             try
             {
-                Contact loadedContact = _serializer.LoadContact(_contact);
+                Contact loadedContact = _serializer.LoadContact();
                 if (loadedContact != null)
                 {
-                    _contact.Name = loadedContact.Name;
-                    _contact.Email = loadedContact.Email;
-                    _contact.Phone = loadedContact.Phone;
-
+                    _viewModel.CurrentContact = loadedContact;
                 }
             }
             catch (Exception ex)
@@ -45,6 +36,12 @@ namespace View.ViewModel
                 Console.WriteLine($"Ошибка при выполнении LoadCommand: {ex.Message}");
                 throw;
             }
+        }
+
+        public LoadCommand(ContactSerializer serializer, MainVM viewModel)
+        {
+            _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+            _viewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
         }
     }
 }

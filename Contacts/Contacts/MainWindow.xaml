@@ -95,13 +95,15 @@
                     Height="25" 
                     Width="75" 
                     Grid.Column="2" 
-                    Margin="2,2,3,2"/>
+                    Margin="2,2,3,2"
+                    Command="{Binding LoadCommand}"/>
             <Button x:Name="SaveButton" 
                     Content="Save"  
                     Height="25" 
                     Width="75" 
                     Grid.Column="1" 
-                    Margin="2,2,3,2"/>
+                    Margin="2,2,3,2"
+                    Command="{Binding SaveCommand}"/>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>

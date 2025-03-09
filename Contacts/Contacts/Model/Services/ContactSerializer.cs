@@ -46,23 +46,24 @@ namespace View.Model.Services
         /// Выполняет загрузку объектов класса <see cref="Contact"/> из файла, используя механизм десериализации.
         /// </summary>
         /// <param name="contacts"></param>
-        public Contact LoadContact(Contact contact)
+        public Contact LoadContact()
         {
             try
             {
                 // Проверяем, существует ли файл
-                if (!File.Exists(_filePath))
+                if (File.Exists(_filePath))
                 {
-                    return null;
+                    // Читаем JSON строку из файла
+                    string jsonString = File.ReadAllText(_filePath);
+
+                    // Десериализуем JSON строку в объект Contact
+                    Contact contact = JsonConvert.DeserializeObject<Contact>(jsonString);
+
+                    return contact;
+                    
                 }
+                else { return null; }
 
-                // Читаем JSON строку из файла
-                string jsonString = File.ReadAllText(_filePath);
-
-                // Десериализуем JSON строку в объект Contact
-                contact = JsonConvert.DeserializeObject<Contact>(jsonString);
-
-                return contact;
             }
             catch (Exception ex)
             {

@@ -14,12 +14,6 @@ namespace View.ViewModel
         private ContactSerializer _serializer;
         private Contact _contact;
 
-        public SaveCommand(ContactSerializer serializer, Contact contact)
-        {
-            _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
-            _contact = contact ?? throw new ArgumentNullException(nameof(contact));
-        }
-
         public event EventHandler CanExecuteChanged;
 
         public bool CanExecute(object parameter)
@@ -38,6 +32,12 @@ namespace View.ViewModel
                 Console.WriteLine($"Ошибка при выполнении SaveCommand: {ex.Message}");
                 throw; 
             }
+        }
+
+        public SaveCommand(ContactSerializer serializer, Contact contact)
+        {
+            _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+            _contact = contact ?? throw new ArgumentNullException(nameof(contact));
         }
     }
 }
