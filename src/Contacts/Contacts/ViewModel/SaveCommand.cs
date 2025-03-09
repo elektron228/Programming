@@ -9,6 +9,9 @@ using System.Windows.Input;
 
 namespace View.ViewModel
 {
+    /// <summary>
+    /// Выполняет сохранение данных в файл.
+    /// </summary>
     public class SaveCommand : ICommand
     {
         private ContactSerializer _serializer;

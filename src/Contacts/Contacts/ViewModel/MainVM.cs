@@ -38,12 +38,12 @@ namespace View.ViewModel
         public ContactSerializer Serializer;
 
         /// <summary>
-        /// Выподняет загрузку данных из файл.
+        /// Выполняет загрузку данных из файл.
         /// </summary>
         public LoadCommand LoadCommand { get; }
 
         /// <summary>
-        /// Выполняет сохоанение данных в файл.
+        /// Выполняет сохранение данных в файл.
         /// </summary>
         public SaveCommand SaveCommand {  get; }
 
@@ -80,7 +80,7 @@ namespace View.ViewModel
         }
 
         /// <summary>
-        /// Возвращает и задаёт Номер телефона.
+        /// Возвращает и задаёт номер телефона.
         /// </summary>
         public string Phone
         {

@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:Contacts"
         mc:Ignorable="d"
         Title="Contacts" Height="400" Width="500"
-        WindowStartupLocation="CenterScreen">
+        WindowStartupLocation="CenterScreen" >
     <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="157*"/>

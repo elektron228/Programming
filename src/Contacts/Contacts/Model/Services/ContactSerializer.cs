@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace View.Model.Services
 {
+    /// <summary>
+    /// Предоставляет методы для сериализации и десиреализации объектов класса <see cref="Contact"/>.
+    /// </summary>
     public class ContactSerializer
     {
         private string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Contacts", "contacts.json");

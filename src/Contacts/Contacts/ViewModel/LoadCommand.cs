@@ -9,6 +9,9 @@ using View.Model;
 
 namespace View.ViewModel
 {
+    /// <summary>
+    /// Выполняет загрузку данных из файла.
+    /// </summary>
     public class LoadCommand : ICommand
     {
         private ContactSerializer _serializer;
