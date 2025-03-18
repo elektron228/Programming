@@ -41,6 +41,12 @@ namespace View.ViewModel
             }
         }
 
+        /// <summary>
+        /// Создаёт экземпляр класса <see cref="LoadCommand"/>.
+        /// </summary>
+        /// <param name="serializer">Класс, выполняюий десериализацию.</param>
+        /// <param name="viewModel">Объект VM для передачи данных.</param>
+        /// <exception cref="ArgumentNullException"></exception>
         public LoadCommand(ContactSerializer serializer, MainVM viewModel)
         {
             _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));

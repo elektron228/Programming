@@ -37,6 +37,12 @@ namespace View.ViewModel
             }
         }
 
+        /// <summary>
+        /// Сздаёт объект каласса <see cref="SaveCommand"/>.
+        /// </summary>
+        /// <param name="serializer">Класс ,выполняющий сериализацию.</param>
+        /// <param name="contact">Объект контакта для сохранения.</param>
+        /// <exception cref="ArgumentNullException"></exception>
         public SaveCommand(ContactSerializer serializer, Contact contact)
         {
             _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));

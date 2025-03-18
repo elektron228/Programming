@@ -19,6 +19,11 @@ namespace View.ViewModel
 
         private Contact _currentContact;
 
+        public ContactSerializer Serializer;
+
+        /// <summary>
+        /// Возвращает и задаёт текущий контакт.
+        /// </summary>
         public Contact CurrentContact
         {
             get 
@@ -34,8 +39,6 @@ namespace View.ViewModel
                 OnPropertyChanged(nameof(Phone));
             }
         }
-
-        public ContactSerializer Serializer;
 
         /// <summary>
         /// Выполняет загрузку данных из файл.

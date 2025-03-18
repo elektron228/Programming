@@ -25,17 +25,6 @@ namespace View.Model
             { return _name; } 
             set 
             {
-                /*
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new ArgumentException("Имя не может быть пустым.");
-                }
-
-                if (!Regex.IsMatch(value, @"^[А-Я][а-я]+ [А-Я][а-я]+([А-Я][а-я]+)?$"))
-                {
-                    throw new ArgumentException("Имя должно содержать только буквы русского алфавита.");
-                }
-                */
                 _name = value;
             } 
         }
@@ -49,17 +38,6 @@ namespace View.Model
             { return _email; } 
             set 
             {
-                /*
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new ArgumentException("Email не может быть пустым.");
-                }
-
-                if (!Regex.IsMatch(value, @"^[\w-\.]+@([\w-]+\.)+[\w]{2,4}$"))
-                {
-                    throw new ArgumentException("Некорректный формат email.");
-                }
-                */
                 _email = value;
             } 
         }
@@ -72,17 +50,6 @@ namespace View.Model
             get { return _phone; }
             set
             {
-                /*
-                if (string.IsNullOrEmpty(value))
-                {
-                    throw new ArgumentException("Номер телефона не может быть пустым.");
-                }
-
-                if (!Regex.IsMatch(value, @"^\+7\d{3}\d{7}$"))
-                {
-                    throw new ArgumentException("Некорректный формат номера телефона. Используйте формат: +7 XXXxxxxxxx");
-                }
-                */
                 _phone = value;
             }
         }

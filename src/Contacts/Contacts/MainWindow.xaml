@@ -5,8 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Contacts"
         mc:Ignorable="d"
-        Title="Contacts" Height="400" Width="500"
-        WindowStartupLocation="CenterScreen" >
+        Title="Contacts" 
+        Height="400" 
+        Width="500"
+        WindowStartupLocation="CenterScreen" Icon="C:\Users\elekt\Source\Repos\elektron228\Programming\src\Contacts\Contacts\ContactsApp_96x96.ico" >
     <Grid Margin="15">
         <Grid.RowDefinitions>
             <RowDefinition Height="157*"/>
@@ -23,7 +25,8 @@
                         Margin="0">
                 <Label x:Name="EditContactNameLabel" 
                        Content="Name:" Height="25" />
-                <DockPanel Height="25" LastChildFill="True" 
+                <DockPanel Height="25" 
+                           LastChildFill="True" 
                            Margin="4,0,0,0">
                     <TextBox x:Name="EditContactNameTextBox" 
                              TextWrapping="Wrap" 
@@ -61,7 +64,8 @@
                   Header="Read Contact" 
                   Margin="3,3,3,3"
                   Grid.Column="1">
-            <StackPanel x:Name="EditContactStackPanel1" Margin="0">
+            <StackPanel x:Name="EditContactStackPanel1" 
+                        Margin="0">
                 <Label x:Name="ReadContactNameLabel" 
                        Content="Name:" 
                        Height="25" />
