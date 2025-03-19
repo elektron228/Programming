@@ -13,7 +13,8 @@ namespace View.Model.Services
     /// </summary>
     public class ContactSerializer
     {
-        private string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "Contacts", "contacts.json");
+        private string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), 
+            "Contacts", "contacts.json");
 
         /// <summary>
         /// Возвращает и задаёт путь для сохранения данных.

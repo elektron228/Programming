@@ -19,11 +19,20 @@ namespace View.ViewModel
 
         public event EventHandler CanExecuteChanged;
 
+        /// <summary>
+        /// Проверяет, возможно ли выполнить команду <see cref="Execute(object)"/>.
+        /// </summary>
+        /// <param name="parameter"></param>
+        /// <returns></returns>
         public bool CanExecute(object parameter)
         {
             return true;
         }
 
+        /// <summary>
+        /// Выполняет сохранение контакта в файл.
+        /// </summary>
+        /// <param name="parameter"></param>
         public void Execute(object parameter)
         {
             try

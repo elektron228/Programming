@@ -24,7 +24,8 @@
             <StackPanel x:Name="EditContactStackPanel" 
                         Margin="0">
                 <Label x:Name="EditContactNameLabel" 
-                       Content="Name:" Height="25" />
+                       Content="Name:" 
+                       Height="25" />
                 <DockPanel Height="25" 
                            LastChildFill="True" 
                            Margin="4,0,0,0">
