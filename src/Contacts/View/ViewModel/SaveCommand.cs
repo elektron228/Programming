@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using View.Model.Services;
+﻿using View.Model.Services;
 using View.Model;
 using System.Windows.Input;
 
@@ -14,10 +9,32 @@ namespace View.ViewModel
     /// </summary>
     public class SaveCommand : ICommand
     {
+        /// <summary>
+        /// Класс, выполняющий сериализацию.
+        /// </summary>
         private ContactSerializer _serializer;
+        
+        /// <summary>
+        /// Сохраняемый объект контакта.
+        /// </summary>
         private Contact _contact;
 
+        /// <summary>
+        /// Вызывается при изменении состояния команды.
+        /// </summary>
         public event EventHandler CanExecuteChanged;
+
+        /// <summary>
+        /// Сздаёт объект каласса <see cref="SaveCommand"/>.
+        /// </summary>
+        /// <param name="serializer">Класс ,выполняющий сериализацию.</param>
+        /// <param name="contact">Объект контакта для сохранения.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public SaveCommand(ContactSerializer serializer, Contact contact)
+        {
+            _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+            _contact = contact ?? throw new ArgumentNullException(nameof(contact));
+        }
 
         /// <summary>
         /// Проверяет, возможно ли выполнить команду <see cref="Execute(object)"/>.
@@ -41,21 +58,8 @@ namespace View.ViewModel
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Ошибка при выполнении SaveCommand: {ex.Message}");
                 throw; 
             }
-        }
-
-        /// <summary>
-        /// Сздаёт объект каласса <see cref="SaveCommand"/>.
-        /// </summary>
-        /// <param name="serializer">Класс ,выполняющий сериализацию.</param>
-        /// <param name="contact">Объект контакта для сохранения.</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public SaveCommand(ContactSerializer serializer, Contact contact)
-        {
-            _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
-            _contact = contact ?? throw new ArgumentNullException(nameof(contact));
         }
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 using View.Model.Services;
 using View.Model;
 
@@ -14,10 +9,32 @@ namespace View.ViewModel
     /// </summary>
     public class LoadCommand : ICommand
     {
+        /// <summary>
+        /// Класс, выполняющий десиреализацию.
+        /// </summary>
         private ContactSerializer _serializer;
+        
+        /// <summary>
+        /// Ссылка на MainVM.
+        /// </summary>
         private readonly MainVM _viewModel;
 
+        /// <summary>
+        /// Вызывается при изменении состояния команды.
+        /// </summary>
         public event EventHandler CanExecuteChanged;
+
+        /// <summary>
+        /// Создаёт экземпляр класса <see cref="LoadCommand"/>.
+        /// </summary>
+        /// <param name="serializer">Класс, выполняюий десериализацию.</param>
+        /// <param name="viewModel">Объект VM для передачи данных.</param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public LoadCommand(ContactSerializer serializer, MainVM viewModel)
+        {
+            _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
+            _viewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
+        }
 
         /// <summary>
         /// Проверяет, возможно ли выполнить команду <see cref="Execute(object)"/>.
@@ -45,21 +62,8 @@ namespace View.ViewModel
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Ошибка при выполнении LoadCommand: {ex.Message}");
                 throw;
             }
-        }
-
-        /// <summary>
-        /// Создаёт экземпляр класса <see cref="LoadCommand"/>.
-        /// </summary>
-        /// <param name="serializer">Класс, выполняюий десериализацию.</param>
-        /// <param name="viewModel">Объект VM для передачи данных.</param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public LoadCommand(ContactSerializer serializer, MainVM viewModel)
-        {
-            _serializer = serializer ?? throw new ArgumentNullException(nameof(serializer));
-            _viewModel = viewModel ?? throw new ArgumentNullException(nameof(viewModel));
         }
     }
 }

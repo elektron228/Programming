@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
+﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 using View.Model;
 using View.Model.Services;
 
@@ -15,11 +10,20 @@ namespace View.ViewModel
     /// </summary>
     public class MainVM : INotifyPropertyChanged
     {
-        public event PropertyChangedEventHandler PropertyChanged;
-
+        /// <summary>
+        /// Текущий контакт.
+        /// </summary>
         private Contact _currentContact;
 
-        public ContactSerializer Serializer;
+        /// <summary>
+        /// Класс, выполняющий сериализацию и дисериализацию.
+        /// </summary>
+        private ContactSerializer _serializer;
+
+        /// <summary>
+        /// Оповещает систему об изменении свойства.
+        /// </summary>
+        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// Возвращает и задаёт текущий контакт.
@@ -98,21 +102,27 @@ namespace View.ViewModel
             }
         }
 
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
         /// <summary>
         /// Создаёт экземпляр класса <see cref="MainVM"/>.
         /// </summary>
         public MainVM()
         {
-           _currentContact = new Contact("Иванов Иван Иванович", "+79235678909", "ivanov1999@gmail.com");
-            
-            Serializer = new ContactSerializer();
-            LoadCommand = new LoadCommand(this.Serializer, this);
-            SaveCommand = new SaveCommand(this.Serializer, this._currentContact);
+            _currentContact = new Contact("Иванов Иван Иванович", "+79235678909", "ivanov1999@gmail.com");
+
+            _serializer = new ContactSerializer();
+            LoadCommand = new LoadCommand(this._serializer, this);
+            SaveCommand = new SaveCommand(this._serializer, this._currentContact);
         }
+
+        /// <summary>
+        /// Отслеживает изменение значений свойства.
+        /// </summary>
+        /// <param name="propertyName"></param>
+        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
+        
     }
 }

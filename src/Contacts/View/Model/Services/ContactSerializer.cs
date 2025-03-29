@@ -1,10 +1,5 @@
 ﻿using Newtonsoft.Json;
-using System;
-using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace View.Model.Services
 {
@@ -13,7 +8,11 @@ namespace View.Model.Services
     /// </summary>
     public class ContactSerializer
     {
-        private string _filePath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), 
+        /// <summary>
+        /// Путь для сохранения данных.
+        /// </summary>
+        private string _filePath = 
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), 
             "Contacts", "contacts.json");
 
         /// <summary>
@@ -23,6 +22,19 @@ namespace View.Model.Services
         {
             get { return _filePath; }
             set { _filePath = value; }
+        }
+
+        /// <summary>
+        /// Создаёт экземпляр класса <see cref="ContactSerializer"/>.
+        /// </summary>
+        public ContactSerializer()
+        {
+            // Проверяем, существует ли директория, и создаем ее, если нет.
+            string directoryPath = Path.GetDirectoryName(_filePath);
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
         }
 
         /// <summary>
@@ -73,19 +85,6 @@ namespace View.Model.Services
             {
                 Console.WriteLine($"Ошибка при загрузке контакта из файла: {ex.Message}");
                 return null; 
-            }
-        }
-
-        /// <summary>
-        /// Создаёт экземпляр класса <see cref="ContactSerializer"/>.
-        /// </summary>
-        public ContactSerializer()
-        {
-            // Проверяем, существует ли директория, и создаем ее, если нет.
-            string directoryPath = Path.GetDirectoryName(_filePath);
-            if (!Directory.Exists(directoryPath))
-            {
-                Directory.CreateDirectory(directoryPath);
             }
         }
     }

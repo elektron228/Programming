@@ -1,58 +1,24 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-
-namespace View.Model
+﻿namespace View.Model
 {
     /// <summary>
     /// Хранит информацию о контакте.
     /// </summary>
     public class Contact
     {
-        private string _name;
-        private string _email;
-        private string _phone;
-
         /// <summary>
         /// Возвращает и задаёт имя контакта.
         /// </summary>
-        public string Name 
-        { 
-            get 
-            { return _name; } 
-            set 
-            {
-                _name = value;
-            } 
-        }
+        public string Name {  get; set; }
 
         /// <summary>
         /// Возвращает и задаёт адрес электронной почты.
         /// </summary>
-        public string Email 
-        { 
-            get 
-            { return _email; } 
-            set 
-            {
-                _email = value;
-            } 
-        }
+        public string Email { get; set; }
 
         /// <summary>
         /// Возвращает и задаёт Номер телефона.
         /// </summary>
-        public string Phone
-        {
-            get { return _phone; }
-            set
-            {
-                _phone = value;
-            }
-        }
+        public string Phone { get; set; }
 
         /// <summary>
         /// Создаёт экзкмпляр класса <see cref="Contact"/>.
