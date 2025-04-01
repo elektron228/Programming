@@ -20,7 +20,7 @@
         <GridSplitter Background="White"
                 HorizontalAlignment="Left" 
                 Width="3" 
-                      Grid.Column="1"/>
+                Grid.Column="1"/>
         <Rectangle Grid.Column="0" Fill="#f8f8f8" />
         <Grid Margin="8">
             <Grid.RowDefinitions>
