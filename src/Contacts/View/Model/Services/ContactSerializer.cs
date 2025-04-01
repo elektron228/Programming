@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System.IO;
+using NLog;
+using System.Collections.ObjectModel;
 
 namespace View.Model.Services
 {
@@ -9,31 +11,40 @@ namespace View.Model.Services
     public class ContactSerializer
     {
         /// <summary>
+        /// Объект, выполняющий логирование.
+        /// </summary>
+        private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
+
+        /// <summary>
         /// Путь для сохранения данных.
         /// </summary>
-        private string _filePath = 
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), 
+        private string _filePath =
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
             "Contacts", "contacts.json");
 
         /// <summary>
-        /// Возвращает и задаёт путь для сохранения данных.
+        /// Возвращает путь для сохранения данных.
         /// </summary>
-        public string FilePath
-        {
-            get { return _filePath; }
-            set { _filePath = value; }
-        }
+        public string FilePath => _filePath;
 
         /// <summary>
         /// Создаёт экземпляр класса <see cref="ContactSerializer"/>.
         /// </summary>
         public ContactSerializer()
         {
-            // Проверяем, существует ли директория, и создаем ее, если нет.
-            string directoryPath = Path.GetDirectoryName(_filePath);
-            if (!Directory.Exists(directoryPath))
+            try
             {
-                Directory.CreateDirectory(directoryPath);
+                string directoryPath = Path.GetDirectoryName(_filePath);
+                if (!Directory.Exists(directoryPath))
+                {
+                    Directory.CreateDirectory(directoryPath);
+                    _logger.Info($"Создана директория для сохранения контактов: {directoryPath}");
+                }
+            }
+            catch (Exception ex)
+            {
+                _logger.Error(ex, $"Ошибка при создании директории: {ex.Message}");
+                throw;
             }
         }
 
@@ -41,20 +52,18 @@ namespace View.Model.Services
         /// Выполняет сохранение объектов класса <see cref="Contact"/> в файл, используя 
         /// механизм сериализации.
         /// </summary>
-        /// <param name="contacts"></param>
-        public void SaveContact(Contact contact)
+        /// <param name="contacts">Список контактов для сохранения.</param>
+        public void SaveContacts(ObservableCollection<Contact> contacts)
         {
             try
             {
-                // Сериализуем объект Contact в JSON строку
-                string jsonString = JsonConvert.SerializeObject(contact);
-
-                // Записываем JSON строку в файл
+                string jsonString = JsonConvert.SerializeObject(contacts);
                 File.WriteAllText(_filePath, jsonString);
+                _logger.Info($"Контакты успешно сохранены в файл: {_filePath}");
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Ошибка при сохранении контакта в файл: {ex.Message}");
+                _logger.Error(ex, $"Ошибка при сохранении контактов в файл: {ex.Message}");
                 throw;
             }
         }
@@ -63,31 +72,32 @@ namespace View.Model.Services
         /// Выполняет загрузку объектов класса <see cref="Contact"/> из файла, используя 
         /// механизм десериализации.
         /// </summary>
-        /// <param name="contacts"></param>
-        public Contact LoadContact()
+        /// <returns></returns>
+        public ObservableCollection<Contact> LoadContacts()
         {
             try
             {
-                // Проверяем, существует ли файл
                 if (File.Exists(_filePath))
                 {
-                    // Читаем JSON строку из файла
-                    string jsonString = File.ReadAllText(_filePath);
-
-                    // Десериализуем JSON строку в объект Contact
-                    Contact contact = JsonConvert.DeserializeObject<Contact>(jsonString);
-
-                    return contact;
-                    
+                    string json = File.ReadAllText(_filePath); 
+                    ObservableCollection<Contact> contacts = 
+                        JsonConvert.DeserializeObject<ObservableCollection<Contact>>(json); 
+                    return contacts ?? new ObservableCollection<Contact>(); 
                 }
-                else { return null; }
-
+                else
+                {
+                    _logger.Warn($"Файл контактов не найден: {_filePath}. " +
+                        $"Возвращена пустая коллекция.");
+                    return new ObservableCollection<Contact>();
+                }
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Ошибка при загрузке контакта из файла: {ex.Message}");
-                return null; 
+                _logger.Error(ex, $"Ошибка при загрузке контактов из файла: {ex.Message}" +
+                        $"Возвращена пустая коллекция.");
+                return new ObservableCollection<Contact>();
             }
+
         }
     }
 }
