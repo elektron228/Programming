@@ -1,6 +1,4 @@
 ﻿using System.Windows.Input;
-using View.Model.Services;
-using View.Model;
 
 namespace View.ViewModel
 {
