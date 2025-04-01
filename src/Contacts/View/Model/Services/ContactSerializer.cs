@@ -4,7 +4,7 @@ using System.IO;
 namespace View.Model.Services
 {
     /// <summary>
-    /// Предоставляет методы для сериализации и десиреализации объектов класса <see cref="Contact"/>.
+    /// Предоставляет методы для сериализации и десиреализации объектов класса<see cref="Contact"/>.
     /// </summary>
     public class ContactSerializer
     {
@@ -38,7 +38,8 @@ namespace View.Model.Services
         }
 
         /// <summary>
-        /// Выполняет сохранение объектов класса <see cref="Contact"/> в файл, используя механизм сериализации.
+        /// Выполняет сохранение объектов класса <see cref="Contact"/> в файл, используя 
+        /// механизм сериализации.
         /// </summary>
         /// <param name="contacts"></param>
         public void SaveContact(Contact contact)
@@ -59,7 +60,8 @@ namespace View.Model.Services
         }
 
         /// <summary>
-        /// Выполняет загрузку объектов класса <see cref="Contact"/> из файла, используя механизм десериализации.
+        /// Выполняет загрузку объектов класса <see cref="Contact"/> из файла, используя 
+        /// механизм десериализации.
         /// </summary>
         /// <param name="contacts"></param>
         public Contact LoadContact()
