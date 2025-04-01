@@ -89,6 +89,11 @@ namespace View.Model
         }
 
         /// <summary>
+        /// Создаёт пустой экземпляр калсса <see cref="Contact"./>
+        /// </summary>
+        public Contact() { }
+
+        /// <summary>
         /// Отслеживает изменение значений свойства.
         /// </summary>
         /// <param name="propertyName"></param>
