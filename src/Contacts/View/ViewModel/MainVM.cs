@@ -64,77 +64,23 @@ namespace View.ViewModel
                     // Сбрасываем изменения, если они не были применены
                     if (_isEdit || _isCreate)
                     {
-                        Name = _originalContact?.Name ?? string.Empty;
-                        Email = _originalContact?.Email ?? string.Empty;
-                        Phone = _originalContact?.Phone ?? string.Empty;
+                        CurrentContact.Name = _originalContact?.Name ?? string.Empty;
+                        CurrentContact.Email = _originalContact?.Email ?? string.Empty;
+                        CurrentContact.Phone = _originalContact?.Phone ?? string.Empty;
 
                         _isCreate = false;
                         _isEdit = false;
                         OnPropertyChanged(nameof(IsEditing));
-                        OnPropertyChanged(nameof(IsApplyVisible));
                         OnPropertyChanged(nameof(IsApplyEnabled));
 
                     }
 
                     _currentContact = value;
                     OnPropertyChanged();
-                    OnPropertyChanged(nameof(Name));
-                    OnPropertyChanged(nameof(Email));
-                    OnPropertyChanged(nameof(Phone));
+                    OnPropertyChanged(nameof(CurrentContact.Name));
+                    OnPropertyChanged(nameof(CurrentContact.Email));
+                    OnPropertyChanged(nameof(CurrentContact.Phone));
                 }
-            }
-        }
-
-        public Contact NewContact { get; set; }
-
-        /// <summary>
-        /// Возвращает и задаёт имя контакта.
-        /// </summary>
-        public string Name 
-        { 
-            get 
-            { 
-                return _currentContact.Name; 
-            } 
-            set 
-            {
-                _currentContact.Name = value; 
-                OnPropertyChanged(nameof(Name));
-                OnPropertyChanged(nameof(IsApplyEnabled));
-            } 
-        }
-
-        /// <summary>
-        /// Возвращает и задаёт адрес электронной почты.
-        /// </summary>
-        public string Email
-        {
-            get
-            {
-                return _currentContact.Email;
-            }
-            set
-            {
-                _currentContact.Email = value;
-                OnPropertyChanged(nameof(Email));
-                OnPropertyChanged(nameof(IsApplyEnabled));
-            }
-        }
-
-        /// <summary>
-        /// Возвращает и задаёт номер телефона.
-        /// </summary>
-        public string Phone
-        {
-            get
-            {
-                return _currentContact.Phone;
-            }
-            set
-            {
-                _currentContact.Phone = value;
-                OnPropertyChanged(nameof(Phone));
-                OnPropertyChanged(nameof(IsApplyEnabled));
             }
         }
 
@@ -171,22 +117,16 @@ namespace View.ViewModel
         /// <summary>
         /// Показывет, возможно ли редактировать контакт.
         /// </summary>
-        public bool IsEditEnabled => CurrentContact != null && !_isEdit && !_isCreate;
-
-        /// <summary>
-        /// Показывет, возможно ли удалить контакт.
-        /// </summary>
-        public bool IsRemoveEnabled => CurrentContact != null && !_isEdit && !_isCreate;
+        public bool IsEditOrRemoveEnabled => CurrentContact != null && !_isEdit && !_isCreate;
 
         /// <summary>
         /// Показывет, возможно ли применить изменения.
         /// </summary>
-        public bool IsApplyEnabled => (_isCreate && (!string.IsNullOrEmpty(Name) &&
-            !string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Phone))) || 
-            (CurrentContact != null && _isEdit &&(!string.IsNullOrEmpty(Name) 
-            && !string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Phone))); 
-
-        public bool IsApplyVisible => IsEditing;
+        public bool IsApplyEnabled => ((_isCreate) || (CurrentContact != null && _isEdit)) &&
+                                      !string.IsNullOrEmpty(CurrentContact.Name) &&
+                                      !string.IsNullOrEmpty(CurrentContact.Email) &&
+                                      !string.IsNullOrEmpty(CurrentContact.Phone);
+            
 
         /// <summary>
         /// Создаёт экземпляр класса <see cref="MainVM"/>.
@@ -217,12 +157,11 @@ namespace View.ViewModel
                 Phone = CurrentContact.Phone
             };
 
-            Name = string.Empty;
-            Email = string.Empty;
-            Phone = string.Empty;
+            CurrentContact.Name = string.Empty;
+            CurrentContact.Email = string.Empty;
+            CurrentContact.Phone = string.Empty;
             _isCreate = true;
 
-            OnPropertyChanged(nameof(IsApplyVisible));
             OnPropertyChanged(nameof(IsApplyEnabled));
             OnPropertyChanged(nameof(IsEditing));
         }
@@ -243,7 +182,6 @@ namespace View.ViewModel
         /// <param name="obj"></param>
         private void OnEditCommandExecute(object obj)
         {
-
             _isEdit = true;
             _originalContact = new Contact
             {
@@ -251,7 +189,6 @@ namespace View.ViewModel
                 Email = CurrentContact.Email,
                 Phone = CurrentContact.Phone
             };
-            OnPropertyChanged(nameof(IsApplyVisible));
             OnPropertyChanged(nameof(IsApplyEnabled));
             OnPropertyChanged(nameof(IsEditing));
         }
@@ -263,7 +200,7 @@ namespace View.ViewModel
         /// <returns></returns>
         private bool OnEditCommandCanExecute(object obj)
         {
-            return IsEditEnabled;
+            return IsEditOrRemoveEnabled;
         }
 
         /// <summary>
@@ -306,7 +243,7 @@ namespace View.ViewModel
         /// <returns></returns>
         private bool OnRemoveCommandCanExecute(object obj)
         {
-            return IsRemoveEnabled;
+            return IsEditOrRemoveEnabled;
         }
 
         /// <summary>
@@ -324,7 +261,6 @@ namespace View.ViewModel
             _serializer.SaveContacts(Contacts);
             
             _originalContact = null;
-            OnPropertyChanged(nameof(IsApplyVisible));
             OnPropertyChanged(nameof(IsApplyEnabled));
             OnPropertyChanged(nameof(IsEditing));
         }
@@ -347,7 +283,5 @@ namespace View.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
-        
     }
 }

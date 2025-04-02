@@ -16,16 +16,15 @@ namespace View.Model.Services
         private static readonly Logger _logger = LogManager.GetCurrentClassLogger();
 
         /// <summary>
-        /// Путь для сохранения данных.
+        /// Директория для сохранения данных.
         /// </summary>
-        private string _filePath =
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments),
-            "Contacts", "contacts.json");
+        private readonly string _directoryPath = Path.Combine(Environment.
+            GetFolderPath(Environment.SpecialFolder.MyDocuments), "Contacts");
 
         /// <summary>
-        /// Возвращает путь для сохранения данных.
+        /// Путь к файлу с сохранёнными данными.
         /// </summary>
-        public string FilePath => _filePath;
+        private readonly string _filePath;
 
         /// <summary>
         /// Создаёт экземпляр класса <see cref="ContactSerializer"/>.
@@ -34,11 +33,11 @@ namespace View.Model.Services
         {
             try
             {
-                string directoryPath = Path.GetDirectoryName(_filePath);
-                if (!Directory.Exists(directoryPath))
+                _filePath = Path.Combine(_directoryPath, "contacts.json");
+                if (!Directory.Exists(_directoryPath))
                 {
-                    Directory.CreateDirectory(directoryPath);
-                    _logger.Info($"Создана директория для сохранения контактов: {directoryPath}");
+                    Directory.CreateDirectory(_directoryPath);
+                    _logger.Info($"Создана директория для сохранения контактов: {_directoryPath}");
                 }
             }
             catch (Exception ex)
