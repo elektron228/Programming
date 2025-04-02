@@ -2,7 +2,7 @@
 using System.Windows;
 using System.Windows.Data;
 
-namespace View.ViewModel
+namespace View.Converters
 {
     /// <summary>
     /// Выполняет преобразование значений.
@@ -37,7 +37,7 @@ namespace View.ViewModel
         public object ConvertBack(object value, Type targetType,
             object parameter, CultureInfo culture)
         {
-            return (value is Visibility visibility) && visibility == Visibility.Visible;
+            return value is Visibility visibility && visibility == Visibility.Visible;
         }
     }
 }
