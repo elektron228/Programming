@@ -10,7 +10,14 @@
 
   <ItemGroup>
     <None Remove="ContactsApp_96x96.ico" />
+    <None Remove="NLog.config" />
     <None Remove="photo_placeholder_100x100.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
 
   <ItemGroup>
