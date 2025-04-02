@@ -53,7 +53,6 @@ namespace View.Model.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Ошибка при сохранении контакта в файл: {ex.Message}");
                 throw;
             }
         }
@@ -83,7 +82,6 @@ namespace View.Model.Services
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Ошибка при загрузке контакта из файла: {ex.Message}");
                 return null; 
             }
         }

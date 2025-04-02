@@ -27,23 +27,23 @@
                 <Label Content="Name:" 
                        Height="25" />
                 <TextBox TextWrapping="Wrap" 
-                            Height="21"
-                            Margin="4,4,0,0"
-                            Text="{Binding Name, Mode=Default, UpdateSourceTrigger=PropertyChanged}">
+                       Height="21"
+                       Margin="4,4,0,0"
+                       Text="{Binding Name, Mode=Default, UpdateSourceTrigger=PropertyChanged}">
                 </TextBox>
                 <Label Content="Email:" 
                        Height="25" />
                 <TextBox TextWrapping="Wrap" 
-                            Height="21"
-                            Margin="4,4,0,0"
-                            Text="{Binding Phone, Mode=Default, UpdateSourceTrigger=PropertyChanged}">
+                       Height="21"
+                       Margin="4,4,0,0"
+                       Text="{Binding Phone, Mode=Default, UpdateSourceTrigger=PropertyChanged}">
                 </TextBox>
                 <Label Content="Phome Number:" 
                        Height="25" />
                 <TextBox TextWrapping="Wrap" 
-                            Height="21"
-                            Margin="4,4,0,0"
-                            Text="{Binding Email, Mode=Default, UpdateSourceTrigger=PropertyChanged}">
+                       Height="21"
+                       Margin="4,4,0,0"
+                       Text="{Binding Email, Mode=Default, UpdateSourceTrigger=PropertyChanged}">
                 </TextBox>
             </StackPanel>
         </GroupBox>

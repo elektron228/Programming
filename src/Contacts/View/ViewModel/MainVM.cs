@@ -107,7 +107,9 @@ namespace View.ViewModel
         /// </summary>
         public MainVM()
         {
-            _currentContact = new Contact("Иванов Иван Иванович", "+79235678909", "ivanov1999@gmail.com");
+            _currentContact = new Contact("Иванов Иван Иванович", 
+                                          "+79235678909", 
+                                          "ivanov1999@gmail.com");
 
             _serializer = new ContactSerializer();
             LoadCommand = new LoadCommand(this._serializer, this);
