@@ -8,12 +8,14 @@
         Title="Contacts" 
         Height="400" 
         Width="500"
+        MinHeight="300"
+        MinWidth="400"
         WindowStartupLocation="CenterScreen" 
         Icon="ContactsApp_96x96.ico" >
     <Grid Margin="15">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40*"/>
-            <RowDefinition Height="5*"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="31"/>
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition/>
@@ -69,7 +71,7 @@
 
         <Grid Grid.Column="1" 
               Grid.Row="1" 
-              Margin="0,1,0,0">
+              Margin="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition/>
                 <ColumnDefinition Width="Auto"/>
