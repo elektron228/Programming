@@ -70,12 +70,12 @@
                 Height="18"/>
         </Grid>
         <Image Grid.Column="1" 
-               Height="100" 
-               Width="100" 
-               HorizontalAlignment="Left" 
-               VerticalAlignment="Top" 
-               Margin="8,29,0,0" 
-               Source="photo_placeholder_100x100.png"/>
+                Height="100" 
+                Width="100" 
+                HorizontalAlignment="Left" 
+                VerticalAlignment="Top" 
+                Margin="8,29,0,0" 
+                Source="photo_placeholder_100x100.png"/>
         <StackPanel Grid.Column="1" 
                 Margin="111,8,8,0" 
                 Height="125"

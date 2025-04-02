@@ -141,10 +141,7 @@ namespace View.ViewModel
         /// <summary>
         /// Определяет, редактируется ли контакт.
         /// </summary>
-        public bool IsEditing
-        {
-            get { return _isCreate || _isEdit; }
-        }
+        public bool IsEditing => _isCreate || _isEdit;
 
         /// <summary>
         /// Команда для добавления контакта.
@@ -189,7 +186,7 @@ namespace View.ViewModel
             (CurrentContact != null && _isEdit &&(!string.IsNullOrEmpty(Name) 
             && !string.IsNullOrEmpty(Email) && !string.IsNullOrEmpty(Phone))); 
 
-        public bool IsApplyVisible => _isEdit || _isCreate;
+        public bool IsApplyVisible => IsEditing;
 
         /// <summary>
         /// Создаёт экземпляр класса <see cref="MainVM"/>.

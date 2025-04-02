@@ -4,6 +4,9 @@ using System.Windows.Data;
 
 namespace View.ViewModel
 {
+    /// <summary>
+    /// Выполняет преобразование значений.
+    /// </summary>
     public class BooleanToVisibilityConverter : IValueConverter
     {
         /// <summary>
@@ -24,7 +27,7 @@ namespace View.ViewModel
         }
 
         /// <summary>
-        /// Преобразует значение из<see cref="Visibility"/>  в <see cref="bool"/>.
+        /// Преобразует значение из <see cref="Visibility"/> в <see cref="bool"/>.
         /// </summary>
         /// <param name="value">Преобразовываемое значение.</param>
         /// <param name="targetType">Тип, в который преобразовываем.</param>

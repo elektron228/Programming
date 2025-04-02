@@ -9,16 +9,16 @@ namespace View.Model
     public class Contact : INotifyPropertyChanged
     {
         /// <summary>
-        /// 
+        /// Имя контакта.
         /// </summary>
         private string _name;
 
         /// <summary>
-        /// 
+        /// Почта контакта.
         /// </summary>
         private string _email;
         /// <summary>
-        /// 
+        /// Мобильный телефон контакта.
         /// </summary>
         private string _phone;
 
@@ -76,7 +76,7 @@ namespace View.Model
         }
 
         /// <summary>
-        /// Создаёт экзкмпляр класса <see cref="Contact"/>.
+        /// Создаёт экземпляр класса <see cref="Contact"/>.
         /// </summary>
         /// <param name="name">Имя контакта.</param>
         /// <param name="email">Адрес электронной почты контакта.</param>
@@ -89,7 +89,7 @@ namespace View.Model
         }
 
         /// <summary>
-        /// Создаёт пустой экземпляр калсса <see cref="Contact"./>
+        /// Создаёт пустой экземпляр класса <see cref="Contact"./>
         /// </summary>
         public Contact() { }
 

@@ -3,17 +3,18 @@
 namespace View.ViewModel
 {
     /// <summary>
-    /// Реализует логику комманд.
+    /// Реализация интерфейса <see cref="ICommand"/>, позволяющая 
+    /// привязать команду к методу в ViewModel.
     /// </summary>
     public class RelayCommand : ICommand
     {
         /// <summary>
-        /// 
+        /// Метод, который будет выполняться при вызове команды.
         /// </summary>
         private Action<object> execute;
 
         /// <summary>
-        /// 
+        /// Метод, определяющий возможность выполнения команды.
         /// </summary>
         private Func<object, bool> canExecute;
 
