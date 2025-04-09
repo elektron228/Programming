@@ -121,7 +121,7 @@
                     Content="Apply" 
                     Width="75"
                     Height="25"
-                    Margin="0,50,0,0" 
+                    Margin="106,50,0,0" 
                     HorizontalAlignment="Left" 
                     VerticalAlignment="Top"
                     Visibility="{Binding IsEditing, Converter={StaticResource BoolToVisibilityConverter}}"
