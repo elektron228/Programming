@@ -1,7 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace View.Model
 {
@@ -24,8 +23,19 @@ namespace View.Model
         /// </summary>
         private string _phone;
 
+        /// <summary>
+        /// Текст текущей ошибки для <see cref="Name"/>.
+        /// </summary>
         private string _nameError;
+
+        /// <summary>
+        ///  Текст текущей ошибки для <see cref="Phone"/>.
+        /// </summary>
         private string _phoneError;
+
+        /// <summary>
+        ///  Текст текущей ошибки для <see cref="Email"/>.
+        /// </summary>
         private string _emailError;
 
         /// <summary>
@@ -44,8 +54,13 @@ namespace View.Model
             }
             set
             {
-                _name = value;
-                OnPropertyChanged(nameof(Name));
+                if (_name != value)
+                {
+                    _name = value;
+                    ValidateName(value); 
+                    OnPropertyChanged(nameof(Name));
+                    OnPropertyChanged(nameof(Error)); 
+                }
             }
         }
 
@@ -61,7 +76,9 @@ namespace View.Model
             set
             {
                 _email = value;
+                ValidateEmail(value); 
                 OnPropertyChanged(nameof(Email));
+                OnPropertyChanged(nameof(Error)); 
             }
         }
 
@@ -77,69 +94,58 @@ namespace View.Model
             set
             {
                 _phone = value;
+                ValidatePhone(value); 
                 OnPropertyChanged(nameof(Phone));
+                OnPropertyChanged(nameof(Error)); 
             }
         }
 
-
-        public string Error
+        /// <summary>
+        /// Возвращает true если ошибок нет, иначе false.
+        /// </summary>
+        public bool IsValid
         {
-            get { return null; }
+            get
+            {
+                 return string.IsNullOrEmpty(Error);
+            }
         }
 
+        /// <summary>
+        /// Проверяет наличие ошибок.
+        /// </summary>
+        public string Error
+        {
+            get
+            {
+                if (!string.IsNullOrEmpty(_nameError)) return _nameError;
+                if (!string.IsNullOrEmpty(_phoneError)) return _phoneError;
+                if (!string.IsNullOrEmpty(_emailError)) return _emailError;
+                return null;
+            }
+        }
+
+        /// <summary>
+        /// Возвращает сообщение об ошибке валидации для указанного свойства.
+        /// Если для свойства нет ошибки, возвращает null.
+        /// </summary>
+        /// <param name="columnName"></param>
+        /// <returns></returns>
         public string this[string columnName]
         {
             get
             {
-                string error = null;
-
                 switch (columnName)
                 {
                     case nameof(Name):
-                        if (string.IsNullOrEmpty(Name))
-                        {
-                            error = "Name is required.";
-                        }
-                        else if (Name.Length > 100)
-                        {
-                            error = "Name must be no longer than 100 characters.";
-                        }
-                        break;
-
+                        return _nameError;
                     case nameof(Phone):
-                        if (string.IsNullOrEmpty(Phone))
-                        {
-                            error = "Phone number is required.";
-                        }
-                        else if (Phone.Length > 100)
-                        {
-                            error = "Phone number must be no longer than 100 characters.";
-                        }
-                        else if (!Regex.IsMatch(Phone, @"^[\d\+\-\(\)]+$")) // Regular expression to check for digits and + - ()
-                        {
-                            error = "Phone number can only contain digits and symbols + - () . Example: +7 (999) 111-22-33";
-                        }
-                        break;
-
+                        return _phoneError;
                     case nameof(Email):
-                        if (string.IsNullOrEmpty(Email))
-                        {
-                            error = "Email is required.";
-                        }
-                        else if (Email.Length > 100)
-                        {
-                            error = "Email must be no longer than 100 characters.";
-                        }
-                        else if (!Email.Contains("@"))
-                        {
-                            error = "Email must contain '@' character.";
-                        }
-                        break;
-                
+                        return _emailError;
                     default:
                         return null;
                 }
-                return error;
             }
         }
 
@@ -157,7 +163,7 @@ namespace View.Model
         }
 
         /// <summary>
-        /// Создаёт пустой экземпляр класса <see cref="Contact"./>
+        /// Создаёт пустой экземпляр класса <see cref="Contact"/>.
         /// </summary>
         public Contact() { }
 
@@ -170,54 +176,90 @@ namespace View.Model
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        /// <summary>
+        /// Проверяет <see cref="Name"/> на наличие ошибок.
+        /// </summary>
+        /// <param name="name"></param>
+        /// <returns></returns>
         private string ValidateName(string name)
         {
             if (string.IsNullOrEmpty(name))
             {
-                return "Name is required.";
+                _nameError = "Name is required.";
+                OnPropertyChanged(nameof(IsValid));
+                return _nameError;
             }
             else if (name.Length > 100)
             {
-                return "Name must be no longer than 100 characters.";
+                _nameError = "Name must be no longer than 100 characters.";
+                OnPropertyChanged(nameof(IsValid));
+                return _nameError;
             }
+            _nameError = "";
+            OnPropertyChanged(nameof(IsValid));
             return null;
         }
 
+        /// <summary>
+        /// Проверяет <see cref="Phone"/> на наличие ошибок.
+        /// </summary>
+        /// <param name="phone"></param>
+        /// <returns></returns>
         private string ValidatePhone(string phone)
         {
             if (string.IsNullOrEmpty(phone))
             {
-                return "Phone number is required.";
+                _phoneError = "Phone number is required.";
+                OnPropertyChanged(nameof(IsValid));
+                return _phoneError;
             }
             else if (phone.Length > 100)
             {
-                return "Phone number must be no longer than 100 characters.";
+                _phoneError = "Phone number must be no longer than 100 characters.";
+                OnPropertyChanged(nameof(IsValid));
+                return _phoneError;
             }
             else if (!Regex.IsMatch(phone, @"^[\d\+\-\(\)]+$"))
             {
-                return "Phone number can only contain digits and symbols + - () . Example: +7 (999) 111-22-33";
+                _phoneError = "Phone number can only contain digits and symbols + - () . Example: +7 (999) 111-22-33";
+                OnPropertyChanged(nameof(IsValid));
+                return _phoneError;
             }
+            _phoneError = "";
+            OnPropertyChanged(nameof(IsValid));
             return null;
         }
 
+        /// <summary>
+        /// Проверяет <see cref="Email"/> на наличие ошибок.
+        /// </summary>
+        /// <param name="email"></param>
+        /// <returns></returns>
         private string ValidateEmail(string email)
         {
             if (string.IsNullOrEmpty(email))
             {
-                return "Email is required."; // Email required
+                _emailError = "Email is required.";
+                OnPropertyChanged(nameof(IsValid));
+                return _emailError; 
             }
 
             if (email.Length > 100)
             {
-                return "Email must be no longer than 100 characters."; // Length limit
+                _emailError = "Email must be no longer than 100 characters.";
+                OnPropertyChanged(nameof(IsValid));
+                return _emailError; 
             }
 
             if (!email.Contains("@"))
             {
-                return "Email must contain the @ symbol."; // Must contain @
+                _emailError = "Email must contain the @ symbol.";
+                OnPropertyChanged(nameof(IsValid));
+                return _emailError; 
             }
-
-            return null; // Valid
+            _emailError = "";
+            OnPropertyChanged(nameof(IsValid));
+            return null; 
         }
     }
 }

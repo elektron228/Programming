@@ -124,8 +124,10 @@
                     Margin="106,50,0,0" 
                     HorizontalAlignment="Left" 
                     VerticalAlignment="Top"
-                    Visibility="{Binding IsEditing, Converter={StaticResource BoolToVisibilityConverter}}"
-                    Command="{Binding ApplyCommand}"/>
+                    Visibility="{Binding IsEditing, 
+                    Converter={StaticResource BoolToVisibilityConverter}}"
+                    Command="{Binding ApplyCommand}"
+                    IsEnabled="{Binding CurrentContact.IsValid}"/>
         </Grid>
     </Grid>
 </Window>

@@ -72,7 +72,8 @@
                      Text="{Binding CurrentContact.Phone, 
                      UpdateSourceTrigger=PropertyChanged,
                      ValidatesOnDataErrors=True}"
-                     IsEnabled="{Binding IsEditing}"/>
+                     IsEnabled="{Binding IsEditing}"
+                     PreviewTextInput=""/>
             
             <TextBlock TextWrapping="Wrap" 
                        Height="18"
