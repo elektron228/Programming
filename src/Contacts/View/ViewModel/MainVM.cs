@@ -72,9 +72,7 @@ namespace View.ViewModel
                         _isEdit = false;
                         OnPropertyChanged(nameof(IsEditing));
                         OnPropertyChanged(nameof(IsApplyEnabled));
-
                     }
-
                     _currentContact = value;
                     OnPropertyChanged();
                     OnPropertyChanged(nameof(CurrentContact.Name));
@@ -126,7 +124,6 @@ namespace View.ViewModel
                                       !string.IsNullOrEmpty(CurrentContact.Name) &&
                                       !string.IsNullOrEmpty(CurrentContact.Email) &&
                                       !string.IsNullOrEmpty(CurrentContact.Phone);
-            
 
         /// <summary>
         /// Создаёт экземпляр класса <see cref="MainVM"/>.

@@ -221,7 +221,8 @@ namespace View.Model
             }
             else if (!Regex.IsMatch(phone, @"^[\d\+\-\(\)]+$"))
             {
-                _phoneError = "Phone number can only contain digits and symbols + - () . Example: +7 (999) 111-22-33";
+                _phoneError = "Phone number can only contain digits and symbols + - ()." +
+                    " Example: +7 (999) 111-22-33";
                 OnPropertyChanged(nameof(IsValid));
                 return _phoneError;
             }
