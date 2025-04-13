@@ -1,17 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace View.Controls
 {
@@ -23,6 +13,40 @@ namespace View.Controls
         public ContactControl()
         {
             InitializeComponent();
+        }
+
+        /// <summary>
+        /// Запрещает ввод недопустимых символов.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
+        {
+            if (!Regex.IsMatch(e.Text, @"^[\d\+\-\(\)]+$"))
+            {
+                e.Handled = true; 
+            }
+        }
+
+        /// <summary>
+        /// Запрещает вставку недопустимых символов.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void TextBox_Pasting(object sender, DataObjectPastingEventArgs e)
+        {
+            if (e.DataObject.GetDataPresent(typeof(string)))
+            {
+                string pastedText = (string)e.DataObject.GetData(typeof(string));
+                if (!Regex.IsMatch(pastedText, @"^[\d\+\-\(\)]+$")) 
+                {
+                    e.CancelCommand(); 
+                }
+            }
+            else
+            {
+                e.CancelCommand();
+            }
         }
     }
 }
