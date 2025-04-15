@@ -27,12 +27,12 @@
                 <AdornedElementPlaceholder/>
             </Border>
         </ControlTemplate>
-
     </UserControl.Resources>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto"/>
             <ColumnDefinition/>
@@ -45,8 +45,8 @@
                HorizontalAlignment="Left" 
                VerticalAlignment="Top" 
                Margin="0,21,3,0" 
-               Source="\Resources\photo_placeholder_100x100.png"
-	    />
+               Source="\Resources\photo_placeholder_100x100.png" />
+        
         <StackPanel Grid.Column="1"
                     Grid.Row="0"
                     Margin="3,0,0,0"

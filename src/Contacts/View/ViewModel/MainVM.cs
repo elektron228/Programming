@@ -15,7 +15,7 @@ namespace View.ViewModel
         /// <summary>
         /// Текущий контакт.
         /// </summary>
-        private Contact _currentContact;
+        private ContactVM _currentContact;
 
         /// <summary>
         /// Копия оригинального контакта.
@@ -45,17 +45,17 @@ namespace View.ViewModel
         /// <summary>
         /// Коллекция контактов.
         /// </summary>
-        public ObservableCollection<Contact> Contacts { get; set; }
-            = new ObservableCollection<Contact>();
+        public ObservableCollection<ContactVM> Contacts { get; set; }
+            = new ObservableCollection<ContactVM>();
 
         /// <summary>
         /// Возвращает и задаёт текущий контакт.
         /// </summary>
-        public Contact CurrentContact
+        public ContactVM CurrentContact
         {
-            get 
+            get
             {
-                return _currentContact; 
+                return _currentContact;
             }
             set
             {
@@ -146,7 +146,7 @@ namespace View.ViewModel
         private void OnAddCommandExecute(object obj)
         {
             CurrentContact = null;
-            CurrentContact = new Contact();
+            CurrentContact = new ContactVM(new Contact());
             _originalContact = new Contact 
             {
                 Name = CurrentContact.Name,
