@@ -137,7 +137,7 @@
                     Visibility="{Binding IsEditing, 
                     Converter={StaticResource BoolToVisibilityConverter}}"
                     Command="{Binding ApplyCommand}"
-                    IsEnabled="{Binding IsValid}"/>
+                    IsEnabled="{Binding CurrentContact.IsValid}"/>
         </Grid>
     </Grid>
 </Window>

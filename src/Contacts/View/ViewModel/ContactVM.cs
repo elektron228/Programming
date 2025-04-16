@@ -37,33 +37,6 @@ namespace View.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Создаёт экземпляр класса <see cref="ContactVM"/>.
-        /// </summary>
-        /// <param name="contact"></param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public ContactVM(Contact contact)
-        {
-            _contact = contact ?? throw new ArgumentNullException(nameof(contact));
-        }
-
-        /// <summary>
-        /// Создаёт экземпляр класса <see cref="ContactVM"/> при десериализации.
-        /// </summary>
-        /// <param name="name">Имя контакта.</param>
-        /// <param name="email">Почта контакта.</param>
-        /// <param name="phone">Телефон контакта.</param>
-        [JsonConstructor]
-        public ContactVM(string name, string email, string phone)
-        {
-            _contact = new Contact
-            {
-                Name = name,
-                Email = email,
-                Phone = phone
-            };
-        }
-
-        /// <summary>
         /// Возвращает и задаёт имя контакта.
         /// </summary>
         public string Name
@@ -173,6 +146,33 @@ namespace View.ViewModel
                         return null;
                 }
             }
+        }
+
+        /// <summary>
+        /// Создаёт экземпляр класса <see cref="ContactVM"/>.
+        /// </summary>
+        /// <param name="contact"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public ContactVM(Contact contact)
+        {
+            _contact = contact ?? throw new ArgumentNullException(nameof(contact));
+        }
+
+        /// <summary>
+        /// Создаёт экземпляр класса <see cref="ContactVM"/> при десериализации.
+        /// </summary>
+        /// <param name="name">Имя контакта.</param>
+        /// <param name="email">Почта контакта.</param>
+        /// <param name="phone">Телефон контакта.</param>
+        [JsonConstructor]
+        public ContactVM(string name, string email, string phone)
+        {
+            _contact = new Contact
+            {
+                Name = name,
+                Email = email,
+                Phone = phone
+            };
         }
 
         /// <summary>
