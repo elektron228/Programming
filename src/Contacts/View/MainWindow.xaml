@@ -124,7 +124,9 @@
                 <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
             
-            <userControl:ContactControl Grid.Row="0"/>
+            <userControl:ContactControl x:Name="contactControl"
+                                        Grid.Row="0"
+                                        DataContext="{Binding CurrentContact}"/>
 
             <Button Grid.Column="1"
                     Grid.Row="1"

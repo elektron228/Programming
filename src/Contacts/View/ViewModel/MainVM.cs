@@ -74,7 +74,7 @@ namespace View.ViewModel
                         OnPropertyChanged(nameof(IsApplyEnabled));
                     }
                     _currentContact = value;
-                    OnPropertyChanged();
+                    OnPropertyChanged(nameof(CurrentContact));
                     OnPropertyChanged(nameof(CurrentContact.Name));
                     OnPropertyChanged(nameof(CurrentContact.Email));
                     OnPropertyChanged(nameof(CurrentContact.Phone));
