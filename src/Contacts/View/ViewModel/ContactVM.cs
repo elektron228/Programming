@@ -22,19 +22,37 @@ namespace View.ViewModel
         private string _nameError;
 
         /// <summary>
-        ///  Текст текущей ошибки для <see cref="Phone"/>.
+        /// Текст текущей ошибки для <see cref="Phone"/>.
         /// </summary>
         private string _phoneError;
 
         /// <summary>
-        ///  Текст текущей ошибки для <see cref="Email"/>.
+        /// Текст текущей ошибки для <see cref="Email"/>.
         /// </summary>
         private string _emailError;
+
+        /// <summary>
+        /// Управляет доступностью текстбоксов.
+        /// </summary>
+        private bool _isEditing = false;
 
         /// <summary>
         /// Оповещает систему об изменении свойства.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        /// <summary>
+        /// Возвращает и задаёт флаг, определяющий доступность текстбоксов.
+        /// </summary>
+        public bool IsEditing
+        {
+            get { return _isEditing; }
+            set
+            {
+                _isEditing = value;
+                OnPropertyChanged(nameof(IsEditing));
+            }
+        }
 
         /// <summary>
         /// Возвращает и задаёт имя контакта.
@@ -79,7 +97,7 @@ namespace View.ViewModel
         }
 
         /// <summary>
-        /// Возвращает и задаёт Номер телефона.
+        /// Возвращает и задаёт номер телефона.
         /// </summary>
         public string Phone
         {

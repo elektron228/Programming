@@ -4,6 +4,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:Contacts"
+             x:Name="contactsControl"
              
              mc:Ignorable="d" 
              d:DesignHeight="150" d:DesignWidth="400">
@@ -63,8 +64,7 @@
                      Text="{Binding Name, 
                      UpdateSourceTrigger=PropertyChanged,
                      ValidatesOnDataErrors=True}"
-                     IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}},
-                                 Path=DataContext.IsEditing}"/>
+                     IsEnabled="{Binding IsEditing}"/>
             
             <TextBlock TextWrapping="Wrap" 
                        Height="18"
@@ -75,8 +75,7 @@
                      Text="{Binding Phone, 
                      UpdateSourceTrigger=PropertyChanged,
                      ValidatesOnDataErrors=True}"
-                     IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}, 
-                                Path=DataContext.IsEditing}"
+                     IsEnabled="{Binding IsEditing }"
                      PreviewTextInput="TextBox_PreviewTextInput"
                      DataObject.Pasting="TextBox_Pasting"/>
             
@@ -89,8 +88,7 @@
                      Text="{Binding Email, 
                      UpdateSourceTrigger=PropertyChanged,
                      ValidatesOnDataErrors=True}"
-                     IsEnabled="{Binding RelativeSource={RelativeSource AncestorType={x:Type local:MainWindow}}, 
-                                Path=DataContext.IsEditing}"/>
+                     IsEnabled="{Binding IsEditing }"/>
         </StackPanel>
     </Grid>
 </UserControl>

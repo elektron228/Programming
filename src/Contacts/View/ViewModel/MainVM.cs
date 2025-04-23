@@ -23,17 +23,17 @@ namespace View.ViewModel
         private Contact _originalContact;
 
         /// <summary>
-        /// Класс, выполняющий сериализацию и дисериализацию.
+        /// Класс, выполняющий сериализацию и десериализацию.
         /// </summary>
         private ContactSerializer _serializer;
 
         /// <summary>
-        /// Показывает, реадктируется ли сйечас контакт.
+        /// Показывает, редактируется ли сейчас контакт.
         /// </summary>
         private bool _isEdit = false;
         
         /// <summary>
-        /// Показывает, добавляется ли сйечас контакт.
+        /// Показывает, добавляется ли сейчас контакт.
         /// </summary>
         private bool _isCreate = false;
 
@@ -75,17 +75,60 @@ namespace View.ViewModel
                     }
                     _currentContact = value;
                     OnPropertyChanged(nameof(CurrentContact));
-                    OnPropertyChanged(nameof(CurrentContact.Name));
-                    OnPropertyChanged(nameof(CurrentContact.Email));
-                    OnPropertyChanged(nameof(CurrentContact.Phone));
+                    if (_currentContact != null) 
+                    {
+                        _currentContact.IsEditing = IsEditing;
+                    }
                 }
+            }
+        }
+
+        /// <summary>
+        /// Возвращает и задаёт флаг редактирования контакта.
+        /// </summary>
+        public bool IsEdit
+        {
+            get 
+            { 
+                return _isEdit; 
+            }
+            set
+            {
+                if (_isEdit != value)
+                {
+                    _isEdit = value;
+                    CurrentContact.IsEditing = value;
+                    OnPropertyChanged(nameof(IsEditing));
+                }
+
+            }
+        }
+
+        /// <summary>
+        /// Возвращает и задаёт флаг создания контакта.
+        /// </summary>
+        public bool IsCreate
+        {
+            get 
+            { 
+                return _isCreate; 
+            }
+            set
+            {
+                if (_isCreate != value)
+                {
+                    _isCreate = value;
+                    CurrentContact.IsEditing = value;
+                    OnPropertyChanged(nameof(IsEditing));
+                }
+
             }
         }
 
         /// <summary>
         /// Определяет, редактируется ли контакт.
         /// </summary>
-        public bool IsEditing => _isCreate || _isEdit;
+        public bool IsEditing => IsCreate || IsEdit;
 
         /// <summary>
         /// Команда для добавления контакта.
@@ -110,17 +153,17 @@ namespace View.ViewModel
         /// <summary>
         /// Показывет, возможно ли добавить новый контакт.
         /// </summary>
-        public bool IsAddEnabled => !_isEdit && !_isCreate;
+        public bool IsAddEnabled => !IsEdit && !IsCreate;
 
         /// <summary>
         /// Показывет, возможно ли редактировать контакт.
         /// </summary>
-        public bool IsEditOrRemoveEnabled => CurrentContact != null && !_isEdit && !_isCreate;
+        public bool IsEditOrRemoveEnabled => CurrentContact != null && !IsEdit && !IsCreate;
 
         /// <summary>
         /// Показывет, возможно ли применить изменения.
         /// </summary>
-        public bool IsApplyEnabled => ((_isCreate) || (CurrentContact != null && _isEdit)) &&
+        public bool IsApplyEnabled => ((IsCreate) || (CurrentContact != null && IsEdit)) &&
                                       !string.IsNullOrEmpty(CurrentContact.Name) &&
                                       !string.IsNullOrEmpty(CurrentContact.Email) &&
                                       !string.IsNullOrEmpty(CurrentContact.Phone);
@@ -157,10 +200,9 @@ namespace View.ViewModel
             CurrentContact.Name = string.Empty;
             CurrentContact.Email = string.Empty;
             CurrentContact.Phone = string.Empty;
-            _isCreate = true;
+            IsCreate = true;
 
             OnPropertyChanged(nameof(IsApplyEnabled));
-            OnPropertyChanged(nameof(IsEditing));
         }
 
         /// <summary>
@@ -179,7 +221,7 @@ namespace View.ViewModel
         /// <param name="obj"></param>
         private void OnEditCommandExecute(object obj)
         {
-            _isEdit = true;
+            IsEdit = true;
             _originalContact = new Contact
             {
                 Name = CurrentContact.Name,
@@ -187,7 +229,6 @@ namespace View.ViewModel
                 Phone = CurrentContact.Phone
             };
             OnPropertyChanged(nameof(IsApplyEnabled));
-            OnPropertyChanged(nameof(IsEditing));
         }
 
         /// <summary>
@@ -228,9 +269,6 @@ namespace View.ViewModel
                     CurrentContact = null; 
                 }
             }
-
-            OnPropertyChanged(nameof(IsApplyEnabled));
-            OnPropertyChanged(nameof(IsEditing));
         }
 
         /// <summary>
@@ -252,14 +290,13 @@ namespace View.ViewModel
             if (_isCreate)
             {
                 Contacts.Add(CurrentContact);
-                _isCreate = false;
+                IsCreate = false;
             }
-            _isEdit = false;
+            IsEdit = false;
             _serializer.SaveContacts(Contacts);
             
             _originalContact = null;
             OnPropertyChanged(nameof(IsApplyEnabled));
-            OnPropertyChanged(nameof(IsEditing));
         }
 
         /// <summary>

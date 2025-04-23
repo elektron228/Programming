@@ -22,7 +22,7 @@ namespace View.Controls
         /// <param name="e"></param>
         private void TextBox_PreviewTextInput(object sender, TextCompositionEventArgs e)
         {
-            if (!Regex.IsMatch(e.Text, @"^[\d\+\-\(\)]+$"))
+            if (!IsValid(e.Text))
             {
                 e.Handled = true; 
             }
@@ -38,7 +38,7 @@ namespace View.Controls
             if (e.DataObject.GetDataPresent(typeof(string)))
             {
                 string pastedText = (string)e.DataObject.GetData(typeof(string));
-                if (!Regex.IsMatch(pastedText, @"^[\d\+\-\(\)]+$")) 
+                if (!IsValid(pastedText)) 
                 {
                     e.CancelCommand(); 
                 }
@@ -47,6 +47,16 @@ namespace View.Controls
             {
                 e.CancelCommand();
             }
+        }
+
+        /// <summary>
+        /// Проверяет, содержит ли текст только допустимые символы.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        private bool IsValid(string text)
+        {
+            return Regex.IsMatch(text, @"^[\d\+\-\(\)]+$");
         }
     }
 }
