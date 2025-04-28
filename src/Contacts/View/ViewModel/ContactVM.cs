@@ -3,13 +3,14 @@ using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using View.Model;
 using Newtonsoft.Json;
+using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace View.ViewModel
 {
     /// <summary>
     /// Уведомляет об изменениях контакта и выполняет валидацию.
     /// </summary>
-    public class ContactVM : INotifyPropertyChanged, IDataErrorInfo
+    public class ContactVM : ObservableObject, IDataErrorInfo
     {
         /// <summary>
         /// Текущий объект контакта.
@@ -35,11 +36,6 @@ namespace View.ViewModel
         /// Управляет доступностью текстбоксов.
         /// </summary>
         private bool _isEditing = false;
-
-        /// <summary>
-        /// Оповещает систему об изменении свойства.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// Возвращает и задаёт флаг, определяющий доступность текстбоксов.
@@ -278,14 +274,6 @@ namespace View.ViewModel
             _emailError = "";
             OnPropertyChanged(nameof(IsValid));
             return null;
-        }
-        /// <summary>
-        /// Отслеживает изменение значений свойства.
-        /// </summary>
-        /// <param name="propertyName"></param>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

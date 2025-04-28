@@ -1,4 +1,5 @@
-﻿using System.Collections.ObjectModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Runtime.CompilerServices;
 using System.Windows.Input;
@@ -10,7 +11,7 @@ namespace View.ViewModel
     /// <summary>
     /// Содержит логику VM.
     /// </summary>
-    public class MainVM : INotifyPropertyChanged
+    public class MainVM : ObservableObject
     {
         /// <summary>
         /// Текущий контакт.
@@ -36,11 +37,6 @@ namespace View.ViewModel
         /// Показывает, добавляется ли сейчас контакт.
         /// </summary>
         private bool _isCreate = false;
-
-        /// <summary>
-        /// Оповещает систему об изменении свойства.
-        /// </summary>
-        public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
         /// Коллекция контактов.
@@ -307,15 +303,6 @@ namespace View.ViewModel
         private bool OnApplyCommandCanExecute(object obj)
         {
             return IsApplyEnabled;
-        }
-
-        /// <summary>
-        /// Отслеживает изменение значений свойства.
-        /// </summary>
-        /// <param name="propertyName"></param>
-        private void OnPropertyChanged([CallerMemberName] string propertyName = null)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
