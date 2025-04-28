@@ -22,14 +22,19 @@ namespace View.ViewModel
         private string _nameError;
 
         /// <summary>
-        ///  Текст текущей ошибки для <see cref="Phone"/>.
+        /// Текст текущей ошибки для <see cref="Phone"/>.
         /// </summary>
         private string _phoneError;
 
         /// <summary>
-        ///  Текст текущей ошибки для <see cref="Email"/>.
+        /// Текст текущей ошибки для <see cref="Email"/>.
         /// </summary>
         private string _emailError;
+
+        /// <summary>
+        /// Управляет доступностью текстбоксов.
+        /// </summary>
+        private bool _isEditing = false;
 
         /// <summary>
         /// Оповещает систему об изменении свойства.
@@ -37,30 +42,16 @@ namespace View.ViewModel
         public event PropertyChangedEventHandler PropertyChanged;
 
         /// <summary>
-        /// Создаёт экземпляр класса <see cref="ContactVM"/>.
+        /// Возвращает и задаёт флаг, определяющий доступность текстбоксов.
         /// </summary>
-        /// <param name="contact"></param>
-        /// <exception cref="ArgumentNullException"></exception>
-        public ContactVM(Contact contact)
+        public bool IsEditing
         {
-            _contact = contact ?? throw new ArgumentNullException(nameof(contact));
-        }
-
-        /// <summary>
-        /// Создаёт экземпляр класса <see cref="ContactVM"/> при десериализации.
-        /// </summary>
-        /// <param name="name">Имя контакта.</param>
-        /// <param name="email">Почта контакта.</param>
-        /// <param name="phone">Телефон контакта.</param>
-        [JsonConstructor]
-        public ContactVM(string name, string email, string phone)
-        {
-            _contact = new Contact
+            get { return _isEditing; }
+            set
             {
-                Name = name,
-                Email = email,
-                Phone = phone
-            };
+                _isEditing = value;
+                OnPropertyChanged(nameof(IsEditing));
+            }
         }
 
         /// <summary>
@@ -106,7 +97,7 @@ namespace View.ViewModel
         }
 
         /// <summary>
-        /// Возвращает и задаёт Номер телефона.
+        /// Возвращает и задаёт номер телефона.
         /// </summary>
         public string Phone
         {
@@ -173,6 +164,33 @@ namespace View.ViewModel
                         return null;
                 }
             }
+        }
+
+        /// <summary>
+        /// Создаёт экземпляр класса <see cref="ContactVM"/>.
+        /// </summary>
+        /// <param name="contact"></param>
+        /// <exception cref="ArgumentNullException"></exception>
+        public ContactVM(Contact contact)
+        {
+            _contact = contact ?? throw new ArgumentNullException(nameof(contact));
+        }
+
+        /// <summary>
+        /// Создаёт экземпляр класса <see cref="ContactVM"/> при десериализации.
+        /// </summary>
+        /// <param name="name">Имя контакта.</param>
+        /// <param name="email">Почта контакта.</param>
+        /// <param name="phone">Телефон контакта.</param>
+        [JsonConstructor]
+        public ContactVM(string name, string email, string phone)
+        {
+            _contact = new Contact
+            {
+                Name = name,
+                Email = email,
+                Phone = phone
+            };
         }
 
         /// <summary>
