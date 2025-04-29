@@ -1,10 +1,10 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using View.Model;
-using View.Model.Services;
+using Contacts.Model;
+using Contacts.Model.Services;
 
-namespace View.ViewModel
+namespace Contacts.ViewModel
 {
     /// <summary>
     /// Содержит логику VM.
@@ -58,7 +58,7 @@ namespace View.ViewModel
                 if (_currentContact != value)
                 {
                     // Сбрасываем изменения, если они не были применены
-                    if (_isEdit || _isCreate)
+                    if (IsEdit || IsCreate)
                     {
                         CurrentContact.Name = _originalContact?.Name ?? string.Empty;
                         CurrentContact.Email = _originalContact?.Email ?? string.Empty;
@@ -80,6 +80,10 @@ namespace View.ViewModel
                     RemoveCommand.NotifyCanExecuteChanged();
                     ApplyCommand.NotifyCanExecuteChanged();
 
+                }
+                if (value != null)
+                {
+                    value.CanExecuteChanged += OnContactCanExecuteChanged;
                 }
             }
         }
@@ -119,6 +123,16 @@ namespace View.ViewModel
         }
 
         /// <summary>
+        /// Уведомляет об изменении доступности команды.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnContactCanExecuteChanged(object sender, EventArgs e)
+        {
+            ApplyCommand.NotifyCanExecuteChanged();
+        }
+
+        /// <summary>
         /// Загружает контакты с помощью сериалайзера и преобразует их в ContactVM.
         /// </summary>
         private void LoadContactsFromSerializer()
@@ -138,7 +152,6 @@ namespace View.ViewModel
             ObservableCollection<Contact> contactsToSave = new ObservableCollection<Contact>(
             Contacts.Select(cvm => cvm.ConvertToContact()));
 
-            // 2. Сохраняем контакты
             _serializer.SaveContacts(contactsToSave);
 
         }
@@ -149,14 +162,16 @@ namespace View.ViewModel
         /// <param name="value"></param>
         partial void OnIsCreateChanged(bool value)
         {
-            if (value)
+            if (!value && CurrentContact != null)
             {
-                // Если создаем новый контакт, то IsEditing должно быть true
-                if (CurrentContact != null)
-                {
-                    CurrentContact.IsEditing = true;
-                }
+                CurrentContact.CanExecuteChanged -= OnContactCanExecuteChanged;
             }
+            
+            if (CurrentContact != null)
+            {
+                CurrentContact.IsEditing = IsCreate;
+            }
+            
             OnPropertyChanged(nameof(IsEditing));
             ApplyCommand.NotifyCanExecuteChanged();
             AddCommand.NotifyCanExecuteChanged();
@@ -170,14 +185,16 @@ namespace View.ViewModel
         /// <param name="value"></param>
         partial void OnIsEditChanged(bool value)
         {
-            if (value)
+            if (!value && CurrentContact != null)
             {
-                // Если редактируем, то IsEditing должно быть true
-                if (CurrentContact != null)
-                {
-                    CurrentContact.IsEditing = true;
-                }
+                CurrentContact.CanExecuteChanged -= OnContactCanExecuteChanged;
             }
+            
+            if (CurrentContact != null)
+            {
+                CurrentContact.IsEditing = IsEdit;
+            }
+            
             OnPropertyChanged(nameof(IsEditing));
             ApplyCommand.NotifyCanExecuteChanged();
             AddCommand.NotifyCanExecuteChanged();
@@ -270,10 +287,10 @@ namespace View.ViewModel
                 IsCreate = false;
             }
             IsEdit = false;
-            SaveContacts();
-            
             _originalContact = null;
             OnPropertyChanged(nameof(IsApplyEnabled));
+            
+            SaveContacts();
         }
     }
 }

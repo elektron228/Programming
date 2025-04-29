@@ -1,10 +1,8 @@
 ﻿using Newtonsoft.Json;
-using System.IO;
 using NLog;
 using System.Collections.ObjectModel;
-using View.ViewModel;
 
-namespace View.Model.Services
+namespace Contacts.Model.Services
 {
     /// <summary>
     /// Предоставляет методы для сериализации и десиреализации объектов класса<see cref="Contact"/>.

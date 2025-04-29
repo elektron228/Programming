@@ -1,11 +1,10 @@
 ﻿using System.ComponentModel;
 using System.Text.RegularExpressions;
-using View.Model;
+using Contacts.Model;
 using Newtonsoft.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
-using Contacts;
 
-namespace View.ViewModel
+namespace Contacts.ViewModel
 {
     /// <summary>
     /// Уведомляет об изменениях контакта и выполняет валидацию.
@@ -45,36 +44,10 @@ namespace View.ViewModel
         private string _name;
 
         /// <summary>
-        /// Выполняет валидацию имени контакта и уведомляет об изменениях.
-        /// </summary>
-        /// <param name="value">Новое значение имени.</param>
-        partial void OnNameChanged(string value)
-        {
-            ValidateName(value);
-            OnPropertyChanged(nameof(Error)); 
-            OnPropertyChanged(nameof(IsValid)); 
-            MainVM mainVm = App.Current.MainWindow.DataContext as MainVM;
-            mainVm?.ApplyCommand.NotifyCanExecuteChanged();
-        }
-
-        /// <summary>
         /// Почта контакта.
         /// </summary>
         [ObservableProperty]
         private string _email;
-
-        /// <summary>
-        ///  Выполняет валидацию адреса электронной почты и уведомляет об изменнениях.
-        /// </summary>
-        /// <param name="value">Новое значение адреса электронной почты.</param>
-        partial void OnEmailChanged(string value)
-        {
-            ValidateEmail(value);
-            OnPropertyChanged(nameof(Error)); 
-            OnPropertyChanged(nameof(IsValid));
-            MainVM mainVm = App.Current.MainWindow.DataContext as MainVM;
-            mainVm?.ApplyCommand.NotifyCanExecuteChanged();
-        }
 
         /// <summary>
         /// Телефон контакта.
@@ -83,17 +56,9 @@ namespace View.ViewModel
         private string _phone;
 
         /// <summary>
-        /// Выполняет валидацию номера телефона контакта и уведомляет об изменениях.
+        /// Уведомляет об изменениях.
         /// </summary>
-        /// <param name="value">Новое значение номера телефона.</param>
-        partial void OnPhoneChanged(string value)
-        {
-            ValidatePhone(value);
-            OnPropertyChanged(nameof(Error)); 
-            OnPropertyChanged(nameof(IsValid)); 
-            MainVM mainVm = App.Current.MainWindow.DataContext as MainVM;
-            mainVm?.ApplyCommand.NotifyCanExecuteChanged();
-        }
+        public event EventHandler CanExecuteChanged;
 
         /// <summary>
         /// Возвращает true если ошибок нет, иначе false.
@@ -176,6 +141,42 @@ namespace View.ViewModel
             _name = name;
             _email = email;
             _phone = phone;
+        }
+
+        /// <summary>
+        /// Выполняет валидацию номера телефона контакта и уведомляет об изменениях.
+        /// </summary>
+        /// <param name="value">Новое значение номера телефона.</param>
+        partial void OnPhoneChanged(string value)
+        {
+            ValidatePhone(value);
+            OnPropertyChanged(nameof(Error));
+            OnPropertyChanged(nameof(IsValid));
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        ///  Выполняет валидацию адреса электронной почты и уведомляет об изменнениях.
+        /// </summary>
+        /// <param name="value">Новое значение адреса электронной почты.</param>
+        partial void OnEmailChanged(string value)
+        {
+            ValidateEmail(value);
+            OnPropertyChanged(nameof(Error));
+            OnPropertyChanged(nameof(IsValid));
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
+        }
+
+        /// <summary>
+        /// Выполняет валидацию имени контакта и уведомляет об изменениях.
+        /// </summary>
+        /// <param name="value">Новое значение имени.</param>
+        partial void OnNameChanged(string value)
+        {
+            ValidateName(value);
+            OnPropertyChanged(nameof(Error));
+            OnPropertyChanged(nameof(IsValid));
+            CanExecuteChanged?.Invoke(this, EventArgs.Empty);
         }
 
         /// <summary>

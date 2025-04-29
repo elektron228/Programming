@@ -1,4 +1,4 @@
-﻿namespace View.Model
+﻿namespace Contacts.Model
 {
     /// <summary>
     /// Хранит информацию о контакте.
