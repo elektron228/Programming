@@ -29,12 +29,14 @@ namespace View.ViewModel
         /// <summary>
         /// Показывает, редактируется ли сейчас контакт.
         /// </summary>
-        private bool _isEdit = false;
-        
+        [ObservableProperty]
+        private bool _isEdit;
+
         /// <summary>
         /// Показывает, добавляется ли сейчас контакт.
         /// </summary>
-        private bool _isCreate = false;
+        [ObservableProperty]
+        private bool _isCreate;
 
         /// <summary>
         /// Коллекция контактов.
@@ -82,55 +84,6 @@ namespace View.ViewModel
             }
         }
 
-        /// <summary>
-        /// Возвращает и задаёт флаг редактирования контакта.
-        /// </summary>
-        public bool IsEdit
-        {
-            get 
-            { 
-                return _isEdit; 
-            }
-            set
-            {
-                if (_isEdit != value)
-                {
-                    _isEdit = value;
-                    CurrentContact.IsEditing = value;
-                    OnPropertyChanged(nameof(IsEditing));
-                    AddCommand.NotifyCanExecuteChanged();
-                    EditCommand.NotifyCanExecuteChanged();
-                    RemoveCommand.NotifyCanExecuteChanged();
-                    ApplyCommand.NotifyCanExecuteChanged();
-                }
-
-            }
-        }
-
-        /// <summary>
-        /// Возвращает и задаёт флаг создания контакта.
-        /// </summary>
-        public bool IsCreate
-        {
-            get 
-            { 
-                return _isCreate; 
-            }
-            set
-            {
-                if (_isCreate != value)
-                {
-                    _isCreate = value;
-                    CurrentContact.IsEditing = value;
-                    OnPropertyChanged(nameof(IsEditing));
-                    AddCommand.NotifyCanExecuteChanged();
-                    EditCommand.NotifyCanExecuteChanged();
-                    RemoveCommand.NotifyCanExecuteChanged();
-                    ApplyCommand.NotifyCanExecuteChanged();
-                }
-
-            }
-        }
 
         /// <summary>
         /// Определяет, редактируется ли контакт.
@@ -163,6 +116,48 @@ namespace View.ViewModel
             _serializer = new ContactSerializer();
             Contacts = _serializer.LoadContacts();
 
+        }
+
+        /// <summary>
+        /// Обрабатывает изменение флага, указывающего на создание нового контакта.
+        /// </summary>
+        /// <param name="value"></param>
+        partial void OnIsCreateChanged(bool value)
+        {
+            if (value)
+            {
+                // Если создаем новый контакт, то IsEditing должно быть true
+                if (CurrentContact != null)
+                {
+                    CurrentContact.IsEditing = true;
+                }
+            }
+            OnPropertyChanged(nameof(IsEditing));
+            ApplyCommand.NotifyCanExecuteChanged();
+            AddCommand.NotifyCanExecuteChanged();
+            EditCommand.NotifyCanExecuteChanged();
+            RemoveCommand.NotifyCanExecuteChanged();
+        }
+
+        /// <summary>
+        /// Обрабатывает изменение флага, указывающего на редактирование существующего контакта.
+        /// </summary>
+        /// <param name="value"></param>
+        partial void OnIsEditChanged(bool value)
+        {
+            if (value)
+            {
+                // Если редактируем, то IsEditing должно быть true
+                if (CurrentContact != null)
+                {
+                    CurrentContact.IsEditing = true;
+                }
+            }
+            OnPropertyChanged(nameof(IsEditing));
+            ApplyCommand.NotifyCanExecuteChanged();
+            AddCommand.NotifyCanExecuteChanged();
+            EditCommand.NotifyCanExecuteChanged();
+            RemoveCommand.NotifyCanExecuteChanged();
         }
 
         /// <summary>
