@@ -114,7 +114,32 @@ namespace View.ViewModel
         public MainVM()
         {
             _serializer = new ContactSerializer();
-            Contacts = _serializer.LoadContacts();
+            LoadContactsFromSerializer();
+
+        }
+
+        /// <summary>
+        /// Загружает контакты с помощью сериалайзера и преобразует их в ContactVM.
+        /// </summary>
+        private void LoadContactsFromSerializer()
+        {
+            var contacts = _serializer.LoadContacts();
+
+            Contacts = new ObservableCollection<ContactVM>(
+                contacts.Select(c => new ContactVM(c)) 
+            );
+        }
+
+        /// <summary>
+        /// Преобразует контакты из ContactVM в Contact и сохраняет их.
+        /// </summary>
+        private void SaveContacts()
+        {
+            ObservableCollection<Contact> contactsToSave = new ObservableCollection<Contact>(
+            Contacts.Select(cvm => cvm.ConvertToContact()));
+
+            // 2. Сохраняем контакты
+            _serializer.SaveContacts(contactsToSave);
 
         }
 
@@ -213,7 +238,7 @@ namespace View.ViewModel
                 int index = Contacts.IndexOf(CurrentContact);
                 Contacts.Remove(CurrentContact);
                 _originalContact = null;
-                _serializer.SaveContacts(Contacts);
+                SaveContacts();
                 if (Contacts.Count > 0) 
                 {
                     if (index < Contacts.Count) 
@@ -245,7 +270,7 @@ namespace View.ViewModel
                 IsCreate = false;
             }
             IsEdit = false;
-            _serializer.SaveContacts(Contacts);
+            SaveContacts();
             
             _originalContact = null;
             OnPropertyChanged(nameof(IsApplyEnabled));

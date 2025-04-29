@@ -264,5 +264,19 @@ namespace View.ViewModel
             OnPropertyChanged(nameof(IsValid));
             return null;
         }
+        
+        /// <summary>
+        /// Преобразует объект класса <see cref="ContactVM"/> в <see cref="Contact"/>.
+        /// </summary>
+        /// <returns></returns>
+        public Contact ConvertToContact()
+        {
+            return new Contact
+            {
+                Name = Name,
+                Email = Email,
+                Phone = Phone
+            };
+        }
     }
 }

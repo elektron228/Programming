@@ -53,7 +53,7 @@ namespace View.Model.Services
         /// механизм сериализации.
         /// </summary>
         /// <param name="contacts">Список контактов для сохранения.</param>
-        public void SaveContacts(ObservableCollection<ContactVM> contacts) 
+        public void SaveContacts(ObservableCollection<Contact> contacts)
         {
             try
             {
@@ -73,31 +73,30 @@ namespace View.Model.Services
         /// механизм десериализации.
         /// </summary>
         /// <returns></returns>
-        public ObservableCollection<ContactVM> LoadContacts()
+        public ObservableCollection<Contact> LoadContacts()
         {
             try
             {
                 if (File.Exists(_filePath))
                 {
-                    string json = File.ReadAllText(_filePath); 
-                    ObservableCollection<ContactVM> contacts = 
-                        JsonConvert.DeserializeObject<ObservableCollection<ContactVM>>(json); 
-                    return contacts ?? new ObservableCollection<ContactVM>(); 
+                    string json = File.ReadAllText(_filePath);
+                    ObservableCollection<Contact> contacts =
+                        JsonConvert.DeserializeObject<ObservableCollection<Contact>>(json);
+                    return contacts ?? new ObservableCollection<Contact>();
                 }
                 else
                 {
                     _logger.Warn($"Файл контактов не найден: {_filePath}. " +
                         $"Возвращена пустая коллекция.");
-                    return new ObservableCollection<ContactVM>();
+                    return new ObservableCollection<Contact>();
                 }
             }
             catch (Exception ex)
             {
                 _logger.Error(ex, $"Ошибка при загрузке контактов из файла: {ex.Message}" +
                         $"Возвращена пустая коллекция.");
-                return new ObservableCollection<ContactVM>();
+                return new ObservableCollection<Contact>();
             }
-
         }
     }
 }
