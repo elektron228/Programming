@@ -1,8 +1,6 @@
 ﻿using CommunityToolkit.Mvvm.ComponentModel;
+using CommunityToolkit.Mvvm.Input;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-using System.Windows.Input;
 using View.Model;
 using View.Model.Services;
 
@@ -11,7 +9,7 @@ namespace View.ViewModel
     /// <summary>
     /// Содержит логику VM.
     /// </summary>
-    public class MainVM : ObservableObject
+    public partial class MainVM : ObservableObject
     {
         /// <summary>
         /// Текущий контакт.
@@ -75,6 +73,11 @@ namespace View.ViewModel
                     {
                         _currentContact.IsEditing = IsEditing;
                     }
+                    AddCommand.NotifyCanExecuteChanged();
+                    EditCommand.NotifyCanExecuteChanged();
+                    RemoveCommand.NotifyCanExecuteChanged();
+                    ApplyCommand.NotifyCanExecuteChanged();
+
                 }
             }
         }
@@ -95,6 +98,10 @@ namespace View.ViewModel
                     _isEdit = value;
                     CurrentContact.IsEditing = value;
                     OnPropertyChanged(nameof(IsEditing));
+                    AddCommand.NotifyCanExecuteChanged();
+                    EditCommand.NotifyCanExecuteChanged();
+                    RemoveCommand.NotifyCanExecuteChanged();
+                    ApplyCommand.NotifyCanExecuteChanged();
                 }
 
             }
@@ -116,6 +123,10 @@ namespace View.ViewModel
                     _isCreate = value;
                     CurrentContact.IsEditing = value;
                     OnPropertyChanged(nameof(IsEditing));
+                    AddCommand.NotifyCanExecuteChanged();
+                    EditCommand.NotifyCanExecuteChanged();
+                    RemoveCommand.NotifyCanExecuteChanged();
+                    ApplyCommand.NotifyCanExecuteChanged();
                 }
 
             }
@@ -125,26 +136,6 @@ namespace View.ViewModel
         /// Определяет, редактируется ли контакт.
         /// </summary>
         public bool IsEditing => IsCreate || IsEdit;
-
-        /// <summary>
-        /// Команда для добавления контакта.
-        /// </summary>
-        public ICommand AddCommand { get; private set; }
-
-        /// <summary>
-        /// Команда для редактирования контакта.
-        /// </summary>
-        public ICommand EditCommand { get; private set; }
-
-        /// <summary>
-        /// Команда для удаления контакта.
-        /// </summary>
-        public ICommand RemoveCommand { get; private set; }
-
-        /// <summary>
-        /// Команда для сохранения изменений.
-        /// </summary>
-        public ICommand ApplyCommand { get; private set; }
 
         /// <summary>
         /// Показывет, возможно ли добавить новый контакт.
@@ -172,17 +163,14 @@ namespace View.ViewModel
             _serializer = new ContactSerializer();
             Contacts = _serializer.LoadContacts();
 
-            AddCommand = new RelayCommand(OnAddCommandExecute, OnAddCommandCanExecute);
-            EditCommand = new RelayCommand(OnEditCommandExecute, OnEditCommandCanExecute);
-            RemoveCommand = new RelayCommand(OnRemoveCommandExecute, OnRemoveCommandCanExecute);
-            ApplyCommand = new RelayCommand(OnApplyCommandExecute, OnApplyCommandCanExecute);
         }
 
         /// <summary>
         /// Выполняет логику добавления нового контакта.
         /// </summary>
         /// <param name="obj"></param>
-        private void OnAddCommandExecute(object obj)
+        [RelayCommand(CanExecute = nameof(IsAddEnabled))]
+        public void Add()
         {
             CurrentContact = null;
             CurrentContact = new ContactVM(new Contact());
@@ -202,20 +190,11 @@ namespace View.ViewModel
         }
 
         /// <summary>
-        /// Определяет, может ли быть выполнена команда добавления контакта.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        private bool OnAddCommandCanExecute(object obj)
-        {
-            return IsAddEnabled;
-        }
-
-        /// <summary>
         /// Выполняет логику редактирования существующего контакта.
         /// </summary>
         /// <param name="obj"></param>
-        private void OnEditCommandExecute(object obj)
+        [RelayCommand(CanExecute = nameof(IsEditOrRemoveEnabled))]
+        public void Edit()
         {
             IsEdit = true;
             _originalContact = new Contact
@@ -228,20 +207,11 @@ namespace View.ViewModel
         }
 
         /// <summary>
-        /// Определяет, может ли быть выполнена команда редактирования контакта.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        private bool OnEditCommandCanExecute(object obj)
-        {
-            return IsEditOrRemoveEnabled;
-        }
-
-        /// <summary>
         /// Выполняет логику удаления выбранного контакта.
         /// </summary>
         /// <param name="obj"></param>
-        private void OnRemoveCommandExecute(object obj)
+        [RelayCommand(CanExecute = nameof(IsEditOrRemoveEnabled))]
+        private void Remove()
         {
             if (CurrentContact != null)
             {
@@ -268,20 +238,11 @@ namespace View.ViewModel
         }
 
         /// <summary>
-        /// Определяет, может ли быть выполнена команда удаления контакта.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        private bool OnRemoveCommandCanExecute(object obj)
-        {
-            return IsEditOrRemoveEnabled;
-        }
-
-        /// <summary>
         /// Выполняет логику применения изменений к контакту.
         /// </summary>
         /// <param name="obj"></param>
-        private void OnApplyCommandExecute(object obj)
+        [RelayCommand(CanExecute = nameof(IsApplyEnabled))]
+        public void Apply()
         {
             if (_isCreate)
             {
@@ -293,16 +254,6 @@ namespace View.ViewModel
             
             _originalContact = null;
             OnPropertyChanged(nameof(IsApplyEnabled));
-        }
-
-        /// <summary>
-        /// Определяет, может ли быть выполнена команда применения изменений.
-        /// </summary>
-        /// <param name="obj"></param>
-        /// <returns></returns>
-        private bool OnApplyCommandCanExecute(object obj)
-        {
-            return IsApplyEnabled;
         }
     }
 }

@@ -1,16 +1,16 @@
 ﻿using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Text.RegularExpressions;
 using View.Model;
 using Newtonsoft.Json;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Contacts;
 
 namespace View.ViewModel
 {
     /// <summary>
     /// Уведомляет об изменениях контакта и выполняет валидацию.
     /// </summary>
-    public class ContactVM : ObservableObject, IDataErrorInfo
+    public partial class ContactVM : ObservableObject, IDataErrorInfo
     {
         /// <summary>
         /// Текущий объект контакта.
@@ -35,82 +35,64 @@ namespace View.ViewModel
         /// <summary>
         /// Управляет доступностью текстбоксов.
         /// </summary>
-        private bool _isEditing = false;
+        [ObservableProperty]
+        private bool _isEditing;
 
         /// <summary>
-        /// Возвращает и задаёт флаг, определяющий доступность текстбоксов.
+        /// Имя контакта.
         /// </summary>
-        public bool IsEditing
+        [ObservableProperty]
+        private string _name;
+
+        /// <summary>
+        /// Выполняет валидацию имени контакта и уведомляет об изменениях.
+        /// </summary>
+        /// <param name="value">Новое значение имени.</param>
+        partial void OnNameChanged(string value)
         {
-            get { return _isEditing; }
-            set
-            {
-                _isEditing = value;
-                OnPropertyChanged(nameof(IsEditing));
-            }
+            ValidateName(value);
+            OnPropertyChanged(nameof(Error)); 
+            OnPropertyChanged(nameof(IsValid)); 
+            MainVM mainVm = App.Current.MainWindow.DataContext as MainVM;
+            mainVm?.ApplyCommand.NotifyCanExecuteChanged();
         }
 
         /// <summary>
-        /// Возвращает и задаёт имя контакта.
+        /// Почта контакта.
         /// </summary>
-        public string Name
+        [ObservableProperty]
+        private string _email;
+
+        /// <summary>
+        ///  Выполняет валидацию адреса электронной почты и уведомляет об изменнениях.
+        /// </summary>
+        /// <param name="value">Новое значение адреса электронной почты.</param>
+        partial void OnEmailChanged(string value)
         {
-            get
-            {
-                return _contact.Name;
-            }
-            set
-            {
-                if (_contact.Name != value)
-                {
-                    _contact.Name = value;
-                    ValidateName(value);
-                    OnPropertyChanged(nameof(Name));
-                    OnPropertyChanged(nameof(Error));
-                }
-            }
+            ValidateEmail(value);
+            OnPropertyChanged(nameof(Error)); 
+            OnPropertyChanged(nameof(IsValid));
+            MainVM mainVm = App.Current.MainWindow.DataContext as MainVM;
+            mainVm?.ApplyCommand.NotifyCanExecuteChanged();
         }
 
         /// <summary>
-        /// Возвращает и задаёт адрес электронной почты.
+        /// Телефон контакта.
         /// </summary>
-        public string Email
-        {
-            get
-            {
-                return _contact.Email;
-            }
-            set
-            {
-                if (_contact.Email != value)
-                {
-                    _contact.Email = value;
-                    ValidateEmail(value);
-                    OnPropertyChanged(nameof(Email));
-                    OnPropertyChanged(nameof(Error));
-                }
-            }
-        }
+        [ObservableProperty]
+        private string _phone;
 
         /// <summary>
-        /// Возвращает и задаёт номер телефона.
+        /// Выполняет валидацию номера телефона контакта и уведомляет об изменениях.
         /// </summary>
-        public string Phone
+        /// <param name="value">Новое значение номера телефона.</param>
+        partial void OnPhoneChanged(string value)
         {
-            get
-            {
-                return _contact.Phone;
-            }
-            set
-            {
-                if (_contact.Phone != value)
-                {
-                    _contact.Phone = value;
-                    ValidatePhone(value);
-                    OnPropertyChanged(nameof(Phone));
-                    OnPropertyChanged(nameof(Error));
-                }
-            }
+            ValidatePhone(value);
+            OnPropertyChanged(nameof(Error)); 
+            OnPropertyChanged(nameof(IsValid)); 
+            MainVM mainVm = App.Current.MainWindow.DataContext as MainVM;
+            mainVm?.ApplyCommand.NotifyCanExecuteChanged();
         }
 
         /// <summary>
@@ -170,6 +152,10 @@ namespace View.ViewModel
         public ContactVM(Contact contact)
         {
             _contact = contact ?? throw new ArgumentNullException(nameof(contact));
+
+            _name = contact.Name;
+            _email = contact.Email;
+            _phone = contact.Phone;
         }
 
         /// <summary>
@@ -187,6 +173,9 @@ namespace View.ViewModel
                 Email = email,
                 Phone = phone
             };
+            _name = name;
+            _email = email;
+            _phone = phone;
         }
 
         /// <summary>
